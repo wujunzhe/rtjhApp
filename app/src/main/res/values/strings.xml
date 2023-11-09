@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">rtjhApp</string>
+    <string name="app_name" translatable="false">rtjhApp</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Minutes</string>
+    <string name="_00">00</string>
+    <string name="colon">:</string>
+    <string name="todo">TODO</string>
 </resources>
