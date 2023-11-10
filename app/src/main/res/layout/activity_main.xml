@@ -8,6 +8,7 @@
     tools:context=".MainActivity"
     android:paddingTop="100dp">
 <LinearLayout
+    android:id="@+id/time"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="MissingConstraints">
@@ -15,14 +16,29 @@
         layout="@layout/top_time" />
 </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_test"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints,RtlSymmetry"
+        app:layout_constraintTop_toBottomOf="@+id/time"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="70dp"
+        android:paddingStart="40dp">
+         <!-- 空调系统-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/v_air_condition"
+                layout="@layout/air_condition"
+                tools:layout_editor_absoluteX="18dp"
+                tools:layout_editor_absoluteY="704dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

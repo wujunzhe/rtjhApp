@@ -6,4 +6,12 @@
     <string name="_00">00</string>
     <string name="colon">:</string>
     <string name="todo">TODO</string>
+    <string name="circleProcess">设置圆环进度</string>
+    <string name="celsius">℃</string>
+    <string name="percent">%</string>
+    <string name="systemNormal">系统正常</string>
+    <string name="dutyRunning">值班运行</string>
+    <string name="systemError">系统故障</string>
+    <string name="systemWaring">系统报警</string>
+    <string name="negPreOpera">负压运行</string>
 </resources>

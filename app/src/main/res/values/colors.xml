@@ -4,4 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="timingColor">#324d6b</color>
     <color name="backgroundTransparent">#00000000</color>
+    <color name="circleBgColor">#b1c3fa</color>
+    <color name="circleColor">#2843b5</color>
+    <color name="circleShadow">#734947B2</color>
+    <color name="circleTextColor">#1432a4</color>
+    <color name="airTextColor">#2c4258</color>
 </resources>
