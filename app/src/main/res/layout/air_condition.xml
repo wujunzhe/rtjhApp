@@ -29,35 +29,11 @@
                 android:paddingStart="20dp"
                 android:layout_weight="1"
                 tools:ignore="RtlSymmetry">
-                <com.example.rtjhapp.view.CircleProgressView
-                    android:id="@+id/temp_circle"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    app:isanim="false"
-                    app:animTime="1000"
-                    app:digit="0"
-                    app:hintDrawable="@drawable/temperature"
-                    app:hintColor="@color/circleTextColor"
-                    app:hintSize="30sp"
-                    app:mBgCirColor="@color/circleBgColor"
-                    app:mBgCirWidth="10sp"
-                    app:mCirColor="@color/circleColor"
-                    app:mCirWidth="15sp"
-                    app:shadowColor="@color/circleShadow"
-                    app:shadowShow="true"
-                    app:shadowSize="9"
-                    app:startAngle="270"
-                    app:sweepAngle="360"
-                    app:unit="@string/celsius"
-                    app:value="0"
-                    app:valueColor="@color/timingColor"
-                    app:valueSize="25sp"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
                     android:orientation="vertical">
                     <ImageButton
                         android:id="@+id/temp_plus"
@@ -84,6 +60,30 @@
                         android:background="@color/backgroundTransparent"
                         android:src="@drawable/btn_reduce"/>
                 </LinearLayout>
+                <com.example.rtjhapp.view.CircleProgressView
+                    android:id="@+id/temp_circle"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:isanim="false"
+                    app:animTime="1000"
+                    app:digit="0"
+                    app:hintDrawable="@drawable/temperature"
+                    app:hintColor="@color/circleTextColor"
+                    app:hintSize="30sp"
+                    app:mBgCirColor="@color/circleBgColor"
+                    app:mBgCirWidth="10sp"
+                    app:mCirColor="@color/circleColor"
+                    app:mCirWidth="15sp"
+                    app:shadowColor="@color/circleShadow"
+                    app:shadowShow="true"
+                    app:shadowSize="9"
+                    app:startAngle="270"
+                    app:sweepAngle="360"
+                    app:unit="@string/celsius"
+                    app:value="0"
+                    app:valueColor="@color/timingColor"
+                    app:valueSize="25sp"/>
             </LinearLayout>
 
             <TextView

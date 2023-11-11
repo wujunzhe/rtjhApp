@@ -3,7 +3,7 @@
     <style name="timingStyle">
         <!-- 字体和文本样式 -->
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">60sp</item>
+        <item name="android:textSize">100sp</item>
         <item name="android:textColor">@color/timingColor</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -18,5 +18,11 @@
     <style name="airIconText">
         <item name="android:textColor">@color/airTextColor</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="musicSeekBarStyle">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/music_seekbar_bg</item>
+        <item name="android:thumb">@drawable/volume_play</item>
+        <item name="android:thumbOffset">0dp</item>
     </style>
 </resources>

@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="0dp">
                 <TextView
                     android:id="@+id/surgery_timing_hours"
                     android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="0dp">
                 <TextView
                     android:id="@+id/local_timing_hours"
                     android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/input"
+                android:background="@drawable/time_bottom"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="@color/timingColor"
@@ -162,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="0dp">
                 <TextView
                     android:id="@+id/anaesthesia_timing_hours"
                     android:layout_width="wrap_content"

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="640dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        tools:ignore="MissingConstraints,RtlSymmetry">
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="170dp"
+            android:src="@drawable/music_icon"/>
+        <RelativeLayout
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="20dp">
+            <TextView
+                android:id="@+id/song_name"
+                android:layout_width="300dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:text="@string/songName"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:background="@drawable/song_name"
+                android:textStyle="bold"
+                android:textColor="@color/songNameColor"
+                tools:ignore="RtlSymmetry" />
+            <LinearLayout
+                android:id="@+id/music_btn"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/song_name">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/previous"
+                    android:background="@color/backgroundTransparent"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/play_circle"
+                    android:background="@color/backgroundTransparent"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/next"
+                    android:background="@color/backgroundTransparent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/music_btn">
+
+                <SeekBar
+                    android:id="@+id/music_seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:maxHeight="50dp"
+                    android:minHeight="30dp"
+                    android:progressDrawable="@drawable/music_seekbar_bg"
+                    android:thumb="@drawable/music_seekbar_thumb"
+                    android:thumbOffset="0dp"
+                    android:splitTrack="false" />
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/music_list"
+                android:background="@color/backgroundTransparent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

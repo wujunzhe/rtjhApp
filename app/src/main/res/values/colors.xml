@@ -9,4 +9,5 @@
     <color name="circleShadow">#734947B2</color>
     <color name="circleTextColor">#1432a4</color>
     <color name="airTextColor">#2c4258</color>
+    <color name="songNameColor">#314056</color>
 </resources>
