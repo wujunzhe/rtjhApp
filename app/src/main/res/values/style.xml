@@ -25,4 +25,14 @@
         <item name="android:thumb">@drawable/volume_play</item>
         <item name="android:thumbOffset">0dp</item>
     </style>
+    <style name="medicalStressTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/medicalTextColor</item>
+    </style>
+    <style name="differentialPressureTextStyle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/differentialPressureTextColor</item>
+    </style>
 </resources>

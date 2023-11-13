@@ -15,4 +15,10 @@
     <string name="systemWaring">系统报警</string>
     <string name="negPreOpera">负压运行</string>
     <string name="songName">歌曲名称</string>
+    <string name="lowStress">低压</string>
+    <string name="highStress">高压</string>
+    <string name="normalStress">正常</string>
+    <string name="differentialPressureValue">00.0Pa</string>
+    <string name="differentialPressure">压差</string>
+
 </resources>

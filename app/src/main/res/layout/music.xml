@@ -58,18 +58,20 @@
             <LinearLayout
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/music_btn">
+                android:layout_below="@+id/music_btn"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/volume"
+                android:gravity="center_horizontal">
 
                 <SeekBar
                     android:id="@+id/music_seekbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:maxHeight="50dp"
-                    android:minHeight="30dp"
-                    android:progressDrawable="@drawable/music_seekbar_bg"
                     android:thumb="@drawable/music_seekbar_thumb"
-                    android:thumbOffset="0dp"
+                    android:thumbOffset="15dp"
+                    android:progressTint="@color/progressColor"
+                    android:layout_marginTop="-3dp"
+                    android:progressBackgroundTint="@color/progressBgColor"
                     android:splitTrack="false" />
             </LinearLayout>
         </RelativeLayout>
