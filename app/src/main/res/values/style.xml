@@ -35,4 +35,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/differentialPressureTextColor</item>
     </style>
+    <style name="settingOptionsTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/timingColor</item>
+    </style>
 </resources>

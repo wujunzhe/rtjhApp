@@ -14,4 +14,9 @@
     <color name="differentialPressureTextColor">#0f384d</color>
     <color name="progressColor">#374759</color>
     <color name="progressBgColor">#cbe3ee</color>
+    <color name="settingBg">#afe7ea</color>
+    <color name="iconFontColor">#1586a7</color>
+    <color name="settingOptionTextColor">#2844b7</color>
+    <color name="halfTransparent">#26afe7ea</color>
+
 </resources>

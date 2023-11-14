@@ -20,5 +20,21 @@
     <string name="normalStress">正常</string>
     <string name="differentialPressureValue">00.0Pa</string>
     <string name="differentialPressure">压差</string>
-
+    <string-array name="setting_options">
+        <item>串口设置</item>
+        <item>空调设置</item>
+        <item>显示设置</item>
+        <item>智能模式设置</item>
+        <item>使用说明书</item>
+        <item>服务器设置</item>
+    </string-array>
+    <string name="list_item_format">%s</string>
+    <string-array name="icon_font_codes">
+        <item>"&#xe7c8;"</item>
+        <item>"&#xe617;"</item>
+        <item>"&#xe7c3;"</item>
+        <item>"&#xe69b;"</item>
+        <item>"&#xe614;"</item>
+        <item>"&#xe694;"</item>
+    </string-array>
 </resources>
