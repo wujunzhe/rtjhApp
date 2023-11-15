@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.CustomListItemBinding
+import com.example.rtjhapp.dialog.AirConditionSettingsDialog
+import com.example.rtjhapp.dialog.SerialPortSettingsDialog
 
 class SettingOptionsAdapter(
     private val objects: Array<out String>,
@@ -23,6 +25,20 @@ class SettingOptionsAdapter(
         holder.binding.iconTextView.text = iconFontCode
         holder.binding.customTextView.text = item
         holder.binding.root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,R.color.halfTransparent))
+
+        holder.binding.root.setOnClickListener {
+            when(item){
+                "串口设置" -> {
+                    val serialPortSettingsDialog = SerialPortSettingsDialog(holder.itemView.context)
+                    serialPortSettingsDialog.show()
+                }
+
+                "空调设置" -> {
+                    val airConditionSettingsDialog = AirConditionSettingsDialog(holder.itemView.context)
+                    airConditionSettingsDialog.show()
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = objects.size

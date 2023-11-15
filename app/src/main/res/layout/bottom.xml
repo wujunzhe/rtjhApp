@@ -7,13 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp">
         <LinearLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -36,6 +38,7 @@
                 android:layout_weight="1"
                 android:gravity="end">
                 <ImageView
+                    android:id="@+id/integrated_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/integrated_control"/>

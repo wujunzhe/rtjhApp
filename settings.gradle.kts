@@ -3,6 +3,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven(uri("https://maven.aliyun.com/repository/public"))
+        maven(uri("https://jitpack.io"))
     }
 }
 dependencyResolutionManagement {

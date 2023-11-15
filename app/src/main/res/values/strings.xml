@@ -29,6 +29,12 @@
         <item>服务器设置</item>
     </string-array>
     <string name="list_item_format">%s</string>
+    <string name="callSerialPort">电话模块串口号：</string>
+    <string name="airConditionPort">空调模块串口号：</string>
+    <string name="controlSerialPort">控制模块串口号：</string>
+    <string name="pronunciationSerialPort">语音模块串口号：</string>
+    <string name="basic">请输入</string>
+    <string name="save">保存</string>
     <string-array name="icon_font_codes">
         <item>"&#xe7c8;"</item>
         <item>"&#xe617;"</item>
@@ -37,4 +43,26 @@
         <item>"&#xe614;"</item>
         <item>"&#xe694;"</item>
     </string-array>
+    <string name="powerOnOff">开关机设置------</string>
+    <string name="powerOn">开机指令</string>
+    <string name="powerOff">关机指令</string>
+    <string name="powerOnPlaceholder">请输入开机指令</string>
+    <string name="powerOffPlaceholder">请输入关机指令</string>
+    <string name="returnWind">回风部分------</string>
+    <string name="returnHum">回风湿度</string>
+    <string name="returnTem">回风温度</string>
+    <string name="registerNum">寄存器号:</string>
+    <string name="humReturnEcho">湿度回显是否/10:</string>
+    <string name="temReturnEcho">温度回显是否/10:</string>
+    <string name="settingHumTem">温湿度设置部分------</string>
+    <string name="settingHum">设置湿度:</string>
+    <string name="settingTem">设置温度:</string>
+    <string name="humSettingEcho">湿度设置是否*10:</string>
+    <string name="temSettingEcho">温度设置是否*10:</string>
+    <string name="other">其他设置部分------</string>
+    <string name="runningStatus">运行状态:</string>
+    <string name="UnitFailure">机组故障:</string>
+    <string name="dutyMode">值班模式:</string>
+    <string name="pressToggle">正负压切换:</string>
+    <string name="runningTime">累计时长:</string>
 </resources>

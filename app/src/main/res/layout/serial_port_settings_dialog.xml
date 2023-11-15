@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="400dp"
+    android:layout_height="500dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:id="@+id/serial_port_setting_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        android:padding="30dp"
+        android:radius="16dp"
+        android:gravity="center"
+        android:elevation="4dp">
+
+        <!-- 电话模块-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+            <TextView
+                android:layout_marginStart="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/callSerialPort"
+                android:textColor="@color/settingOptionTextColor"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/call_serial_port"
+                android:hint="@string/basic"
+                style="@style/InputBoxStyle"
+                android:autofillHints="@string/basic"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- 空调模块 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            tools:ignore="UselessParent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/airConditionPort"
+                android:textColor="@color/settingOptionTextColor"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/air_condition_serial_port"
+                android:hint="@string/basic"
+                style="@style/InputBoxStyle"
+                android:autofillHints="@string/basic"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- 控制模块 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            tools:ignore="UselessParent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/controlSerialPort"
+                android:textColor="@color/settingOptionTextColor"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/control_serial_port"
+                android:hint="@string/basic"
+                style="@style/InputBoxStyle"
+                android:autofillHints="@string/basic"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- 语音模块 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            tools:ignore="UselessParent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/pronunciationSerialPort"
+                android:textColor="@color/settingOptionTextColor"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/pronunciation_serial_port"
+                android:hint="@string/basic"
+                style="@style/InputBoxStyle"
+                android:autofillHints="@string/basic"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/save_btn"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:text="@string/save"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            style="@style/btnStyle"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

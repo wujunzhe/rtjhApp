@@ -18,5 +18,7 @@
     <color name="iconFontColor">#1586a7</color>
     <color name="settingOptionTextColor">#2844b7</color>
     <color name="halfTransparent">#26afe7ea</color>
+    <color name="successToastColor">#5cb868</color>
+    <color name="grayTextColor">#bbbbbb</color>
 
 </resources>

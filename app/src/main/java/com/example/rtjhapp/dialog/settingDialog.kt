@@ -3,9 +3,7 @@ package com.example.rtjhapp.dialog
 import android.annotation.SuppressLint
 import com.example.rtjhapp.adapter.SettingOptionsAdapter
 import android.content.Context
-import android.view.LayoutInflater
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.customListAdapter
 
 import com.example.rtjhapp.R

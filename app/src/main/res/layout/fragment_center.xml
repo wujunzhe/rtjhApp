@@ -2,32 +2,49 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:baselineAligned="false">
 
     <!-- 空调模块 -->
     <FrameLayout
         android:id="@+id/container_air_condition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="45dp"
+        tools:ignore="RtlSymmetry" />
 
     <!-- 电话模块 -->
     <FrameLayout
         android:id="@+id/container_call"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="10dp"
+        tools:ignore="RtlSymmetry" />
 
-    <!-- 音乐模块 -->
-    <FrameLayout
-        android:id="@+id/container_music"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="-100dp"
+        tools:ignore="RtlSymmetry">
+        <!-- 音乐模块 -->
+        <FrameLayout
+            android:id="@+id/container_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <!-- 气体模块 -->
-    <FrameLayout
-        android:id="@+id/container_gas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <!-- 气体模块 -->
+        <FrameLayout
+            android:id="@+id/container_gas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 </LinearLayout>

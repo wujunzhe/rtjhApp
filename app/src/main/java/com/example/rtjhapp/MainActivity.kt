@@ -7,6 +7,7 @@ import android.view.WindowInsets
 import com.example.rtjhapp.bottomModule.BottomFragment
 import com.example.rtjhapp.databinding.ActivityMainBinding
 import com.example.rtjhapp.timeModule.TimeFragment
+import com.example.rtjhapp.utils.SharedPreferencesManager
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
