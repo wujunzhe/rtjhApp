@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="640dp"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="1"
+        android:paddingEnd="30dp"
+        android:paddingTop="30dp"
         tools:ignore="MissingConstraints,RtlSymmetry">
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="170dp"
+            android:id="@+id/music_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/music_main"
             android:src="@drawable/music_icon"/>
-        <RelativeLayout
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingTop="20dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/music_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintStart_toEndOf="@id/music_bg"
+            app:layout_constraintEnd_toStartOf="@+id/music_list">
             <TextView
                 android:id="@+id/song_name"
-                android:layout_width="300dp"
-                android:layout_marginStart="10dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/music_btn"
                 android:text="@string/songName"
                 android:gravity="center_vertical"
                 android:paddingStart="20dp"
@@ -29,37 +44,54 @@
                 android:textStyle="bold"
                 android:textColor="@color/songNameColor"
                 tools:ignore="RtlSymmetry" />
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/music_btn"
-                android:layout_width="330dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/song_name">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintTop_toBottomOf="@+id/song_name"
+                app:layout_constraintBottom_toTopOf="@+id/volume_seek">
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:id="@+id/previous_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.3"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/play_btn"
                     android:src="@drawable/previous"
                     android:background="@color/backgroundTransparent"/>
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:id="@+id/play_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.3"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@+id/previous_btn"
+                    app:layout_constraintEnd_toStartOf="@+id/netx_btn"
                     android:src="@drawable/play_circle"
                     android:background="@color/backgroundTransparent"/>
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:id="@+id/netx_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.3"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@+id/play_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/next"
                     android:background="@color/backgroundTransparent"/>
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
-                android:layout_width="330dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/music_btn"
-                android:layout_marginTop="16dp"
+                android:id="@+id/volume_seek"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.3"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/music_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@drawable/volume"
                 android:gravity="center_horizontal">
 
@@ -70,15 +102,18 @@
                     android:thumb="@drawable/music_seekbar_thumb"
                     android:thumbOffset="15dp"
                     android:progressTint="@color/progressColor"
-                    android:layout_marginTop="-3dp"
                     android:progressBackgroundTint="@color/progressBgColor"
                     android:splitTrack="false" />
             </LinearLayout>
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:id="@+id/music_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintStart_toEndOf="@id/music_main"
+            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="bottom">
             <ImageButton
                 android:layout_width="wrap_content"
@@ -87,6 +122,6 @@
                 android:background="@color/backgroundTransparent" />
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

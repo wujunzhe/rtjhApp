@@ -65,4 +65,5 @@
     <string name="dutyMode">值班模式:</string>
     <string name="pressToggle">正负压切换:</string>
     <string name="runningTime">累计时长:</string>
+    <string name="airTodo">TODO</string>
 </resources>

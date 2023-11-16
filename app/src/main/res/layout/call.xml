@@ -1,196 +1,304 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="540dp"
-    android:layout_height="540dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="40dp"
+    android:paddingTop="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.85"
+        tools:ignore="MissingConstraints">
 
         <!-- 数字输入框模块-->
         <RelativeLayout
             android:id="@+id/input_num"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.95"
+            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/keyboard"
             android:orientation="horizontal"
-            tools:ignore="MissingConstraints"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
+            tools:ignore="MissingConstraints">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/input"
-                android:textSize="40sp"
-                android:textColor="@color/timingColor"
-                android:textStyle="bold"
-                android:paddingStart="50dp"
                 android:gravity="center_vertical"
+                android:paddingStart="50dp"
                 android:text="@string/_00"
+                android:textColor="@color/timingColor"
+                android:textSize="40sp"
+                android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
             <ImageButton
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-                android:src="@drawable/delete"
-                android:background="@color/backgroundTransparent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="30dp"/>
+                android:layout_marginEnd="30dp"
+                android:background="@color/backgroundTransparent"
+                android:src="@drawable/delete" />
         </RelativeLayout>
 
         <!--数字键盘模块-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/input_num">
-            <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/keyboard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_percent="0.78"
+            app:layout_constraintTop_toBottomOf="@id/input_num"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num_cell_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/num_cell_2"
                 tools:ignore="NotSibling">
+
                 <ImageButton
                     android:id="@+id/num_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/num_2"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_1"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_1"
+                    app:layout_constraintEnd_toStartOf="@id/num_3"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_2"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_2"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_weight="1"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_3"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
 
-            </LinearLayout>
-            <LinearLayout
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num_cell_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/num_cell_1">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@+id/num_cell_1"
+                app:layout_constraintBottom_toTopOf="@id/num_cell_3"
+                android:layout_marginTop="1dp">
+
                 <ImageButton
                     android:id="@+id/num_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/num_5"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_4"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_4"
+                    app:layout_constraintEnd_toStartOf="@id/num_6"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_5"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_6"
-                    android:background="@color/backgroundTransparent"/>
-            </LinearLayout>
-            <LinearLayout
+                    android:scaleType="fitCenter"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num_cell_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/num_cell_2">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/num_cell_2"
+                app:layout_constraintBottom_toTopOf="@id/num_cell_4"
+                android:layout_marginTop="1dp">
+
                 <ImageButton
                     android:id="@+id/num_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/num_8"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_7"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_7"
+                    app:layout_constraintEnd_toStartOf="@id/num_9"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_8"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_9"
-                    android:background="@color/backgroundTransparent"/>
-            </LinearLayout>
-            <LinearLayout
+                    android:scaleType="fitCenter"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num_cell_4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/num_cell_3">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@+id/num_cell_3"
+                app:layout_constraintBottom_toTopOf="@+id/num_cell_5"
+                android:layout_marginTop="1dp">
+
                 <ImageButton
                     android:id="@+id/num_star"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/num_0"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/star"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_star"
+                    app:layout_constraintEnd_toStartOf="@id/num_jin"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/num_0"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/num_jin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/num_0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/call_num_jing"
-                    android:background="@color/backgroundTransparent"/>
-            </LinearLayout>
-            <LinearLayout
+                    android:scaleType="fitCenter"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/num_cell_5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/num_cell_4">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/num_cell_4"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
                 <ImageButton
                     android:id="@+id/call_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/exclusive_calling_btn"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/call"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
                     android:id="@+id/exclusive_calling_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/call_btn"
+                    app:layout_constraintEnd_toStartOf="@id/hang_up_btn"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/exclusive_calling"
-                    android:background="@color/backgroundTransparent"/>
+                    android:scaleType="fitCenter"/>
+
                 <ImageButton
-                    android:id="@+id/hang_up_brn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:id="@+id/hang_up_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintStart_toEndOf="@id/exclusive_calling_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/backgroundTransparent"
                     android:src="@drawable/hang_up"
-                    android:background="@color/backgroundTransparent"/>
-            </LinearLayout>
-        </RelativeLayout>
+                    android:scaleType="fitCenter"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

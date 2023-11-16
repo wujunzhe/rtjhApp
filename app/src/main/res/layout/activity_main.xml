@@ -6,29 +6,37 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
     tools:context=".MainActivity"
-    android:paddingTop="100dp">
+    android:paddingTop="70dp">
     <FrameLayout
         android:id="@+id/container_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        tools:ignore="MissingConstraints">
         <!-- 时间模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/container_center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/container_time">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.53"
+        app:layout_constraintTop_toBottomOf="@+id/container_time"
+        tools:ignore="MissingConstraints">
         <!-- 中心模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/containerBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-30dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintTop_toBottomOf="@+id/container_center"
         tools:ignore="MissingConstraints">
         <!-- 底部模块的 Fragment 将在运行时加载到这里 -->
