@@ -10,25 +10,26 @@
         app:layout_constraintWidth_percent="1"
         app:layout_constraintHeight_percent="1"
         android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        tools:ignore="MissingConstraints">
+        android:paddingBottom="60dp"
+        tools:ignore="MissingConstraints,RtlSymmetry">
         <ImageView
             android:id="@+id/medical_stress_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHeight_percent="0.2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/gas_cell_1"
             android:src="@drawable/medical_stress_status"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/todo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/gas_cell_1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/medical_stress_image"
             app:layout_constraintBottom_toTopOf="@id/gas_cell_2"
             android:paddingEnd="10dp"
@@ -54,7 +55,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:src="@drawable/oxygen"
                     android:scaleType="fitCenter"/>
-
                 <ImageView
                     android:id="@+id/oxygen_light"
                     android:layout_width="0dp"
@@ -65,8 +65,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.5"
-                    app:layout_constraintWidth_percent="0.5" />
+                    app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintWidth_percent="0.45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--氮气-->
@@ -96,8 +96,8 @@
                     android:id="@+id/nitrogen_light"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.5"
-                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintHeight_percent="0.45"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -130,8 +130,8 @@
                     android:id="@+id/nitrous_oxide_light"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.5"
-                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintHeight_percent="0.45"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -163,8 +163,8 @@
                     android:id="@+id/hydrogen_light"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.5"
-                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintWidth_percent="0.45"
+                    app:layout_constraintHeight_percent="0.45"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -178,7 +178,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/gas_cell_1"
             app:layout_constraintBottom_toTopOf="@id/stress_status_light"
             android:paddingStart="15dp"
@@ -286,7 +286,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintHeight_percent="0.2"
             app:layout_constraintTop_toBottomOf="@+id/gas_cell_2"
             app:layout_constraintWidth_percent="1">
 
@@ -305,8 +305,10 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/yellow"
-                    app:layout_constraintWidth_percent="0.5"
-                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintWidth_percent="0.6"
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gas_warning_text"
                     />
@@ -319,6 +321,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
                     android:text="@string/lowStress"
+                    android:textSize="15sp"
                     app:layout_constraintWidth_percent="0.5"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toEndOf="@+id/gas_warning_light"
@@ -341,8 +344,10 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/green"
-                    app:layout_constraintWidth_percent="0.5"
-                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintWidth_percent="0.6"
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gas_normal_text"
                     />
@@ -353,6 +358,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
+                    android:textSize="15sp"
                     android:text="@string/normalStress"
                     app:layout_constraintWidth_percent="0.5"
                     app:layout_constraintHeight_percent="1"
@@ -376,10 +382,13 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/red"
-                    app:layout_constraintHeight_percent="1"
-                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintWidth_percent="0.6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/gas_error_light"/>
+                    app:layout_constraintEnd_toStartOf="@+id/gas_error_text"
+                    />
 
                 <TextView
                     android:id="@+id/gas_error_text"
@@ -389,6 +398,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
                     android:text="@string/highStress"
+                    android:textSize="15sp"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintWidth_percent="0.5"
                     app:layout_constraintStart_toEndOf="@+id/gas_error_light"

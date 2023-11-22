@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<!--<androidx.cardview.widget.CardView-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="400dp"-->
+<!--    android:layout_height="500dp"-->
+<!--    card_view:cardCornerRadius="8dp"-->
+<!--    card_view:cardElevation="4dp"-->
+<!--    android:layout_gravity="center">-->
+    <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
-    android:layout_gravity="center">
-    <ScrollView
         android:layout_width="400dp"
-        android:layout_height="600dp">
+        android:layout_height="600dp"
+    android:layout_gravity="center">
         <LinearLayout
             android:id="@+id/air_condition_settings_dialog"
             android:layout_width="match_parent"
@@ -108,7 +111,7 @@
                             android:id="@+id/return_hum_reg_num"
                             android:hint="@string/basic"
                             style="@style/InputBoxStyle"
-                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:autofillHints="@string/basic"
                             android:inputType="text" />
                     </LinearLayout>
                     <LinearLayout
@@ -160,7 +163,7 @@
                             android:id="@+id/return_tem_reg_num"
                             android:hint="@string/basic"
                             style="@style/InputBoxStyle"
-                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:autofillHints="@string/basic"
                             android:inputType="text" />
                     </LinearLayout>
                     <LinearLayout
@@ -436,7 +439,7 @@
                             android:text="@string/registerNum"
                             android:layout_marginTop="10dp"/>
                         <EditText
-                            android:id="@+id/press_toggle_reg_num"
+                            android:id="@+id/stress_toggle_reg_num"
                             android:hint="@string/basic"
                             style="@style/InputBoxStyle"
                             android:autofillHints="@string/powerOffPlaceholder"
@@ -480,7 +483,7 @@
 
 
             <TextView
-                android:id="@+id/save_btn"
+                android:id="@+id/air_condition_settings_save_btn"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:text="@string/save"
@@ -491,4 +494,4 @@
         </LinearLayout>
     </ScrollView>
 
-</androidx.cardview.widget.CardView>
+<!--</androidx.cardview.widget.CardView>-->

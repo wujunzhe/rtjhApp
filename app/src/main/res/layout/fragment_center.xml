@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHeight_percent="0.4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/container_gas"
             />
@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHeight_percent="0.6"
             app:layout_constraintTop_toBottomOf="@+id/container_music"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

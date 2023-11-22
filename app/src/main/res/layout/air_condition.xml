@@ -22,7 +22,7 @@
             app:layout_constraintHeight_percent="0.05"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/air_circle"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/air_condition_system"
             android:contentDescription="@string/airTodo" />
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -191,11 +191,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintHeight_percent="0.16"
             app:layout_constraintTop_toBottomOf="@id/air_circle"
-            app:layout_constraintBottom_toTopOf="@id/air_bottom"
-            android:layout_marginTop="-20dp">
-            <!--系统正常-->
+            app:layout_constraintBottom_toTopOf="@id/air_bottom">
+            <!--值班运行-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/icon_1"
                 android:layout_width="0dp"
@@ -203,31 +202,27 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/icon_2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside">
+                app:layout_constraintEnd_toStartOf="@+id/icon_2">
                 <ImageView
-                    android:id="@+id/system_normal_img"
+                    android:id="@+id/duty_running_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintWidth_percent="1"
                     app:layout_constraintHeight_percent="0.5"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/system_normal_text"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    android:src="@drawable/air_system_green"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="@string/todo" />
+                    app:layout_constraintBottom_toTopOf="@+id/duty_running_text"
+                    android:src="@drawable/air_system_blue"
+                    />
                 <TextView
-                    android:id="@+id/system_normal_text"
+                    android:id="@+id/duty_running_text"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintWidth_percent="1"
                     app:layout_constraintHeight_percent="0.5"
-                    app:layout_constraintTop_toBottomOf="@id/system_normal_img"
+                    app:layout_constraintTop_toBottomOf="@id/duty_running_img"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:gravity="center_horizontal"
-                    android:text="@string/systemNormal"
+                    android:text="@string/dutyRunning"
                     android:layout_marginTop="10dp"
                     style="@style/airIconText"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -263,7 +258,7 @@
                     android:layout_marginTop="10dp"
                     style="@style/airIconText"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--系统故障-->
+            <!--系统正常-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/icon_3"
                 android:layout_width="0dp"
@@ -271,7 +266,43 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@+id/icon_2"
-                app:layout_constraintEnd_toStartOf="@+id/icon_4">
+                app:layout_constraintEnd_toStartOf="@+id/icon_4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside">
+                <ImageView
+                    android:id="@+id/system_normal_img"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="1"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/system_normal_text"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    android:src="@drawable/air_system_green"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/todo" />
+                <TextView
+                    android:id="@+id/system_normal_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="1"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/system_normal_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center_horizontal"
+                    android:text="@string/systemNormal"
+                    android:layout_marginTop="10dp"
+                    style="@style/airIconText"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--系统故障-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/icon_4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toEndOf="@+id/icon_3"
+                app:layout_constraintEnd_toStartOf="@+id/icon_5">
                 <ImageView
                     android:id="@+id/system_error_img"
                     android:layout_width="0dp"
@@ -292,38 +323,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:gravity="center_horizontal"
                     android:text="@string/systemError"
-                    android:layout_marginTop="10dp"
-                    style="@style/airIconText"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--值班运行-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/icon_4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.2"
-                app:layout_constraintHeight_percent="1"
-                app:layout_constraintStart_toEndOf="@+id/icon_3"
-                app:layout_constraintEnd_toStartOf="@+id/icon_5">
-                <ImageView
-                    android:id="@+id/duty_running_img"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
-                    app:layout_constraintHeight_percent="0.5"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/duty_running_text"
-                    android:src="@drawable/air_system_blue"
-                    />
-                <TextView
-                    android:id="@+id/duty_running_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
-                    app:layout_constraintHeight_percent="0.5"
-                    app:layout_constraintTop_toBottomOf="@id/duty_running_img"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:gravity="center_horizontal"
-                    android:text="@string/dutyRunning"
                     android:layout_marginTop="10dp"
                     style="@style/airIconText"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -367,30 +366,31 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="1"
-            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHeight_percent="0.12"
             app:layout_constraintTop_toBottomOf="@id/air_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="-20dp">
-            <ImageButton
-                android:id="@+id/air_start_stop_btn"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.3"
-                app:layout_constraintHeight_percent="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/air_condition_duty_btn"
-                android:src="@drawable/air_condition_start_stop"
-                android:background="@color/backgroundTransparent"
-                android:scaleType="fitCenter"/>
+            android:layout_marginTop="10dp"
+            android:paddingBottom="15dp">
             <ImageButton
                 android:id="@+id/air_condition_duty_btn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="0.3"
                 app:layout_constraintHeight_percent="1"
-                app:layout_constraintStart_toEndOf="@id/air_start_stop_btn"
-                app:layout_constraintEnd_toStartOf="@+id/positive_negative_pressure_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/air_start_stop_btn"
                 android:src="@drawable/air_condition_duty"
+                android:background="@color/backgroundTransparent"
+                android:scaleType="fitCenter"/>
+            <ImageButton
+                android:id="@+id/air_start_stop_btn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toEndOf="@+id/air_condition_duty_btn"
+                app:layout_constraintEnd_toStartOf="@+id/positive_negative_pressure_btn"
+                android:src="@drawable/air_condition_start_stop"
                 android:background="@color/backgroundTransparent"
                 android:scaleType="fitCenter"/>
             <ImageButton
@@ -399,7 +399,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="0.3"
                 app:layout_constraintHeight_percent="1"
-                app:layout_constraintStart_toEndOf="@+id/air_condition_duty_btn"
+                app:layout_constraintStart_toEndOf="@+id/air_start_stop_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/positive_negative_pressure"
                 android:background="@color/backgroundTransparent"

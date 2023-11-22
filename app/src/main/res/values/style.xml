@@ -35,8 +35,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/differentialPressureTextColor</item>
     </style>
+    <style name="bottomText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/differentialPressureTextColor</item>
+    </style>
     <style name="settingOptionsTextStyle">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/timingColor</item>
     </style>
@@ -73,5 +78,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">18dp</item>
         <item name="android:textColor">@color/settingOptionTextColor</item>
+    </style>
+    <style name="bottomTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/timingColor</item>
+        <item name="android:layout_marginTop">3dp</item>
     </style>
 </resources>

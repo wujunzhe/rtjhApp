@@ -49,39 +49,42 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintHeight_percent="0.3"
                 app:layout_constraintTop_toBottomOf="@+id/song_name"
                 app:layout_constraintBottom_toTopOf="@+id/volume_seek">
                 <ImageButton
                     android:id="@+id/previous_btn"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.3"
-                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintHeight_percent="0.8"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/play_btn"
                     android:src="@drawable/previous"
-                    android:background="@color/backgroundTransparent"/>
+                    android:background="@color/backgroundTransparent"
+                    android:scaleType="fitCenter"/>
                 <ImageButton
                     android:id="@+id/play_btn"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.3"
-                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintHeight_percent="0.8"
                     app:layout_constraintStart_toEndOf="@+id/previous_btn"
                     app:layout_constraintEnd_toStartOf="@+id/netx_btn"
                     android:src="@drawable/play_circle"
-                    android:background="@color/backgroundTransparent"/>
+                    android:background="@color/backgroundTransparent"
+                    android:scaleType="fitCenter"/>
                 <ImageButton
                     android:id="@+id/netx_btn"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.3"
-                    app:layout_constraintHeight_percent="1"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintHeight_percent="0.8"
                     app:layout_constraintStart_toEndOf="@+id/play_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/next"
-                    android:background="@color/backgroundTransparent"/>
+                    android:background="@color/backgroundTransparent"
+                    android:scaleType="fitCenter"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:id="@+id/volume_seek"
@@ -100,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:thumb="@drawable/music_seekbar_thumb"
-                    android:thumbOffset="15dp"
+                    android:thumbOffset="13dp"
                     android:progressTint="@color/progressColor"
                     android:progressBackgroundTint="@color/progressBgColor"
                     android:splitTrack="false" />

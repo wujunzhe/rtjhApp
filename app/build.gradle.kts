@@ -51,6 +51,8 @@ dependencies {
     implementation("io.github.muddz:styleabletoast:2.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.github.zcweng:switch-button:0.0.3@aar")
+    implementation("org.greenrobot:eventbus:3.2.0")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

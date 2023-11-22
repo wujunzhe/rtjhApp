@@ -1,0 +1,4 @@
+package com.example.rtjhapp.event
+
+class UpdateAirConditionFragmentUIEvent
+class UpdateBottomFragmentUIEvent

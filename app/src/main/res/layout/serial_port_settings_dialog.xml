@@ -107,7 +107,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/save_btn"
+            android:id="@+id/serial_port_setting_save_btn"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:text="@string/save"

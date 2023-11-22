@@ -24,9 +24,10 @@
         <item>串口设置</item>
         <item>空调设置</item>
         <item>显示设置</item>
-        <item>智能模式设置</item>
+        <item>智能模式及消毒设置</item>
         <item>使用说明书</item>
-        <item>服务器设置</item>
+        <item>退出程序</item>
+<!--        <item>服务器设置</item>-->
     </string-array>
     <string name="list_item_format">%s</string>
     <string name="callSerialPort">电话模块串口号：</string>
@@ -35,13 +36,15 @@
     <string name="pronunciationSerialPort">语音模块串口号：</string>
     <string name="basic">请输入</string>
     <string name="save">保存</string>
+    <!--图标-->
     <string-array name="icon_font_codes">
-        <item>"&#xe7c8;"</item>
-        <item>"&#xe617;"</item>
-        <item>"&#xe7c3;"</item>
-        <item>"&#xe69b;"</item>
-        <item>"&#xe614;"</item>
-        <item>"&#xe694;"</item>
+        <item>"&#xe7c8;"</item> <!-- 串口设置 -->
+        <item>"&#xe617;"</item> <!-- 空调设置 -->
+        <item>"&#xe7c3;"</item> <!-- 显示设置 -->
+        <item>"&#xe69b;"</item> <!-- 智能模式及消毒设置 -->
+        <item>"&#xe614;"</item> <!-- 使用说明书 -->
+<!--        <item>"&#xe694;"</item>--> <!-- 服务器设置 -->
+        <item>"&#xe655;"</item> <!-- 退出程序 -->
     </string-array>
     <string name="powerOnOff">开关机设置------</string>
     <string name="powerOn">开机指令</string>
@@ -66,4 +69,28 @@
     <string name="pressToggle">正负压切换:</string>
     <string name="runningTime">累计时长:</string>
     <string name="airTodo">TODO</string>
+    <string name="duty">值班</string>
+    <string name="negeToggle">正负压切换</string>
+    <string name="yacha">压差表</string>
+    <string name="lighting1">照明1</string>
+    <string name="lighting2">照明2</string>
+    <string name="viewingLights">观片灯</string>
+    <string name="noShadowLights">无影灯</string>
+    <string name="surgicalLights">手术灯</string>
+    <string name="exhaustFan">排风机</string>
+    <string name="disinfect">消毒</string>
+    <string name="firefighting">消防</string>
+    <string name="power">电源</string>
+    <string name="silence">消音</string>
+    <string name="spare1">备用1</string>
+    <string name="spare2">备用2</string>
+    <string name="spare3">备用3</string>
+    <string name="spare4">备用4</string>
+    <string name="disinfectSettings">消毒部分------</string>
+    <string name="disinfectRemarks">当消毒时长为0时可手动控制消毒开关</string>
+    <string name="disinfectTime">消毒时长:</string>
+    <string name="smartSettings">智能控制部分------</string>
+    <string name="smartRemarks">开启开机消毒，点击空调机组开机即可下发消毒指令</string>
+    <string name="powerOnDisinfect">开机消毒</string>
+    <string name="back_button_description">返回</string>
 </resources>
