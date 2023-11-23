@@ -31,7 +31,7 @@ class SerialPortSettingsDialog(context : Context){
 
     private fun saveSerialPortVal(){
         adapter.saveSerialPortVal()
-        MyToast(binding.root.context).success(binding.root.context)
+        MyToast().success(binding.root.context)
         dialog.dismiss()
     }
 }

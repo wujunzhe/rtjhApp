@@ -10,16 +10,16 @@ class SerialPortSettingsAdapter(private val binding: SerialPortSettingsDialogBin
         // SharedPreferences来读取和存储数据
         val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
         // 读取本地串口值赋值给输入框
-        val localCallSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.call,Constants.SerialPort.DefaultSerialPort.call)
+        val localCallSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.call,Constants.SerialPort.Default.call)
         binding.callSerialPort.setText(localCallSerialPort)
 
-        val localAirConditionSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.airCondition,Constants.SerialPort.DefaultSerialPort.airCondition)
+        val localAirConditionSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.airCondition,Constants.SerialPort.Default.airCondition)
         binding.airConditionSerialPort.setText(localAirConditionSerialPort)
 
-        val localControlSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.control,Constants.SerialPort.DefaultSerialPort.control)
+        val localControlSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.control,Constants.SerialPort.Default.control)
         binding.controlSerialPort.setText(localControlSerialPort)
 
-        val localMusicSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.music,Constants.SerialPort.DefaultSerialPort.music)
+        val localMusicSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.music,Constants.SerialPort.Default.music)
         binding.pronunciationSerialPort.setText(localMusicSerialPort)
     }
 

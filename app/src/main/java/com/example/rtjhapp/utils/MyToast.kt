@@ -8,12 +8,20 @@ import com.example.rtjhapp.R
 import com.example.rtjhapp.R.*
 import io.github.muddz.styleabletoast.StyleableToast
 
-class MyToast(context : Context) {
+class MyToast() {
     fun success(context : Context){
         StyleableToast.Builder(context)
             .text("保存成功")
             .textColor(Color.WHITE)
             .backgroundColor(context.getColor(color.successToastColor))
+            .show()
+    }
+
+    fun error(context : Context,text:String){
+        StyleableToast.Builder(context)
+            .text(text)
+            .textColor(Color.WHITE)
+            .backgroundColor(context.getColor(color.errorToastColor))
             .show()
     }
 }

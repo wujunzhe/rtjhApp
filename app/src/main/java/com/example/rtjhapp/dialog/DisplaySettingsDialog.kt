@@ -38,7 +38,7 @@ class DisplaySettingsDialog(context : Context) {
     }
     private fun saveSettings(){
         adapter.saveSettings()
-        MyToast(binding.root.context).success(binding.root.context)
+        MyToast().success(binding.root.context)
         EventBus.getDefault().post(UpdateAirConditionFragmentUIEvent())
         EventBus.getDefault().post(UpdateBottomFragmentUIEvent())
         dialog.dismiss()

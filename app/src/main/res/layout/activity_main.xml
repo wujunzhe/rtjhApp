@@ -42,5 +42,14 @@
         <!-- 底部模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/debug_list_layout"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints">
+        <include layout="@layout/debug_list"/>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

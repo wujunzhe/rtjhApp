@@ -41,7 +41,7 @@ class SmartSettingsDialog(context : Context) {
     }
     private fun saveSettings(){
         adapter.saveSettings()
-        MyToast(binding.root.context).success(binding.root.context)
+        MyToast().success(binding.root.context)
         dialog.dismiss()
     }
 }

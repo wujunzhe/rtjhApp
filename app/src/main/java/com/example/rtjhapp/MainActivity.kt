@@ -1,16 +1,17 @@
 package com.example.rtjhapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import com.example.rtjhapp.bottomModule.BottomFragment
 import com.example.rtjhapp.databinding.ActivityMainBinding
+import com.example.rtjhapp.debugModule.DebugFragment
 import com.example.rtjhapp.timeModule.TimeFragment
-import com.example.rtjhapp.utils.SharedPreferencesManager
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
+    private var clickCount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,6 +31,27 @@ class MainActivity : AppCompatActivity() {
 
         // 显示底部模块
         showBottom()
+
+        // 显示调试模块
+        showDebug()
+        binding!!.root.setOnClickListener {
+            clickCount++
+            if(clickCount >= 10) {
+                binding!!.debugListLayout.visibility = View.VISIBLE
+            }
+            if (clickCount >= 20) {
+                binding!!.debugListLayout.visibility = View.GONE
+
+                clickCount = 0
+            }
+        }
+
+    }
+
+    private fun showDebug(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.debug_list_layout,DebugFragment())
+            .commit()
     }
 
     /**

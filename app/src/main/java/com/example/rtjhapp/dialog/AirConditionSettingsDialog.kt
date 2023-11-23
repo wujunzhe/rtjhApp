@@ -28,7 +28,7 @@ class AirConditionSettingsDialog(context : Context) {
 
     private fun saveSettings(){
         adapter.saveSettingVal()
-        MyToast(binding.root.context).success(binding.root.context)
+        MyToast().success(binding.root.context)
         dialog.dismiss()
     }
 }

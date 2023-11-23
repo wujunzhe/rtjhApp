@@ -29,18 +29,19 @@
             tools:ignore="MissingConstraints">
 
             <TextView
+                android:id="@+id/phone_num_text"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/input"
                 android:gravity="center_vertical"
                 android:paddingStart="30dp"
-                android:text="@string/_00"
                 android:textColor="@color/timingColor"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
             <ImageButton
+                android:id="@+id/del_num"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"

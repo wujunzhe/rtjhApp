@@ -13,7 +13,7 @@ object Constants {
         /**
          * 常量-默认串口号
          */
-        object DefaultSerialPort {
+        object Default {
             const val call = "/dev/ttyS9"
             const val airCondition = "/dev/ttyS2"
             const val control = "/dev/ttyS0"
@@ -92,5 +92,14 @@ object Constants {
             const val disinfectTime = "0"
             const val powerOnDisinfect = false
         }
+    }
+
+    /**
+     * 常量-串口设置一些默认值
+     */
+    object SerialPortDefaultConfig {
+        const val baudRate = 9600
+        const val dataBits = 8
+        const val parity = 0
     }
 }
