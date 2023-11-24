@@ -66,9 +66,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/lighting1_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/lighting1"
+                        android:src="@drawable/lights1_unselected"
                        />
                     <TextView
                         android:layout_width="match_parent"
@@ -84,9 +85,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/lighting2_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/lighting2"
+                        android:src="@drawable/lights2_unselected"
                         />
                     <TextView
                         android:layout_width="match_parent"
@@ -102,9 +104,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/viewing_lights_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/viewing_lights" />
+                        android:src="@drawable/viewing_lights_unselected" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -119,9 +122,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/no_shadow_lights_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/no_shadow_light" />
+                        android:src="@drawable/no_shaodw_lights_unselected" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,9 +140,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/surgical_lights_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/surgical_lights"/>
+                        android:src="@drawable/surgical_lights_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,9 +158,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/exhaust_fan_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/exhaust_fan"/>
+                        android:src="@drawable/exhaust_fan_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,9 +176,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/disinfect_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/spare"/>
+                        android:src="@drawable/spare_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -187,9 +194,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/firefighting_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/firefighting"/>
+                        android:src="@drawable/firefighting_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -204,9 +212,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/power_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/power"/>
+                        android:src="@drawable/power_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -221,9 +230,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/silence_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/silence"/>
+                        android:src="@drawable/silence_unselected"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -239,9 +249,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/spare1_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/spare"
+                        android:src="@drawable/spare_unselected"
                         />
                     <TextView
                         android:layout_width="match_parent"
@@ -258,9 +269,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/spare2_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/spare"
+                        android:src="@drawable/spare_unselected"
                         />
                     <TextView
                         android:layout_width="match_parent"
@@ -277,9 +289,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/spare3_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/spare"
+                        android:src="@drawable/spare_unselected"
                         />
                     <TextView
                         android:layout_width="match_parent"
@@ -296,9 +309,10 @@
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
+                        android:id="@+id/spare4_btn"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/spare"
+                        android:src="@drawable/spare_unselected"
                         />
                     <TextView
                         android:layout_width="match_parent"
