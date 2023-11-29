@@ -25,5 +25,6 @@
         <attr name="shadowShow" format="boolean" />
         <attr name="digit" format="integer" />
         <attr name="isanim" format="boolean" />
+        <attr name="hintText" format="string"/>
     </declare-styleable>
 </resources>

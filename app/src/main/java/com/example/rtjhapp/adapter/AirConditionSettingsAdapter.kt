@@ -7,6 +7,13 @@ import com.example.rtjhapp.utils.SharedPreferencesManager
 class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialogBinding) {
     fun initSettings(){
         val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
+
+        val localGetStatusOrder = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Order.getStatus,
+            Constants.AirConditionSettings.Default.Order.getStatus
+        )
+        binding.readAirOrder.setText(localGetStatusOrder)
+
         // 开关机部分 start
         val localPowerOnOrder = sharedPreferencesManager.readString(
             Constants.AirConditionSettings.Order.powerOn,
@@ -30,7 +37,7 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
 
         val localReturnHumNeedDivision = sharedPreferencesManager.readBoolean(
             Constants.AirConditionSettings.NeedCalculator.returnHum,
-            false
+            true
             )
         binding.humEchoSwitch.isChecked = localReturnHumNeedDivision
 
@@ -54,9 +61,21 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
             )
         binding.settingHumRegNum.setText(localSettingHumRegNum)
 
+        val localSettingHumMax = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Max.hum,
+            Constants.AirConditionSettings.Default.Max.hum
+        )
+        binding.humMax.setText(localSettingHumMax)
+
+        val localSettingHumMin = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Min.hum,
+            Constants.AirConditionSettings.Default.Min.hum
+        )
+        binding.humMin.setText(localSettingHumMin)
+
         val localSettingHumNeedMulti = sharedPreferencesManager.readBoolean(
             Constants.AirConditionSettings.NeedCalculator.settingHum,
-            false
+            true
             )
         binding.humSettingEchoSwitch.isChecked = localSettingHumNeedMulti
 
@@ -65,6 +84,18 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
             Constants.AirConditionSettings.Default.Register.settingTem
             )
         binding.settingTemRegNum.setText(localSettingTemRegNum)
+
+        val localSettingTemMax = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Max.tem,
+            Constants.AirConditionSettings.Default.Max.tem
+        )
+        binding.temMax.setText(localSettingTemMax)
+
+        val localSettingTemMin = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Min.tem,
+            Constants.AirConditionSettings.Default.Min.tem
+        )
+        binding.temMin.setText(localSettingTemMin)
 
         val localSettingTemNeedMulti = sharedPreferencesManager.readBoolean(
             Constants.AirConditionSettings.NeedCalculator.settingTem,
@@ -98,6 +129,12 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
             )
         binding.stressToggleRegNum.setText(localNeGeStressToggleRegNum)
 
+        val localSystemErrorRegNum = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.Register.systemError,
+            Constants.AirConditionSettings.Default.Register.systemError
+        )
+        binding.systemErrorReg.setText(localSystemErrorRegNum)
+
         val localRunningTimeRegNum = sharedPreferencesManager.readString(
             Constants.AirConditionSettings.Register.runningTime,
             Constants.AirConditionSettings.Default.Register.runningTime
@@ -112,6 +149,9 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
 
     fun saveSettingVal(){
         val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
+
+        val getStatusOrder = binding.readAirOrder.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Order.getStatus,getStatusOrder)
 
         // 开关机部分 start
         val powerOnOrder = binding.powerOnOrder.text.toString()
@@ -139,11 +179,23 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
         val settingHumRegNum = binding.settingHumRegNum.text.toString()
         sharedPreferencesManager.writeString(Constants.AirConditionSettings.Register.settingHum,settingHumRegNum)
 
+        val settingHumMax = binding.humMax.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Max.hum,settingHumMax)
+
+        val settingHumMin = binding.humMin.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Min.hum,settingHumMin)
+
         val settingHumNeedMulti = binding.humSettingEchoSwitch.isChecked
         sharedPreferencesManager.writeBoolean(Constants.AirConditionSettings.NeedCalculator.settingHum,settingHumNeedMulti)
 
         val settingTemRegNum = binding.settingTemRegNum.text.toString()
         sharedPreferencesManager.writeString(Constants.AirConditionSettings.Register.settingTem,settingTemRegNum)
+
+        val settingTemMax = binding.temMax.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Max.tem,settingTemMax)
+
+        val settingTemMin = binding.temMin.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Min.tem,settingTemMin)
 
         val settingTemNeedMulti = binding.temSettingEchoSwitch.isChecked
         sharedPreferencesManager.writeBoolean(Constants.AirConditionSettings.NeedCalculator.settingTem,settingTemNeedMulti)
@@ -161,6 +213,9 @@ class AirConditionSettingsAdapter(private val binding: AirConditionSettingsDialo
 
         val neGeStressToggleRegNum = binding.stressToggleRegNum.text.toString()
         sharedPreferencesManager.writeString(Constants.AirConditionSettings.Register.neStressToggle,neGeStressToggleRegNum)
+
+        val systemErrorRegNum = binding.systemErrorReg.text.toString()
+        sharedPreferencesManager.writeString(Constants.AirConditionSettings.Register.systemError,systemErrorRegNum)
 
         val runningTimeRegNum = binding.runningTimeRegNum.text.toString()
         sharedPreferencesManager.writeString(Constants.AirConditionSettings.Register.runningTime,runningTimeRegNum)

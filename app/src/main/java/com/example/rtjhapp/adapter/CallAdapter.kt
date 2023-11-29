@@ -1,6 +1,5 @@
 package com.example.rtjhapp.adapter
 
-import android.annotation.SuppressLint
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.rtjhapp.databinding.CallBinding
@@ -9,12 +8,8 @@ import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.modbus.CRC16
-import com.example.rtjhapp.utils.modbus.ModbusRtuMaster
 import org.greenrobot.eventbus.EventBus
-import tp.xmaihh.serialport.SerialHelper
 import java.lang.Exception
-import java.lang.StringBuilder
 
 
 class CallAdapter(private val binding : CallBinding){
@@ -83,7 +78,6 @@ class CallAdapter(private val binding : CallBinding){
     }
 
     private fun handleCallBtnClick(){
-
         val number = phoneNumberTextView.text.toString()
         var msg = ""
         msg = if (number.isEmpty()){
@@ -91,7 +85,7 @@ class CallAdapter(private val binding : CallBinding){
             val answerCommand = "FE10000A000810EEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
             callSerialHelper.sendHex(answerCommand)
             "下发接听指令：$answerCommand"
-        }else {
+        } else {
             val phoneNumber = handlePhoneNumberToHex(number)
             callSerialHelper.sendHex(phoneNumber.toString())
             "下发拨号指令：$phoneNumber"
@@ -104,7 +98,7 @@ class CallAdapter(private val binding : CallBinding){
         val header = "FE10000A000810"
         val stringBuffer = StringBuffer()
         stringBuffer.append(header)
-        stringBuffer.append("EE")
+        stringBuffer.append("FF")
         var phone = ""
         for (i in phoneNumber.indices) {
             phone = phone + "0" + phoneNumber.substring(i, i + 1)

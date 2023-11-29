@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintHeight_percent="0.88"
             app:layout_constraintTop_toBottomOf="@id/input_num"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -66,7 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.176"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/num_cell_2"
                 tools:ignore="NotSibling">
@@ -115,7 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.176"
                 app:layout_constraintTop_toBottomOf="@+id/num_cell_1"
                 app:layout_constraintBottom_toTopOf="@id/num_cell_3"
                 android:layout_marginTop="1dp">
@@ -162,7 +162,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.176"
                 app:layout_constraintTop_toBottomOf="@id/num_cell_2"
                 app:layout_constraintBottom_toTopOf="@id/num_cell_4"
                 android:layout_marginTop="1dp">
@@ -209,7 +209,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.176"
                 app:layout_constraintTop_toBottomOf="@+id/num_cell_3"
                 app:layout_constraintBottom_toTopOf="@+id/num_cell_5"
                 android:layout_marginTop="1dp">
@@ -256,7 +256,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="1"
-                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintHeight_percent="0.176"
                 app:layout_constraintTop_toBottomOf="@id/num_cell_4"
                 app:layout_constraintBottom_toBottomOf="parent" >
 

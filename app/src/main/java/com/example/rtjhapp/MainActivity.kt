@@ -8,6 +8,7 @@ import com.example.rtjhapp.bottomModule.BottomFragment
 import com.example.rtjhapp.databinding.ActivityMainBinding
 import com.example.rtjhapp.debugModule.DebugFragment
 import com.example.rtjhapp.timeModule.TimeFragment
+import com.example.rtjhapp.titleModule.TitleFragment
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
@@ -15,8 +16,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-//        binding!!.vAirCondition.tempCircle.setValue("30",36f)
-//        binding!!.vAirCondition.humidityCircle.setValue("50",70f)
         setContentView(binding!!.root)
 
         // 在 Activity 的 onCreate 方法中添加以下代码
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         // 显示调试模块
         showDebug()
-        binding!!.root.setOnClickListener {
+        binding!!.containerTitle.setOnClickListener {
             clickCount++
             if(clickCount >= 10) {
                 binding!!.debugListLayout.visibility = View.VISIBLE
@@ -46,6 +45,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        showTitle()
+
+    }
+
+    private fun showTitle(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_title,TitleFragment())
+            .commit()
     }
 
     private fun showDebug(){

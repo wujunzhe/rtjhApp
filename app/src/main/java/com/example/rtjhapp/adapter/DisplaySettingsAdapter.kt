@@ -8,7 +8,7 @@ class DisplaySettingsAdapter(private val binding:DisplaySettingsDialogBinding) {
     private val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
     fun initSettings(){
 
-        val localDutyDisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.duty,true)
+        val localDutyDisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.duty,false)
         binding.dutyDisplaySwitch.isChecked = localDutyDisplayState
 
         val localNeGeStressToggleDisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.neStress,true)
@@ -17,7 +17,7 @@ class DisplaySettingsAdapter(private val binding:DisplaySettingsDialogBinding) {
         val localDifferentGaugeDisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.differentGauge,true)
         binding.yachaDisplaySwitch.isChecked = localDifferentGaugeDisplayState
 
-        val localSpare1DisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.spare1,false)
+        val localSpare1DisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.spare1,true)
         binding.spare1DisplaySwitch.isChecked = localSpare1DisplayState
 
         val localSpare2DisplayState = sharedPreferencesManager.readBoolean(Constants.DisplayState.spare2,false)

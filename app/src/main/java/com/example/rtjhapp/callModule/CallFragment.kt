@@ -11,7 +11,6 @@ import com.example.rtjhapp.databinding.CallBinding
 
 class CallFragment: Fragment() {
     private lateinit var binding: CallBinding
-    private lateinit var debugListAdapter : DebugListAdapter
 
     override fun onCreateView(
         inflater : LayoutInflater,
@@ -20,7 +19,6 @@ class CallFragment: Fragment() {
     ) : View {
         binding = CallBinding.inflate(inflater,container,false)
 
-        debugListAdapter = DebugListAdapter(mutableListOf())
         val adapter = CallAdapter(binding)
         adapter.initViews()
         return binding.root

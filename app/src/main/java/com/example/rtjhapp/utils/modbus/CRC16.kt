@@ -17,16 +17,15 @@ object CRC16 {
     )
 
     fun getCRC(data: String): String {
-        var data = data
-        data = data.replace(" ", "")
-        val len = data.length
+        val newData : String = data.replace(" ", "")
+        val len = newData.length
         if (len % 2 != 0) {
             return "0000"
         }
         val num = len / 2
         val para = ByteArray(num)
         for (i in 0 until num) {
-            val value = Integer.valueOf(data.substring(i * 2, 2 * (i + 1)), 16)
+            val value = Integer.valueOf(newData.substring(i * 2, 2 * (i + 1)), 16)
             para[i] = value.toByte()
         }
         return getCRC(para)

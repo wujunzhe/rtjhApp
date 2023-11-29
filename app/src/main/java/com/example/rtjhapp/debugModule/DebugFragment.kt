@@ -35,7 +35,7 @@ class DebugFragment : Fragment() {
         // 设置 RecyclerView 的布局管理器和适配器
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = DebugListAdapter(debugDataList)
+        adapter = DebugListAdapter(recyclerView,debugDataList)
         recyclerView.adapter = adapter
 
         return binding.root
@@ -43,7 +43,12 @@ class DebugFragment : Fragment() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e: Exception) {
+            // 处理注册失败的情况
+            e.printStackTrace()
+        }
     }
 
     override fun onDestroy() {
@@ -52,8 +57,8 @@ class DebugFragment : Fragment() {
     }
     @Subscribe
     fun onDebugMessageEvent(event:UpdateDebugMessageEvent){
-        debugDataList.add(0,event.debugMsg)
-
-        adapter.notifyItemInserted(0)
+        debugDataList.add(event.debugMsg)
+        adapter.notifyItemInserted(debugDataList.size - 1)
+        recyclerView.scrollToPosition(debugDataList.size - 1)
     }
 }

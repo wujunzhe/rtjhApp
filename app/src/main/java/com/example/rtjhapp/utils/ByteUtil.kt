@@ -1,5 +1,9 @@
 package com.example.rtjhapp.utils
 
+import tp.xmaihh.serialport.bean.ComBean
+import java.math.BigDecimal
+import java.math.RoundingMode
+
 object ByteUtil {
 
     fun toHexString(input: ByteArray?, separator: String): String? {
@@ -43,4 +47,26 @@ object ByteUtil {
         result[0] = (input and 0xFF).toByte()
         return result
     }
+
+    fun intToHex(number: Int, width: Int): String {
+        val hex = Integer.toHexString(number)
+        return  hex.padStart(width, '0')
+    }
+
+    fun comBeanToHex(comBean : ComBean): String {
+        val hexStringBuilder = StringBuilder()
+
+        val data = comBean.bRec
+         for (byteValue in data) {
+             val hex = String.format("%02X",byteValue)
+             hexStringBuilder.append(hex)
+         }
+        return hexStringBuilder.toString()
+    }
+
+    fun hexToDecimal(hexString : String) : BigDecimal {
+        val intVal = hexString.toLong(16)
+        return BigDecimal(intVal).setScale(1,RoundingMode.DOWN).divide(BigDecimal(10))
+    }
+
 }

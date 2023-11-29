@@ -17,7 +17,6 @@
         android:gravity="center"
         android:padding="20dp"
         >
-        <!-- 消毒部分 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,8 +105,38 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/smartLightRemarks"
+                        android:gravity="center"
+                        style="@style/settingTextStyle"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lightDelayTime"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/lights_delay_time"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/basic"
+                            android:inputType="text" />
+                    </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/display_setting_save_btn"
@@ -118,5 +147,6 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="40dp"
             style="@style/btnStyle"/>
+    </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

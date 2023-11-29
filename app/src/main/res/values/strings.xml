@@ -24,7 +24,7 @@
         <item>串口设置</item>
         <item>空调设置</item>
         <item>显示设置</item>
-        <item>智能模式及消毒设置</item>
+        <item>智能模式及消毒</item>
         <item>使用说明书</item>
         <item>退出程序</item>
 <!--        <item>服务器设置</item>-->
@@ -34,6 +34,7 @@
     <string name="airConditionPort">空调模块串口号：</string>
     <string name="controlSerialPort">控制模块串口号：</string>
     <string name="pronunciationSerialPort">语音模块串口号：</string>
+    <string name="readRegisterNum">读取寄存器的个数:</string>
     <string name="basic">请输入</string>
     <string name="save">保存</string>
     <!--图标-->
@@ -46,6 +47,8 @@
 <!--        <item>"&#xe694;"</item>--> <!-- 服务器设置 -->
         <item>"&#xe655;"</item> <!-- 退出程序 -->
     </string-array>
+    <string name="readOrder">读取数据指令</string>
+    <string name="readOrderPlaceholder">请输入读取数据指令</string>
     <string name="powerOnOff">开关机设置------</string>
     <string name="powerOn">开机指令</string>
     <string name="powerOff">关机指令</string>
@@ -62,9 +65,14 @@
     <string name="settingTem">设置温度:</string>
     <string name="humSettingEcho">湿度设置是否*10:</string>
     <string name="temSettingEcho">温度设置是否*10:</string>
+    <string name="humMax">湿度最大值:</string>
+    <string name="humMin">湿度最小值:</string>
+    <string name="temMax">温度最大值:</string>
+    <string name="temMin">温度最小值：</string>
     <string name="other">其他设置部分------</string>
     <string name="runningStatus">运行状态:</string>
     <string name="UnitFailure">机组故障:</string>
+    <string name="systemErrors">机组报警:</string>
     <string name="dutyMode">值班模式:</string>
     <string name="pressToggle">正负压切换:</string>
     <string name="runningTime">累计时长:</string>
@@ -93,4 +101,6 @@
     <string name="smartRemarks">开启开机消毒，点击空调机组开机即可下发消毒指令</string>
     <string name="powerOnDisinfect">开机消毒</string>
     <string name="back_button_description">返回</string>
+    <string name="smartLightRemarks">当照明关闭延时为0时，关闭灯光不会延时关闭</string>
+    <string name="lightDelayTime">照明延时:</string>
 </resources>

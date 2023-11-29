@@ -55,7 +55,7 @@ class SettingOptionsAdapter(
                     displaySettingsDialog.show()
                 }
 
-                "智能模式及消毒设置" -> {
+                "智能模式及消毒" -> {
                     val smartModeSettingsDialog = SmartSettingsDialog(holder.itemView.context)
                     smartModeSettingsDialog.show()
                 }

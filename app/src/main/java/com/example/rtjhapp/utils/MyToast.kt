@@ -9,9 +9,9 @@ import com.example.rtjhapp.R.*
 import io.github.muddz.styleabletoast.StyleableToast
 
 class MyToast() {
-    fun success(context : Context){
+    fun success(context : Context,text : String){
         StyleableToast.Builder(context)
-            .text("保存成功")
+            .text(text)
             .textColor(Color.WHITE)
             .backgroundColor(context.getColor(color.successToastColor))
             .show()
@@ -22,6 +22,14 @@ class MyToast() {
             .text(text)
             .textColor(Color.WHITE)
             .backgroundColor(context.getColor(color.errorToastColor))
+            .show()
+    }
+
+    fun info(context : Context,text : String) {
+        StyleableToast.Builder(context)
+            .text(text)
+            .textColor(Color.WHITE)
+            .backgroundColor(context.getColor(color.infoColor))
             .show()
     }
 }

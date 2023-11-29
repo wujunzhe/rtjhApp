@@ -1,7 +1,12 @@
 package com.example.rtjhapp.adapter
 
+import com.example.rtjhapp.databinding.BottomBinding
 import com.example.rtjhapp.databinding.SmartModeSettingsDialogBinding
+import com.example.rtjhapp.utils.AddMsgToDebugList
+import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
+import com.example.rtjhapp.utils.MySerialHelper
+import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
 
 class SmartSettingsAdapter(private val binding:SmartModeSettingsDialogBinding) {
@@ -16,7 +21,13 @@ class SmartSettingsAdapter(private val binding:SmartModeSettingsDialogBinding) {
         val localPowerOnDisinfect = sharedPreferencesManager.readBoolean(
             Constants.SmartSettings.powerOnDisinfect,
             Constants.SmartSettings.Default.powerOnDisinfect)
-            binding.powerOnDisinfectSwitch.isChecked = localPowerOnDisinfect
+        binding.powerOnDisinfectSwitch.isChecked = localPowerOnDisinfect
+
+        val localLightDelayTime = sharedPreferencesManager.readString(
+            Constants.SmartSettings.lightDelayTime,
+            Constants.SmartSettings.Default.lightDelayTime
+        )
+        binding.lightsDelayTime.setText(localLightDelayTime)
     }
 
     fun setSaveButtonClickListener(listener:() -> Unit){
@@ -30,5 +41,8 @@ class SmartSettingsAdapter(private val binding:SmartModeSettingsDialogBinding) {
 
         val powerOnDisinfect = binding.powerOnDisinfectSwitch.isChecked
         sharedPreferencesManager.writeBoolean(Constants.SmartSettings.powerOnDisinfect,powerOnDisinfect)
+
+        val lightDelayTime = binding.lightsDelayTime.text.toString()
+        sharedPreferencesManager.writeString(Constants.SmartSettings.lightDelayTime,lightDelayTime)
     }
 }

@@ -2,6 +2,8 @@ package com.example.rtjhapp.bottomModule
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ class BottomFragment: Fragment() {
 
     private lateinit var binding: BottomBinding
     private lateinit var adapter: BottomAdapter
+    private val handler = Handler(Looper.getMainLooper())
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
@@ -27,8 +30,11 @@ class BottomFragment: Fragment() {
     ) : View {
         binding = BottomBinding.inflate(inflater,container,false)
         adapter = BottomAdapter(binding)
-        adapter.initViews()
         adapter.isShow()
+        // 启动定时任务
+        if (adapter.serialIsOpen()){
+            startStatusPolling()
+        }
         return binding.root
     }
 
@@ -40,6 +46,8 @@ class BottomFragment: Fragment() {
         integratedControlBtn.setOnClickListener {
             showSettingDialog(requireContext())
         }
+
+
     }
 
     /**
@@ -51,7 +59,14 @@ class BottomFragment: Fragment() {
         dialog.show()
     }
 
-
+    private fun startStatusPolling(){
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                adapter.getStatus()
+                handler.postDelayed(this,6000)
+            }
+        },6000)
+    }
 
     @Subscribe
     fun upDateUI(event:UpdateBottomFragmentUIEvent){

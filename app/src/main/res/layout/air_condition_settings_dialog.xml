@@ -31,6 +31,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 tools:ignore="UselessParent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/readOrder"
+                        style="@style/settingTextStyle"/>
+                    <EditText
+                        android:id="@+id/read_air_order"
+                        android:hint="@string/readOrderPlaceholder"
+                        style="@style/InputBoxStyle"
+                        android:autofillHints="@string/readOrderPlaceholder"
+                        android:inputType="text" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 开关机部分-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                tools:ignore="UselessParent">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -234,6 +261,44 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/humMax"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/hum_max"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/humMin"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/hum_min"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingStart="18dp"
@@ -283,6 +348,44 @@
                             style="@style/InputBoxStyle"
                             android:autofillHints="@string/powerOffPlaceholder"
                             android:inputType="text" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/temMax"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/tem_max"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/temMin"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/tem_min"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:inputType="number" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -376,6 +479,38 @@
                             android:layout_marginTop="10dp"/>
                         <EditText
                             android:id="@+id/unit_failure_reg_num"
+                            android:hint="@string/basic"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/powerOffPlaceholder"
+                            android:inputType="text" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 机组报警 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/systemErrors"
+                        style="@style/settingTextStyle"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registerNum"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:id="@+id/system_error_reg"
                             android:hint="@string/basic"
                             style="@style/InputBoxStyle"
                             android:autofillHints="@string/powerOffPlaceholder"

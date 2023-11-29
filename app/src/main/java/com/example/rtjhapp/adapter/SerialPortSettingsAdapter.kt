@@ -21,6 +21,7 @@ class SerialPortSettingsAdapter(private val binding: SerialPortSettingsDialogBin
 
         val localMusicSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.music,Constants.SerialPort.Default.music)
         binding.pronunciationSerialPort.setText(localMusicSerialPort)
+
     }
 
     fun setSaveButtonClickListener(listener: () -> Unit){
@@ -41,5 +42,6 @@ class SerialPortSettingsAdapter(private val binding: SerialPortSettingsDialogBin
 
         val inputMusicSerialPort = binding.pronunciationSerialPort.text.toString()
         sharedPreferencesManager.writeString(Constants.SerialPort.music, inputMusicSerialPort)
+
     }
 }

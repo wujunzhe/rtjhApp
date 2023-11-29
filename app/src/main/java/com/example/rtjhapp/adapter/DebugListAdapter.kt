@@ -1,17 +1,21 @@
 package com.example.rtjhapp.adapter
 
 import android.annotation.SuppressLint
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.DebugListItemBinding
 import com.example.rtjhapp.model.DebugItemViewModel
 
-class DebugListAdapter(private val debugList: MutableList<String>) :
+class DebugListAdapter( private val recyclerView: RecyclerView,private val debugList: MutableList<String>) :
     RecyclerView.Adapter<DebugListAdapter.DebugViewHolder>() {
 
+    private val handler = Handler(Looper.getMainLooper())
     class DebugViewHolder(val binding: DebugListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DebugViewHolder {
@@ -39,7 +43,9 @@ class DebugListAdapter(private val debugList: MutableList<String>) :
     fun addDebugMessage(debugInfo: String) {
         // 添加提供的调试信息
         debugList.add(debugInfo)
-        notifyDataSetChanged()
-        notifyItemInserted(debugList.size - 1)
+        handler.post{
+            notifyItemInserted(debugList.size - 1)
+            recyclerView.scrollToPosition(debugList.size - 1)
+        }
     }
 }

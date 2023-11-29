@@ -15,6 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.example.rtjhapp.R
+import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.TypeUtils.Companion.isNum
 import java.text.DecimalFormat
 
@@ -95,6 +96,9 @@ class CircleProgressView(context: Context?, attrs: AttributeSet?): View(context,
     // 图标渲染
     private var mHintDrawable: Drawable? = null
 
+    // 图标单位
+    private var mHintText: String? = null
+
     init {
         try {
             setLayerType(LAYER_TYPE_SOFTWARE,null)
@@ -129,6 +133,7 @@ class CircleProgressView(context: Context?, attrs: AttributeSet?): View(context,
         mValueSize = typeArray.getDimension(R.styleable.CircleProgressView_valueSize,15f)
         mValueColor = typeArray.getColor(R.styleable.CircleProgressView_valueColor,Color.BLACK)
         mHintDrawable = typeArray.getDrawable(R.styleable.CircleProgressView_hintDrawable)
+        mHintText = typeArray.getString(R.styleable.CircleProgressView_hintText)
         mHint = typeArray.getString(R.styleable.CircleProgressView_hint)
         mHintSize = typeArray.getDimension(R.styleable.CircleProgressView_hintSize,15f)
         mHintColor = typeArray.getColor(R.styleable.CircleProgressView_hintColor,Color.GRAY)
@@ -222,25 +227,36 @@ class CircleProgressView(context: Context?, attrs: AttributeSet?): View(context,
     private fun drawIcon(canvas: Canvas){
         mHintDrawable?.let {
             val drawableHeight = it.intrinsicHeight
-            val baseline = (height - drawableHeight) / 2 - 20
+            val baseline = (height - drawableHeight) / 2 + 100
+            val iconWidth = it.intrinsicWidth / 8
+            val iconHeight = it.intrinsicHeight / 8
             it.setBounds(
-                centerPosition.x - it.intrinsicWidth / 2,
+                centerPosition.x - iconWidth / 2 - 25,
                 baseline,
-                centerPosition.x + it.intrinsicWidth / 2,
-                (baseline + drawableHeight)
+                centerPosition.x + iconWidth / 2 - 25,
+                (baseline + iconHeight)
             )
             it.draw(canvas)
+            mHintText?.let { hintText ->
+                val textX = centerPosition.x + iconWidth / 2 // 调整水平偏移量
+                val textY = baseline + iconHeight + mHintPaint.textSize - 30  // 调整垂直偏移量
+                mHintPaint.textSize = drawableHeight / 12.toFloat()
+                canvas.drawText(hintText, textX.toFloat(), textY, mHintPaint)
+            }
         }
 
         mValue?.let{
-            val textBaseline = centerPosition.y + mValuePaint.textSize
-            mValuePaint.isFakeBoldText = true
-            canvas.drawText(
-                it + mUnit,
-                centerPosition.x.toFloat(),
-                textBaseline,
-                mValuePaint
-            )
+            val floatValue = it.toFloatOrNull()
+            if (floatValue != null) {
+                val textBaseline = centerPosition.y + mValuePaint.textSize
+                mValuePaint.isFakeBoldText = true
+                canvas.drawText(
+                    floatValue.toString() + mUnit,
+                    centerPosition.x.toFloat(),
+                    textBaseline,
+                    mValuePaint
+                )
+            }
         }
     }
 
@@ -295,19 +311,16 @@ class CircleProgressView(context: Context?, attrs: AttributeSet?): View(context,
     /**
      * 执行属性动画
      */
-    private fun startAnim(start:Float,end:Float,animTime:Int){
-        mAnimator = ValueAnimator.ofFloat(start,end)
+    private fun startAnim(start: Float, end: Float, animTime: Int) {
+        mAnimator = ValueAnimator.ofFloat(start, end)
         mAnimator?.duration = animTime.toLong()
         mAnimator?.addUpdateListener {
-            //得到当前的动画进度并赋值
+            // 得到当前的动画进度并赋值
             mAnimPercent = it.animatedValue as Float
 
             // 根据当前的动画得到当前的值
-            mValue = if (isAnim){
-                CircleUtil.roundByScale((mAnimPercent * mMaxValue).toDouble(),mDigit)
-            } else {
-                CircleUtil.roundByScale(mValue!!.toDouble(),mDigit)
-            }
+            val decimalFormat = DecimalFormat("#.#")
+            mValue = decimalFormat.format(mAnimPercent * mMaxValue)
 
             // 不停的重绘当前的值-表现出动画效果
             postInvalidate()

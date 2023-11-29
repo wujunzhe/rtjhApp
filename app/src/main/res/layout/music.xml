@@ -110,21 +110,55 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
-            android:id="@+id/music_list"
+            android:id="@+id/music_list_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="0.1"
             app:layout_constraintHeight_percent="1"
             app:layout_constraintStart_toEndOf="@id/music_main"
             app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="bottom">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/music_list"
-                android:background="@color/backgroundTransparent" />
-        </LinearLayout>
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top">
+                <ImageButton
+                    android:id="@+id/background_music"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/toggle_music_mode"
+                    android:background="@color/backgroundTransparent"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom">
+                <ImageButton
+                    android:id="@+id/music_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/music_list"
+                    android:background="@color/backgroundTransparent" />
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/music_list_dialog_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        >
+        <include layout="@layout/music_list_dialog"/>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
