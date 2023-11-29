@@ -22,47 +22,49 @@ import com.example.rtjhapp.utils.modbus.CRC16
 import tp.xmaihh.serialport.bean.ComBean
 
 class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataReceivedListener {
-    private val dutyRunningLayout: LinearLayout = binding.dutyRunningLayout
-    private val neLayout: LinearLayout = binding.neRunningLayout
-    private val airDutyLayout: LinearLayout = binding.airDutyLayout
-    private val airNegeLayout: LinearLayout = binding.airNegeLayout
-    private val reHumReg: String?
-    private val reHumNeedDivision: Boolean
-    private val reTemReg: String?
-    private val reTemNeedDivision: Boolean
-    private val setHumText: TextView = binding.settingHumText
-    private val humPlus: ImageButton = binding.humidityPlus
-    private val humReduce: ImageButton = binding.humidityReduce
-    private val setHumReg: String?
-    private val setHumMin: String?
-    private val setHumMax: String?
-    private val setHumNeedMulti: Boolean
-    private val setTemText: TextView = binding.settingTemText
-    private val tempPlus: ImageButton = binding.tempPlus
-    private val tempReduce: ImageButton = binding.tempReduce
-    private val setTemReg: String?
-    private val setTemMax: String?
-    private val setTemMin: String?
-    private val setTemNeedMulti: Boolean
-    private val dutyReg: String?
-    private val dutyStatusImg: ImageView = binding.dutyRunningImg
-    private val negeReg: String?
-    private val negeStatusImg: ImageView = binding.neRunningImg
-    private val systemNormalReg: String?
-    private val systemNormalStatusImg: ImageView = binding.systemNormalImg
-    private val systemWarningReg: String?
-    private val systemWarningImg: ImageView = binding.systemWarningImg
-    private val systemErrorReg: String?
-    private val systemErrorImg: ImageView = binding.systemErrorImg
-    private val airConditionDutyBtn: ImageButton = binding.airConditionDutyBtn
-    private var airConditionDutyFlag: Boolean = false
-    private val airConditionStartStopBtn: ImageButton = binding.airStartStopBtn
-    private var airConditionStartStopFlag: Boolean = false
-    private val airConditionNegeStressBtn: ImageButton = binding.positiveNegativePressureBtn
-    private var airConditionNegeStressFlag: Boolean = false
-    private val airConditionSerialHelper: MySerialHelper
-    private val sharedPreferencesManager : SharedPreferencesManager = SharedPreferencesManager(binding.root.context)
+    private val dutyRunningLayout : LinearLayout = binding.dutyRunningLayout
+    private val neLayout : LinearLayout = binding.neRunningLayout
+    private val airDutyLayout : LinearLayout = binding.airDutyLayout
+    private val airNegeLayout : LinearLayout = binding.airNegeLayout
+    private val reHumReg : String?
+    private val reHumNeedDivision : Boolean
+    private val reTemReg : String?
+    private val reTemNeedDivision : Boolean
+    private val setHumText : TextView = binding.settingHumText
+    private val humPlus : ImageButton = binding.humidityPlus
+    private val humReduce : ImageButton = binding.humidityReduce
+    private val setHumReg : String?
+    private val setHumMin : String?
+    private val setHumMax : String?
+    private val setHumNeedMulti : Boolean
+    private val setTemText : TextView = binding.settingTemText
+    private val tempPlus : ImageButton = binding.tempPlus
+    private val tempReduce : ImageButton = binding.tempReduce
+    private val setTemReg : String?
+    private val setTemMax : String?
+    private val setTemMin : String?
+    private val setTemNeedMulti : Boolean
+    private val dutyReg : String?
+    private val dutyStatusImg : ImageView = binding.dutyRunningImg
+    private val negeReg : String?
+    private val negeStatusImg : ImageView = binding.neRunningImg
+    private val systemNormalReg : String?
+    private val systemNormalStatusImg : ImageView = binding.systemNormalImg
+    private val systemWarningReg : String?
+    private val systemWarningImg : ImageView = binding.systemWarningImg
+    private val systemErrorReg : String?
+    private val systemErrorImg : ImageView = binding.systemErrorImg
+    private val airConditionDutyBtn : ImageButton = binding.airConditionDutyBtn
+    private var airConditionDutyFlag : Boolean = false
+    private val airConditionStartStopBtn : ImageButton = binding.airStartStopBtn
+    private var airConditionStartStopFlag : Boolean = false
+    private val airConditionNegeStressBtn : ImageButton = binding.positiveNegativePressureBtn
+    private var airConditionNegeStressFlag : Boolean = false
+    private val airConditionSerialHelper : MySerialHelper
+    private val sharedPreferencesManager : SharedPreferencesManager =
+        SharedPreferencesManager(binding.root.context)
     private val handler = Handler(Looper.getMainLooper())
+
     init {
 
         reHumReg = sharedPreferencesManager.readString(
@@ -154,55 +156,59 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
             Constants.AirConditionSettings.Default.Register.systemError
         )
 
-        val airConditionPort = sharedPreferencesManager.readString(Constants.SerialPort.airCondition,Constants.SerialPort.Default.airCondition)
-        airConditionSerialHelper = object : MySerialHelper(airConditionPort,Constants.SerialPortDefaultConfig.baudRate) {
-            override fun onDataReceived(comBean : ComBean) {
-                super.onDataReceived(comBean)
-                val hex = ByteUtil.comBeanToHex(comBean)
-                if (hex.length > 16 && hex.startsWith(Constants.AirConditionOrder.StartWith.getStatus)) {
-                    setAirConditionStatus(hex,binding)
-                    GlobalData.airConditionStatusHex = hex
-                }
-                handler.post {
-                    AddMsgToDebugList.addMsg("获取空调状态",hex)
+        val airConditionPort = sharedPreferencesManager.readString(
+            Constants.SerialPort.airCondition,
+            Constants.SerialPort.Default.airCondition
+        )
+        airConditionSerialHelper =
+            object : MySerialHelper(airConditionPort, Constants.SerialPortDefaultConfig.baudRate) {
+                override fun onDataReceived(comBean : ComBean) {
+                    super.onDataReceived(comBean)
+                    val hex = ByteUtil.comBeanToHex(comBean)
+                    if (hex.length > 16 && hex.startsWith(Constants.AirConditionOrder.StartWith.getStatus)) {
+                        setAirConditionStatus(hex, binding)
+                        GlobalData.airConditionStatusHex = hex
+                    }
+                    handler.post {
+                        AddMsgToDebugList.addMsg("获取空调状态", hex)
+                    }
                 }
             }
-        }
         try {
             airConditionSerialHelper.open()
-        } catch (e: Exception) {
-            MyToast().error(binding.root.context,"空调模块串口未打开")
+        } catch (e : Exception) {
+            MyToast().error(binding.root.context, "空调模块串口未打开")
         }
         setOnClickListener()
     }
 
-    fun isShow(){
-        val showDutyFlag = sharedPreferencesManager.readBoolean("DutyDisplayState",false)
-        val showNeFlag = sharedPreferencesManager.readBoolean("NeGeStressToggleDisplayState",true)
+    fun isShow() {
+        val showDutyFlag = sharedPreferencesManager.readBoolean("DutyDisplayState", false)
+        val showNeFlag = sharedPreferencesManager.readBoolean("NeGeStressToggleDisplayState", true)
 
-        if (!showDutyFlag){
+        if (! showDutyFlag) {
             dutyRunningLayout.visibility = View.GONE
             airDutyLayout.visibility = View.GONE
-        }else {
+        } else {
             dutyRunningLayout.visibility = View.VISIBLE
             airDutyLayout.visibility = View.VISIBLE
         }
 
-        if(!showNeFlag){
+        if (! showNeFlag) {
             neLayout.visibility = View.GONE
             airNegeLayout.visibility = View.GONE
-        }else {
+        } else {
             neLayout.visibility = View.VISIBLE
             airNegeLayout.visibility = View.VISIBLE
         }
     }
 
-    fun serialPortIsOpen() : Boolean{
+    fun serialPortIsOpen() : Boolean {
         return airConditionSerialHelper.isOpen
     }
 
     fun getStatus() {
-        if (airConditionSerialHelper.isOpen){
+        if (airConditionSerialHelper.isOpen) {
             val hex = sharedPreferencesManager.readString(
                 Constants.AirConditionSettings.Order.getStatus,
                 Constants.AirConditionSettings.Default.Order.getStatus
@@ -211,50 +217,50 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
         }
     }
 
-    private fun setAirConditionStatus(hex: String,binding : AirConditionBinding) {
-        val data = hex.substring(6,hex.length - 1)
+    private fun setAirConditionStatus(hex : String, binding : AirConditionBinding) {
+        val data = hex.substring(6, hex.length - 1)
         val dataList = data.chunked(4)
-        for ((index,bytes) in dataList.withIndex()) {
-            if (index + 1 == reTemReg!!.toInt()) {
+        for ((index, bytes) in dataList.withIndex()) {
+            if (index + 1 == reTemReg !!.toInt()) {
                 val reTemVal = if (reTemNeedDivision) {
-                   ByteUtil.hexToDecimal(bytes).toString()
+                    ByteUtil.hexToDecimal(bytes).toString()
 
                 } else {
                     bytes.toInt(16).toString()
                 }
                 handler.post {
-                    binding.tempCircle.setValue(reTemVal,setTemMax!!.toFloat())
+                    binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
                 }
-            } else if(index + 1 == reHumReg!!.toInt()) {
+            } else if (index + 1 == reHumReg !!.toInt()) {
                 val reHumVal = if (reHumNeedDivision) {
                     ByteUtil.hexToDecimal(bytes).toString()
                 } else {
                     bytes.toInt(16).toString()
                 }
                 handler.post {
-                    binding.humidityCircle.setValue(reHumVal,setHumMax!!.toFloat())
+                    binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
                 }
-            } else if(index + 1 == dutyReg!!.toInt()) {
+            } else if (index + 1 == dutyReg !!.toInt()) {
                 val dutyVal = bytes.lastOrNull().toString()
                 if (dutyVal.toInt() == 1) {
                     dutyStatusImg.setImageResource(R.drawable.air_system_green)
                 }
-            } else if (index + 1 == negeReg!!.toInt()) {
+            } else if (index + 1 == negeReg !!.toInt()) {
                 val negeVal = bytes.lastOrNull().toString()
                 if (negeVal.toInt() == 1) {
                     negeStatusImg.setImageResource(R.drawable.air_system_green)
                 }
-            } else if (index + 1 == systemNormalReg!!.toInt()) {
+            } else if (index + 1 == systemNormalReg !!.toInt()) {
                 val status = bytes.lastOrNull().toString()
                 if (status.toInt() == 1) {
                     systemNormalStatusImg.setImageResource(R.drawable.air_system_green)
                 }
-            } else if (index + 1 == systemWarningReg!!.toInt()) {
+            } else if (index + 1 == systemWarningReg !!.toInt()) {
                 val status = bytes.lastOrNull().toString()
                 if (status.toInt() == 1) {
                     systemWarningImg.setImageResource(R.drawable.air_system_yellow)
                 }
-            } else if (index + 1 == systemErrorReg!!.toInt()) {
+            } else if (index + 1 == systemErrorReg !!.toInt()) {
                 val status = bytes.lastOrNull().toString()
                 if (status.toInt() == 1) {
                     systemErrorImg.setImageResource(R.drawable.air_system_red)
@@ -279,7 +285,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     currentTempVal + 1
                 }
 
-                val setTemRegHex = ByteUtil.intToHex((setTemReg!!.toInt() * 2), 4)
+                val setTemRegHex = ByteUtil.intToHex((setTemReg !!.toInt() * 2), 4)
                 val tempHex = ByteUtil.intToHex(newTempVal, 4)
                 val hex = "0106${setTemRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
@@ -307,7 +313,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     currentTempVal - 1
                 }
 
-                val setTemRegHex = ByteUtil.intToHex((setTemReg!!.toInt() * 2), 4)
+                val setTemRegHex = ByteUtil.intToHex((setTemReg !!.toInt() * 2), 4)
                 val tempHex = ByteUtil.intToHex(newTempVal, 4)
                 val hex = "0106${setTemRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
@@ -335,7 +341,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     currentHumVal + 1
                 }
 
-                val setHumRegHex = ByteUtil.intToHex((setHumReg!!.toInt() * 2), 4)
+                val setHumRegHex = ByteUtil.intToHex((setHumReg !!.toInt() * 2), 4)
                 val tempHex = ByteUtil.intToHex(newHumVal, 4)
                 val hex = "0106${setHumRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
@@ -363,7 +369,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     currentHumVal - 1
                 }
 
-                val setHumRegHex = ByteUtil.intToHex((setHumReg!!.toInt() * 2), 4)
+                val setHumRegHex = ByteUtil.intToHex((setHumReg !!.toInt() * 2), 4)
                 val tempHex = ByteUtil.intToHex(newHumVal, 4)
                 val hex = "0106${setHumRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
@@ -382,39 +388,39 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
         // 空调值班
         airConditionDutyBtn.setOnClickListener(DebounceClickListener({
             if (airConditionSerialHelper.isOpen) {
-                if (!airConditionDutyFlag) {
+                if (! airConditionDutyFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.dutyStart
                     val crc = CRC16.getCRC(hex)
                     handler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        AddMsgToDebugList.addMsg("下发空调值班开启指令",hex + crc)
+                        AddMsgToDebugList.addMsg("下发空调值班开启指令", hex + crc)
                         airConditionDutyBtn.setImageResource(R.drawable.air_condition_duty_selected)
                         airConditionDutyFlag = true
                     }
                 } else {
                     val hex = Constants.AirConditionOrder.AirCondition.dutyStop
                     val crc = CRC16.getCRC(hex)
-                    handler.post{
+                    handler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        AddMsgToDebugList.addMsg("下发空调值班停止指令",hex + crc)
+                        AddMsgToDebugList.addMsg("下发空调值班停止指令", hex + crc)
                         airConditionDutyBtn.setImageResource(R.drawable.air_condition_duty)
                         airConditionDutyFlag = false
                     }
                 }
             } else {
-                MyToast().error(binding.root.context,"空调模块串口未打开")
+                MyToast().error(binding.root.context, "空调模块串口未打开")
             }
-        },debounceInterval))
+        }, debounceInterval))
 
         // 空调启停
         airConditionStartStopBtn.setOnClickListener(DebounceClickListener({
             if (airConditionSerialHelper.isOpen) {
-                if (!airConditionStartStopFlag) {
+                if (! airConditionStartStopFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.start
                     val crc = CRC16.getCRC(hex)
                     handler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        AddMsgToDebugList.addMsg("下发空调启动指令",hex + crc)
+                        AddMsgToDebugList.addMsg("下发空调启动指令", hex + crc)
                         airConditionStartStopBtn.setImageResource(R.drawable.air_condition_start_stop_selected)
                         airConditionStartStopFlag = true
                     }
@@ -423,25 +429,25 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     val crc = CRC16.getCRC(hex)
                     handler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        AddMsgToDebugList.addMsg("下发空调停止指令",hex + crc)
+                        AddMsgToDebugList.addMsg("下发空调停止指令", hex + crc)
                         airConditionStartStopBtn.setImageResource(R.drawable.air_condition_start_stop)
                         airConditionStartStopFlag = false
                     }
                 }
             } else {
-                MyToast().error(binding.root.context,"空调模块串口未打开")
+                MyToast().error(binding.root.context, "空调模块串口未打开")
             }
-        },debounceInterval))
+        }, debounceInterval))
 
         // 正负压
         airConditionNegeStressBtn.setOnClickListener(DebounceClickListener({
             if (airConditionSerialHelper.isOpen) {
-                if (!airConditionNegeStressFlag) {
+                if (! airConditionNegeStressFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.neStress
                     val crc = CRC16.getCRC(hex)
                     handler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        AddMsgToDebugList.addMsg("下发正负压指令",hex + crc)
+                        AddMsgToDebugList.addMsg("下发正负压指令", hex + crc)
                         airConditionNegeStressBtn.setImageResource(R.drawable.nege_stress_selected)
                         airConditionNegeStressFlag = true
                     }
@@ -456,9 +462,9 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                     }
                 }
             } else {
-                MyToast().error(binding.root.context,"空调模块串口未打开")
+                MyToast().error(binding.root.context, "空调模块串口未打开")
             }
-        },debounceInterval))
+        }, debounceInterval))
     }
 
     override fun onDataReceived(receivedData : String) {

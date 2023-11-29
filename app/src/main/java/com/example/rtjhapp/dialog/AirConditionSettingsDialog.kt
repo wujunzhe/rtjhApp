@@ -13,22 +13,24 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class AirConditionSettingsDialog(context : Context) {
     private val binding = AirConditionSettingsDialogBinding.inflate(LayoutInflater.from(context))
     private val dialog = MaterialAlertDialogBuilder(context)
-        .setBackground(ColorDrawable(ContextCompat.getColor(context,R.color.white)))
+        .setBackground(ColorDrawable(ContextCompat.getColor(context, R.color.white)))
         .create()
 
     private val adapter = AirConditionSettingsAdapter(binding)
+
     init {
         dialog.setView(binding.root)
         adapter.initSettings()
         adapter.setSaveButtonClickListener { saveSettings() }
     }
+
     fun show() {
         dialog.show()
     }
 
-    private fun saveSettings(){
+    private fun saveSettings() {
         adapter.saveSettingVal()
-        MyToast().success(binding.root.context,"保存成功")
+        MyToast().success(binding.root.context, "保存成功")
         dialog.dismiss()
     }
 }

@@ -1,60 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="1"
         android:paddingEnd="30dp"
         android:paddingBottom="60dp"
+        app:layout_constraintHeight_percent="1"
+        app:layout_constraintWidth_percent="1"
         tools:ignore="MissingConstraints,RtlSymmetry">
+
         <ImageView
             android:id="@+id/medical_stress_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="1"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/medical_stress_status"
+            app:layout_constraintBottom_toTopOf="@id/gas_cell_1"
             app:layout_constraintHeight_percent="0.2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/gas_cell_1"
-            android:src="@drawable/medical_stress_status"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/todo" />
+            app:layout_constraintWidth_percent="1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/gas_cell_1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="1"
+            android:paddingEnd="10dp"
+            app:layout_constraintBottom_toTopOf="@id/gas_cell_2"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/medical_stress_image"
-            app:layout_constraintBottom_toTopOf="@id/gas_cell_2"
-            android:paddingEnd="10dp"
+            app:layout_constraintWidth_percent="1"
             tools:ignore="RtlSymmetry">
             <!--氧气-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/oxygen_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintEnd_toStartOf="@+id/nitrogen_layout"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/nitrogen_layout">
+                app:layout_constraintWidth_percent="0.2">
+
                 <ImageView
                     android:id="@+id/oxygen_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/oxygen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/oxygen"
-                    android:scaleType="fitCenter"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/oxygen_status"
                     android:layout_width="0dp"
@@ -62,10 +66,10 @@
                     android:layout_centerVertical="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/green"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,35 +78,36 @@
                 android:id="@+id/nitrogen_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.2"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/nitrous_oxide_layout"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@id/oxygen_layout"
-                app:layout_constraintEnd_toStartOf="@+id/nitrous_oxide_layout"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+                app:layout_constraintWidth_percent="0.2">
+
                 <ImageView
                     android:id="@+id/nitrogen_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/nitrogen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/nitrogen"
-                    android:scaleType="fitCenter"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/nitrogen_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.45"
-                    app:layout_constraintHeight_percent="0.45"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:src="@drawable/green"
-                    />
+                    app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--笑气-->
@@ -110,33 +115,34 @@
                 android:id="@+id/nitrous_oxide_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.2"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/hydrogen_layout"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@+id/nitrogen_layout"
-                app:layout_constraintEnd_toStartOf="@+id/hydrogen_layout"
-                android:layout_marginEnd="5dp">
+                app:layout_constraintWidth_percent="0.2">
+
                 <ImageView
                     android:id="@+id/nitrous_oxide_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:src="@drawable/nitrous_oxide"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/nitrous_oxide"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/nitrous_oxide_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.45"
-                    app:layout_constraintHeight_percent="0.45"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:src="@drawable/green"
-                    />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--氢气-->
@@ -144,32 +150,33 @@
                 android:id="@+id/hydrogen_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@id/nitrous_oxide_layout"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintWidth_percent="0.2">
+
                 <ImageView
                     android:id="@+id/hydrogen_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:src="@drawable/hydrogen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/hydrogen"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/hydrogen_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.45"
-                    app:layout_constraintHeight_percent="0.45"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:src="@drawable/green"
-                    />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,43 +184,45 @@
             android:id="@+id/gas_cell_2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="1"
+            android:paddingStart="15dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@id/stress_status_light"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/gas_cell_1"
-            app:layout_constraintBottom_toTopOf="@id/stress_status_light"
-            android:paddingStart="15dp"
-            android:paddingEnd="20dp">
+            app:layout_constraintWidth_percent="1">
 
             <!--负压吸引-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ne_pressure_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintEnd_toStartOf="@+id/press_air_layout"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/press_air_layout">
+                app:layout_constraintWidth_percent="0.3">
+
                 <ImageView
                     android:id="@+id/negative_pressure_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:src="@drawable/negative_pressure_suction"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/negative_pressure_suction"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/negative_pressure_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.4"
-                    app:layout_constraintHeight_percent="0.4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/green"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/green" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--压缩空气-->
@@ -221,31 +230,33 @@
                 android:id="@+id/press_air_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintEnd_toStartOf="@+id/carbon_layout"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@id/ne_pressure_layout"
-                app:layout_constraintEnd_toStartOf="@+id/carbon_layout">
+                app:layout_constraintWidth_percent="0.3">
+
                 <ImageView
                     android:id="@+id/pressurized_air_text"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:src="@drawable/pressurized_air"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/pressurized_air"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/pressurized_air_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.4"
-                    app:layout_constraintHeight_percent="0.4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/green"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/green" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--二氧化碳-->
@@ -253,31 +264,33 @@
                 android:id="@+id/carbon_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toEndOf="@id/press_air_layout"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintWidth_percent="0.3">
+
                 <ImageView
                     android:id="@+id/carbon_dioxide_text"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="1"
+                    android:src="@drawable/carbon_dioxide"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/carbon_dioxide"/>
+                    app:layout_constraintWidth_percent="1" />
+
                 <ImageView
                     android:id="@+id/carbon_dioxide_status"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.4"
-                    app:layout_constraintHeight_percent="0.4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/green"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/green" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -305,13 +318,12 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/yellow"
-                    app:layout_constraintWidth_percent="0.6"
-                    app:layout_constraintHeight_percent="0.6"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gas_warning_text"
-                    />
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.6" />
 
                 <TextView
                     android:id="@+id/gas_warning_text"
@@ -322,11 +334,10 @@
                     android:gravity="center_vertical"
                     android:text="@string/lowStress"
                     android:textSize="15sp"
-                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toEndOf="@+id/gas_warning_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintWidth_percent="0.5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -344,13 +355,12 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/green"
-                    app:layout_constraintWidth_percent="0.6"
-                    app:layout_constraintHeight_percent="0.6"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gas_normal_text"
-                    />
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.6" />
 
                 <TextView
                     android:id="@+id/gas_normal_text"
@@ -358,13 +368,12 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
-                    android:textSize="15sp"
                     android:text="@string/normalStress"
-                    app:layout_constraintWidth_percent="0.5"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toEndOf="@+id/gas_normal_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintWidth_percent="0.5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -382,13 +391,12 @@
                     android:layout_height="0dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/red"
-                    app:layout_constraintHeight_percent="0.6"
-                    app:layout_constraintWidth_percent="0.6"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gas_error_text"
-                    />
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.6" />
 
                 <TextView
                     android:id="@+id/gas_error_text"
@@ -399,10 +407,10 @@
                     android:gravity="center_vertical"
                     android:text="@string/highStress"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
-                    app:layout_constraintWidth_percent="0.5"
                     app:layout_constraintStart_toEndOf="@+id/gas_error_light"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintWidth_percent="0.5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

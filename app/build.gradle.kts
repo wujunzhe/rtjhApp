@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -15,11 +13,18 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
+        ndk {
+            abiFilters.add("armeabi-v7a")
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            isShrinkResources = true
+            isMinifyEnabled = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -49,7 +54,6 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.licheedev:Modbus4Android:2.0.2")
-//    implementation(files("libs/modbus4Android-1.2.jar"))
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("io.github.muddz:styleabletoast:2.4.0")
     implementation("androidx.cardview:cardview:1.0.0")

@@ -3,14 +3,14 @@ package com.example.rtjhapp.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import com.example.rtjhapp.utils.AddMsgToDebugList
 import com.example.rtjhapp.utils.MyToast
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
-import android.os.Handler
-import android.os.Looper
 
 class UsbMountReceiver : BroadcastReceiver() {
 
@@ -50,35 +50,44 @@ class UsbMountReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun hasMp3Files(usbPath: String): Boolean {
+    private fun hasMp3Files(usbPath : String) : Boolean {
         val usbDirectory = File(usbPath)
         if (usbDirectory.isDirectory) {
             val mp3Files = usbDirectory.listFiles { file ->
                 file.isFile && file.extension.equals("mp3", ignoreCase = true)
             }
             isImporting = true
-            return !mp3Files.isNullOrEmpty()
+            return ! mp3Files.isNullOrEmpty()
         }
         return false
     }
-    private fun importMp3FilesFromUsb(usbPath: String?, targetDirectory: String, context : Context?){
+
+    private fun importMp3FilesFromUsb(
+        usbPath : String?,
+        targetDirectory : String,
+        context : Context?
+    ) {
         usbPath?.let {
             val usbDirectory = File(usbPath)
             if (usbDirectory.isDirectory) {
                 val mp3Files = usbDirectory.listFiles { file ->
-                    file.isFile && file.extension.equals("mp3",ignoreCase = true)
+                    file.isFile && file.extension.equals("mp3", ignoreCase = true)
                 }
 
                 mp3Files?.forEach { mp3File ->
                     try {
                         // 动态创建目标目录
                         val targetDir = File(targetDirectory)
-                        if (!targetDir.exists()) {
+                        if (! targetDir.exists()) {
                             targetDir.mkdirs()
                         }
                         val targetFile = File(targetDirectory, mp3File.name)
-                        if (!targetFile.exists()) {
-                            Files.copy(mp3File.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                        if (! targetFile.exists()) {
+                            Files.copy(
+                                mp3File.toPath(),
+                                targetFile.toPath(),
+                                StandardCopyOption.REPLACE_EXISTING
+                            )
                         } else {
                             // 如果文件已存在，则不导入，可以选择记录日志或其他逻辑
                             context?.let { it1 ->
@@ -87,7 +96,7 @@ class UsbMountReceiver : BroadcastReceiver() {
                                 }
                             }
                         }
-                    } catch (e: IOException) {
+                    } catch (e : IOException) {
                         e.printStackTrace()
                         // 处理复制过程中可能的异常
                     } finally {

@@ -1,16 +1,11 @@
 package com.example.rtjhapp.dialog
 
 import android.annotation.SuppressLint
-import com.example.rtjhapp.adapter.SettingOptionsAdapter
 import android.content.Context
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
-import android.view.WindowManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
-
 import com.example.rtjhapp.R
-import com.example.rtjhapp.databinding.CustomDialogLayoutBinding
+import com.example.rtjhapp.adapter.SettingOptionsAdapter
 
 class SettingDialog(private val context : Context) {
     @SuppressLint("InflateParams", "ServiceCast")
@@ -27,5 +22,5 @@ class SettingDialog(private val context : Context) {
             )
             .cornerRadius(16f)
             .show()
-        }
     }
+}

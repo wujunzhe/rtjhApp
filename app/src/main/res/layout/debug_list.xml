@@ -14,11 +14,11 @@
             android:id="@+id/debug_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/halfTransparent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:background="@color/halfTransparent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

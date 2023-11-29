@@ -27,7 +27,7 @@
         <item>智能模式及消毒</item>
         <item>使用说明书</item>
         <item>退出程序</item>
-<!--        <item>服务器设置</item>-->
+        <!--        <item>服务器设置</item>-->
     </string-array>
     <string name="list_item_format">%s</string>
     <string name="callSerialPort">电话模块串口号：</string>
@@ -44,7 +44,7 @@
         <item>"&#xe7c3;"</item> <!-- 显示设置 -->
         <item>"&#xe69b;"</item> <!-- 智能模式及消毒设置 -->
         <item>"&#xe614;"</item> <!-- 使用说明书 -->
-<!--        <item>"&#xe694;"</item>--> <!-- 服务器设置 -->
+        <!--        <item>"&#xe694;"</item>--> <!-- 服务器设置 -->
         <item>"&#xe655;"</item> <!-- 退出程序 -->
     </string-array>
     <string name="readOrder">读取数据指令</string>

@@ -5,10 +5,9 @@ import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.MedicalStressStatusBinding
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.GlobalData
-import com.example.rtjhapp.utils.MyToast
 
-class GasAdapter(private val binding: MedicalStressStatusBinding) {
-    private val gasImageViews: Map<String, ImageView> = mapOf(
+class GasAdapter(private val binding : MedicalStressStatusBinding) {
+    private val gasImageViews : Map<String, ImageView> = mapOf(
         Constants.AirConditionSettings.Default.Register.oxygenStatus to binding.oxygenStatus,
         Constants.AirConditionSettings.Default.Register.nitrogenStatus to binding.nitrogenStatus,
         Constants.AirConditionSettings.Default.Register.nitrousOxideStatus to binding.nitrousOxideStatus,
@@ -23,7 +22,7 @@ class GasAdapter(private val binding: MedicalStressStatusBinding) {
         setStatus(hex)
     }
 
-    fun setStatus(hex: String?) {
+    fun setStatus(hex : String?) {
         if (hex != null) {
             val data = hex.substring(6, hex.length - 1)
             val dataList = data.chunked(4)

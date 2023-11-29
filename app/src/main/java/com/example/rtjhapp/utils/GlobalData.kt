@@ -1,5 +1,5 @@
 package com.example.rtjhapp.utils
 
 object GlobalData {
-    var airConditionStatusHex: String? = null
+    var airConditionStatusHex : String? = null
 }

@@ -5,17 +5,18 @@ import tp.xmaihh.serialport.bean.ComBean
 import java.nio.charset.Charset
 
 interface OnDataReceivedListener {
-    fun onDataReceived(receivedData: String)
+    fun onDataReceived(receivedData : String)
 }
-open class MySerialHelper(sPort : String?, iBaudRate : Int) : SerialHelper(sPort,iBaudRate) {
 
-    private var onDataReceivedListener: OnDataReceivedListener? = null
+open class MySerialHelper(sPort : String?, iBaudRate : Int) : SerialHelper(sPort, iBaudRate) {
 
-    fun setOnDataReceivedListener(listener: OnDataReceivedListener) {
+    private var onDataReceivedListener : OnDataReceivedListener? = null
+
+    fun setOnDataReceivedListener(listener : OnDataReceivedListener) {
         this.onDataReceivedListener = listener
     }
 
-    override fun onDataReceived(comBean: ComBean) {
+    override fun onDataReceived(comBean : ComBean) {
         // 在这里处理接收到的数据
         val data = comBean.bRec
         val receivedString = String(data, Charset.forName("UTF-8"))

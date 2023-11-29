@@ -31,21 +31,21 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.util.Locale
 
-class MusicFragment: Fragment() {
-    private lateinit var binding: MusicBinding
-    private lateinit var usbMountReceiver: UsbMountReceiver
+class MusicFragment : Fragment() {
+    private lateinit var binding : MusicBinding
+    private lateinit var usbMountReceiver : UsbMountReceiver
     private lateinit var musicPlayerManager : MusicPlayerManager
     private lateinit var musicSerialHelper : MySerialHelper
     private lateinit var adapter : MusicAdapter
-    private lateinit var audioManager: AudioManager
-    private lateinit var mainHandler:Handler
-    private lateinit var sharedPreferencesManager:SharedPreferencesManager
-    private lateinit var playBtn: ImageButton
-    private lateinit var musicListBtn: ImageButton
-    private lateinit var nextBtn: ImageButton
-    private lateinit var previousBtn: ImageButton
-    private lateinit var backgroundMusicBtn: ImageButton
-    private lateinit var volumeSeekBar: SeekBar
+    private lateinit var audioManager : AudioManager
+    private lateinit var mainHandler : Handler
+    private lateinit var sharedPreferencesManager : SharedPreferencesManager
+    private lateinit var playBtn : ImageButton
+    private lateinit var musicListBtn : ImageButton
+    private lateinit var nextBtn : ImageButton
+    private lateinit var previousBtn : ImageButton
+    private lateinit var backgroundMusicBtn : ImageButton
+    private lateinit var volumeSeekBar : SeekBar
     private var isBackgroundMusic = false
     var volumeLevel = arrayOf(
         "1档",
@@ -82,17 +82,25 @@ class MusicFragment: Fragment() {
         container : ViewGroup?,
         savedInstanceState : Bundle?
     ) : View {
-        binding = MusicBinding.inflate(inflater,container,false)
+        binding = MusicBinding.inflate(inflater, container, false)
 
         audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
-        val musicSerialPort = sharedPreferencesManager.readString(Constants.SerialPort.music,Constants.SerialPort.Default.music)
-        musicSerialHelper = musicSerialPort?.let { MySerialHelper(it,Constants.SerialPortDefaultConfig.baudRate) } !!
+        val musicSerialPort = sharedPreferencesManager.readString(
+            Constants.SerialPort.music,
+            Constants.SerialPort.Default.music
+        )
+        musicSerialHelper = musicSerialPort?.let {
+            MySerialHelper(
+                it,
+                Constants.SerialPortDefaultConfig.baudRate
+            )
+        } !!
 
         try {
             musicSerialHelper.open()
-        } catch (e: Exception) {
-            MyToast().error(binding.root.context,"音乐模块串口没打开")
+        } catch (e : Exception) {
+            MyToast().error(binding.root.context, "音乐模块串口没打开")
         }
 
 
@@ -132,14 +140,14 @@ class MusicFragment: Fragment() {
             volumeSeekBar.progress = 1
             audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
             audioManager.getStreamVolume(AudioManager.STREAM_RING)
-        } catch (e: Exception) {
+        } catch (e : Exception) {
 
         }
         // 本地音乐列表按钮监听
         musicListBtn.setOnClickListener {
             val mp3FileList = getMp3Files()
             if (mp3FileList.isEmpty()) {
-                MyToast().info(binding.root.context,"暂无可播放列表")
+                MyToast().info(binding.root.context, "暂无可播放列表")
             } else {
                 showMusicListDialog(binding)
             }
@@ -147,14 +155,14 @@ class MusicFragment: Fragment() {
 
         // 播放按钮监听
         playBtn.setOnClickListener {
-                if (musicPlayerManager.isPlaying()) {
-                    musicPlayerManager.pauseOrResumeSong(binding)
-                } else {
-                        val selectedItem = adapter.getSelectedItem()
-                        selectedItem?.let {
-                            musicPlayerManager.playSong(binding,it.getSongPath())
-                        }
+            if (musicPlayerManager.isPlaying()) {
+                musicPlayerManager.pauseOrResumeSong(binding)
+            } else {
+                val selectedItem = adapter.getSelectedItem()
+                selectedItem?.let {
+                    musicPlayerManager.playSong(binding, it.getSongPath())
                 }
+            }
         }
 
         // 上一曲按钮监听
@@ -168,32 +176,32 @@ class MusicFragment: Fragment() {
 
         // 背景音乐按钮监听
         backgroundMusicBtn.setOnClickListener {
-            if (musicSerialHelper.isOpen){
+            if (musicSerialHelper.isOpen) {
                 isBackgroundMusic = true
             } else {
-                MyToast().error(binding.root.context,"音乐模块串口未打开")
+                MyToast().error(binding.root.context, "音乐模块串口未打开")
             }
         }
 
-        volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar : SeekBar?, progress : Int, fromUser : Boolean) {
-               if (isBackgroundMusic){
-                   if (musicSerialHelper.isOpen) {
-                       volumeSeekBar.progress = progress
-                       val hex = "FF05000" + Integer.toHexString(progress)
-                           .uppercase(Locale.getDefault()) + "FF00"
-                       val hexWithCRC = hex + getCRC(hex)
-                       musicSerialHelper.sendHex(hexWithCRC)
-                       mainHandler.post {
-                           AddMsgToDebugList.addMsg("下发设置音量指令:",hexWithCRC)
-                       }
-                   } else {
-                       MyToast().error(binding.root.context,"音乐模块串口没打开")
-                       volumeSeekBar.progress = volumeSeekBar.progress
-                   }
-               } else {
-                   musicPlayerManager.setVolume(audioManager,progress)
-               }
+                if (isBackgroundMusic) {
+                    if (musicSerialHelper.isOpen) {
+                        volumeSeekBar.progress = progress
+                        val hex = "FF05000" + Integer.toHexString(progress)
+                            .uppercase(Locale.getDefault()) + "FF00"
+                        val hexWithCRC = hex + getCRC(hex)
+                        musicSerialHelper.sendHex(hexWithCRC)
+                        mainHandler.post {
+                            AddMsgToDebugList.addMsg("下发设置音量指令:", hexWithCRC)
+                        }
+                    } else {
+                        MyToast().error(binding.root.context, "音乐模块串口没打开")
+                        volumeSeekBar.progress = volumeSeekBar.progress
+                    }
+                } else {
+                    musicPlayerManager.setVolume(audioManager, progress)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar : SeekBar?) {
@@ -202,7 +210,10 @@ class MusicFragment: Fragment() {
 
             override fun onStopTrackingTouch(seekBar : SeekBar?) {
                 if (seekBar != null) {
-                    MyToast().success(binding.root.context,"设置当前音量为${volumeLevel[seekBar.progress - 1]}")
+                    MyToast().success(
+                        binding.root.context,
+                        "设置当前音量为${volumeLevel[seekBar.progress - 1]}"
+                    )
                 }
             }
         })
@@ -212,7 +223,7 @@ class MusicFragment: Fragment() {
 
 
     @SuppressLint("InflateParams")
-    private fun showMusicListDialog(binding : MusicBinding){
+    private fun showMusicListDialog(binding : MusicBinding) {
         val dialogBinding = MusicListDialogBinding.inflate(layoutInflater)
         val dialogView = dialogBinding.root
 
@@ -222,16 +233,15 @@ class MusicFragment: Fragment() {
             binding,
             createMusicListItems(mp3Files),
             musicPlayerManager,
-            onSongClickListener = {
-                    songPath ->
-                if (musicSerialHelper.isOpen){
-                    musicPlayerManager.playSong(binding,songPath)
+            onSongClickListener = { songPath ->
+                if (musicSerialHelper.isOpen) {
+                    musicPlayerManager.playSong(binding, songPath)
                     binding.songName.text = getMetadata(File(songPath))
                 } else {
-                    MyToast().info(binding.root.context,"音乐模块串口为打开")
+                    MyToast().info(binding.root.context, "音乐模块串口为打开")
                 }
             },
-            onVolumeChangedListener = {volume ->
+            onVolumeChangedListener = { volume ->
                 // 设置音乐流的音量
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0)
             })
@@ -246,31 +256,30 @@ class MusicFragment: Fragment() {
     }
 
 
-
-    private fun getMp3Files(): List<File> {
+    private fun getMp3Files() : List<File> {
         val internalStorageDir = requireContext().filesDir
         return internalStorageDir.listFiles { _, name -> name.endsWith(".mp3", true) }?.toList()
             ?: emptyList()
     }
 
-    private fun createMusicListItems(mp3Files: List<File>): List<MusicListItemViewModel>{
+    private fun createMusicListItems(mp3Files : List<File>) : List<MusicListItemViewModel> {
         val musicListItems = mutableListOf<MusicListItemViewModel>()
 
-        for (mp3File in mp3Files){
+        for (mp3File in mp3Files) {
             val songName = getMetadata(mp3File)
             val songPath = mp3File.absolutePath
-            musicListItems.add(MusicListItemViewModel(songName,songPath))
+            musicListItems.add(MusicListItemViewModel(songName, songPath))
         }
         return musicListItems
     }
 
-    private fun getMetadata(mp3File: File): String {
+    private fun getMetadata(mp3File : File) : String {
         val retriever = MediaMetadataRetriever()
         try {
             retriever.setDataSource(mp3File.absolutePath)
             return retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                 ?: mp3File.name
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             e.printStackTrace()
         } finally {
             retriever.release()

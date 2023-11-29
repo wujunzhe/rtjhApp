@@ -1,8 +1,7 @@
 <!-- fragment_center.xml -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="20dp">
@@ -12,10 +11,10 @@
         android:id="@+id/container_air_condition"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.33"
+        app:layout_constraintEnd_toStartOf="@id/container_call"
         app:layout_constraintHeight_percent="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/container_call"
+        app:layout_constraintWidth_percent="0.33"
         tools:ignore="MissingConstraints" />
 
     <!-- 电话模块 -->
@@ -23,42 +22,41 @@
         android:id="@+id/container_call"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.33"
+        app:layout_constraintEnd_toStartOf="@id/container_music_gas"
         app:layout_constraintHeight_percent="1.2"
         app:layout_constraintStart_toEndOf="@id/container_air_condition"
-        app:layout_constraintEnd_toStartOf="@id/container_music_gas"
+        app:layout_constraintWidth_percent="0.33"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_music_gas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.33"
+        android:layout_marginStart="-20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="1"
         app:layout_constraintStart_toEndOf="@id/container_air_condition"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints"
-        android:layout_marginStart="-20dp">
+        app:layout_constraintWidth_percent="0.33"
+        tools:ignore="MissingConstraints">
         <!-- 音乐模块 -->
         <FrameLayout
             android:id="@+id/container_music"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="1"
+            app:layout_constraintBottom_toTopOf="@id/container_gas"
             app:layout_constraintHeight_percent="0.4"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/container_gas"
-            />
+            app:layout_constraintWidth_percent="1" />
 
         <!-- 气体模块 -->
         <FrameLayout
             android:id="@+id/container_gas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.6"
             app:layout_constraintTop_toBottomOf="@+id/container_music"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintWidth_percent="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

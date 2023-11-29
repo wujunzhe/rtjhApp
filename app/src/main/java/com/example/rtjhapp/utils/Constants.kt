@@ -4,11 +4,12 @@ object Constants {
     /**
      * 常量-串口
      */
-     object SerialPort {
+    object SerialPort {
         const val call = "CallSerialPort" // 电话模块
         const val airCondition = "AirConditionSerialPort" // 空调模块
         const val control = "ControlSerialPort" // 控制模块
         const val music = "MusicSerialPort" // 音乐模块
+
         /**
          * 常量-默认串口号
          */
@@ -18,7 +19,7 @@ object Constants {
             const val control = "/dev/ttyS2"
             const val music = "/dev/ttyS5"
         }
-     }
+    }
 
     /**
      * 常量-显示控制
@@ -37,12 +38,13 @@ object Constants {
      * 常量-空调设置
      */
     object AirConditionSettings {
-        object Order{ // 指令常量
+        object Order { // 指令常量
             const val powerOn = "PowerOnOrder" // 开机指令
             const val powerOff = "PowerOffOrder" // 关机指令
             const val getStatus = "GetAirConditionStatus" // 获取状态指令
         }
-        object NeedCalculator{
+
+        object NeedCalculator {
             const val returnTem = "ReturnTemNeedDivision"
             const val returnHum = "ReturnHumNeedDivision"
             const val settingHum = "SettingHumNeedMulti"
@@ -66,6 +68,7 @@ object Constants {
             const val hum = "HumMax"
             const val tem = "TemMax"
         }
+
         object Min {
             const val hum = "HumMin"
             const val tem = "TemMin"
@@ -77,6 +80,7 @@ object Constants {
                 const val powerOff = "默认关机指令"
                 const val getStatus = "0103000200156407"
             }
+
             object Register {
                 const val returnHum = "2"
                 const val returnTem = "1"
@@ -112,10 +116,11 @@ object Constants {
     /**
      * 常量-智能设置
      */
-    object SmartSettings{
+    object SmartSettings {
         const val disinfectTime = "DisinfectTime"
         const val powerOnDisinfect = "PowerOnDisinfect"
         const val lightDelayTime = "LightDelayTime"
+
         object Default {
             const val disinfectTime = "0"
             const val powerOnDisinfect = false
@@ -175,6 +180,7 @@ object Constants {
         object StartWith {
             const val getStatus = "0103"
         }
+
         object AirCondition {
             const val dutyStart = "" // 空调值班启动
             const val dutyStop = "" // 空调值班停止

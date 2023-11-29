@@ -10,20 +10,19 @@ import androidx.fragment.app.Fragment
 import com.example.rtjhapp.adapter.AirConditionAdapter
 import com.example.rtjhapp.databinding.AirConditionBinding
 import com.example.rtjhapp.event.UpdateAirConditionFragmentUIEvent
-import com.example.rtjhapp.utils.SharedPreferencesManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class AirConditionFragment: Fragment() {
-    private lateinit var binding: AirConditionBinding
-    private lateinit var adapter: AirConditionAdapter
-    private var handler =  Handler(Looper.getMainLooper())
+class AirConditionFragment : Fragment() {
+    private lateinit var binding : AirConditionBinding
+    private lateinit var adapter : AirConditionAdapter
+    private var handler = Handler(Looper.getMainLooper())
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
         savedInstanceState : Bundle?
     ) : View {
-        binding = AirConditionBinding.inflate(inflater,container,false)
+        binding = AirConditionBinding.inflate(inflater, container, false)
         adapter = AirConditionAdapter(binding)
         if (adapter.serialPortIsOpen()) {
             startStatusPolling()
@@ -31,17 +30,17 @@ class AirConditionFragment: Fragment() {
         return binding.root
     }
 
-    private fun startStatusPolling(){
+    private fun startStatusPolling() {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 adapter.getStatus()
-                handler.postDelayed(this,6000)
+                handler.postDelayed(this, 6000)
             }
-        },6000)
+        }, 6000)
     }
 
     @Subscribe
-    fun onUpdateUI(event: UpdateAirConditionFragmentUIEvent){
+    fun onUpdateUI(event : UpdateAirConditionFragmentUIEvent) {
         adapter.isShow()
     }
 

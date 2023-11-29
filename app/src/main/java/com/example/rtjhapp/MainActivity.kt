@@ -1,9 +1,9 @@
 package com.example.rtjhapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
+import androidx.appcompat.app.AppCompatActivity
 import com.example.rtjhapp.bottomModule.BottomFragment
 import com.example.rtjhapp.databinding.ActivityMainBinding
 import com.example.rtjhapp.debugModule.DebugFragment
@@ -11,12 +11,12 @@ import com.example.rtjhapp.timeModule.TimeFragment
 import com.example.rtjhapp.titleModule.TitleFragment
 
 class MainActivity : AppCompatActivity() {
-    private var binding: ActivityMainBinding? = null
+    private var binding : ActivityMainBinding? = null
     private var clickCount = 0
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding !!.root)
 
         // 在 Activity 的 onCreate 方法中添加以下代码
         val controller = window.insetsController
@@ -33,13 +33,13 @@ class MainActivity : AppCompatActivity() {
 
         // 显示调试模块
         showDebug()
-        binding!!.containerTitle.setOnClickListener {
-            clickCount++
-            if(clickCount >= 10) {
-                binding!!.debugListLayout.visibility = View.VISIBLE
+        binding !!.containerTitle.setOnClickListener {
+            clickCount ++
+            if (clickCount >= 10) {
+                binding !!.debugListLayout.visibility = View.VISIBLE
             }
             if (clickCount >= 20) {
-                binding!!.debugListLayout.visibility = View.GONE
+                binding !!.debugListLayout.visibility = View.GONE
 
                 clickCount = 0
             }
@@ -49,24 +49,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showTitle(){
+    private fun showTitle() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container_title,TitleFragment())
+            .replace(R.id.container_title, TitleFragment())
             .commit()
     }
 
-    private fun showDebug(){
+    private fun showDebug() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.debug_list_layout,DebugFragment())
+            .replace(R.id.debug_list_layout, DebugFragment())
             .commit()
     }
 
     /**
      *  加载时间模块
      */
-    private fun showTopTime(){
+    private fun showTopTime() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container_time,TimeFragment())
+            .replace(R.id.container_time, TimeFragment())
             .commit()
     }
 
@@ -75,13 +75,13 @@ class MainActivity : AppCompatActivity() {
      */
     private fun showBottom() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.containerBottom,BottomFragment())
+            .replace(R.id.containerBottom, BottomFragment())
             .commit()
     }
 
     private fun showCenterContainer() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container_center,CenterContainerFragment())
+            .replace(R.id.container_center, CenterContainerFragment())
             .commit()
     }
 }
