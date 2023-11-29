@@ -32,13 +32,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_marginTop="0dp">
+
                 <TextView
                     android:id="@+id/surgery_timing_hours"
+                    style="@style/timingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_00"
-                    style="@style/timingStyle"
-                    />
+                    android:text="@string/_00" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,6 +140,7 @@
                     style="@style/timingStyle" />
             </LinearLayout>
             <TextView
+                android:id="@+id/local_timing_years"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/time_bottom"
