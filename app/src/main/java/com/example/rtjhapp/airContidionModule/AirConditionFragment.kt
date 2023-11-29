@@ -40,7 +40,7 @@ class AirConditionFragment : Fragment() {
     }
 
     @Subscribe
-    fun onUpdateUI(event : UpdateAirConditionFragmentUIEvent) {
+    fun onUpdateUI(event: UpdateAirConditionFragmentUIEvent) {
         adapter.isShow()
     }
 
@@ -50,6 +50,7 @@ class AirConditionFragment : Fragment() {
     }
 
     override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }

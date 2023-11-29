@@ -11,11 +11,12 @@ android {
         applicationId = "com.example.rtjhapp"
         minSdk = 30
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
         ndk {
             abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
         }
+        versionCode = 1
+        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,6 +24,10 @@ android {
         debug {
             isShrinkResources = true
             isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         release {
             isMinifyEnabled = false
@@ -51,6 +56,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
+    implementation("org.greenrobot:eventbus:3.2.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.licheedev:Modbus4Android:2.0.2")
     implementation("com.afollestad.material-dialogs:core:3.3.0")
@@ -58,7 +64,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.databinding:databinding-runtime:7.4.2")
     implementation("com.github.zcweng:switch-button:0.0.3@aar")
-    implementation("org.greenrobot:eventbus:3.2.0")
     implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
     implementation("io.github.xmaihh:serialport:2.1.1")
     testImplementation("junit:junit:4.13.2")
