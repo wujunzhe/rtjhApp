@@ -10,12 +10,10 @@ import com.github.barteksc.pdfviewer.util.FitPolicy
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class PdfPreviewActivity : AppCompatActivity(), OnPageChangeListener, OnLoadCompleteListener {
-    private lateinit var backBtn : ExtendedFloatingActionButton
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityPdfRenderBinding.inflate(layoutInflater)
-        backBtn = binding.backBtn
         setContentView(binding.root)
 
         val pdfFileName = "test.pdf"
@@ -30,9 +28,6 @@ class PdfPreviewActivity : AppCompatActivity(), OnPageChangeListener, OnLoadComp
             .scrollHandle(DefaultScrollHandle(this))
             .load()
 
-        backBtn.setOnClickListener {
-            finish()
-        }
 
     }
 

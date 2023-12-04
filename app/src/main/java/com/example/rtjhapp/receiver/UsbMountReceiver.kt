@@ -21,10 +21,10 @@ class UsbMountReceiver : BroadcastReceiver() {
             val usbPath = intent.data?.path
             usbPath?.let {
                 if (hasMp3Files(it)) {
-                    if (isImporting) {
+                    isImporting = true
                         context?.let { it1 ->
                             handler.post {
-                                MyToast().success(it1, "正在导入mp3文件")
+                                MyToast().info(it1, "正在导入mp3文件")
                             }
                         }
                         try {
@@ -38,13 +38,6 @@ class UsbMountReceiver : BroadcastReceiver() {
                         } finally {
                             isImporting = false
                         }
-                    } else {
-                        context?.let { it2 ->
-                            handler.post {
-                                MyToast().info(it2, "没有可导入的mp3文件")
-                            }
-                        }
-                    }
                 }
             }
         }
