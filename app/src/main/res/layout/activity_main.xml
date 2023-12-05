@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="1"
         tools:ignore="MissingConstraints" />
-    <!-- 添加透明方框 View -->
+
     <FrameLayout
         android:id="@+id/container_time"
         android:layout_width="0dp"
@@ -63,5 +63,4 @@
 
         <include layout="@layout/debug_list" />
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

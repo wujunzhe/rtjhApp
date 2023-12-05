@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="40dp"
-    android:paddingTop="10dp">
+    android:background="@color/halfTransparent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -267,13 +269,13 @@
                     android:background="@color/backgroundTransparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/call"
-                    app:layout_constraintEnd_toStartOf="@+id/exclusive_calling_btn"
+                    app:layout_constraintEnd_toStartOf="@+id/special_calling_btn"
                     app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintWidth_percent="0.33" />
 
                 <ImageButton
-                    android:id="@+id/exclusive_calling_btn"
+                    android:id="@+id/special_calling_btn"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@color/backgroundTransparent"
@@ -293,7 +295,7 @@
                     android:src="@drawable/hang_up"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_percent="1"
-                    app:layout_constraintStart_toEndOf="@id/exclusive_calling_btn"
+                    app:layout_constraintStart_toEndOf="@id/special_calling_btn"
                     app:layout_constraintWidth_percent="0.33" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

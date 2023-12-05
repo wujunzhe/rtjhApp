@@ -1,5 +1,6 @@
 package com.example.rtjhapp.receiver
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -16,11 +17,12 @@ class UsbMountReceiver : BroadcastReceiver() {
 
     private val handler = Handler(Looper.getMainLooper())
     private var isImporting = false
+    @SuppressLint("SuspiciousIndentation")
     override fun onReceive(context : Context?, intent : Intent?) {
         if (intent != null && intent.action == Intent.ACTION_MEDIA_MOUNTED) {
             val usbPath = intent.data?.path
             usbPath?.let {
-                if (hasMp3Files(it)) {
+                if (hasMp3Files(it) && !isImporting) {
                     isImporting = true
                         context?.let { it1 ->
                             handler.post {
@@ -54,6 +56,7 @@ class UsbMountReceiver : BroadcastReceiver() {
         }
         return false
     }
+
 
     private fun importMp3FilesFromUsb(
         usbPath : String?,

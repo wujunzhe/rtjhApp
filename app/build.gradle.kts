@@ -66,6 +66,8 @@ dependencies {
     implementation("com.github.zcweng:switch-button:0.0.3@aar")
     implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
     implementation("io.github.xmaihh:serialport:2.1.1")
+    implementation("com.felipecsl.asymmetricgridview:library:2.0.1")
+    implementation("com.google.code.gson:gson:2.8.9")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

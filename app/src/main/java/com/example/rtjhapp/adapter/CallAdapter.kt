@@ -1,13 +1,19 @@
 package com.example.rtjhapp.adapter
 
+import android.view.LayoutInflater
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.CallBinding
+import com.example.rtjhapp.dialog.SpecialCallDialog
 import com.example.rtjhapp.event.UpdateDebugMessageEvent
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 
 
@@ -19,6 +25,7 @@ class CallAdapter(private val binding : CallBinding) {
     private lateinit var hangUpBtn : ImageButton
     private lateinit var sharedPreferencesManager : SharedPreferencesManager
     private lateinit var callSerialHelper : MySerialHelper
+    private lateinit var specialBtn: ImageButton
 
     fun initViews() {
         phoneNumberTextView = binding.phoneNumText
@@ -38,6 +45,11 @@ class CallAdapter(private val binding : CallBinding) {
         delBtn = binding.delNum
         callBtn = binding.callBtn
         hangUpBtn = binding.hangUpBtn
+
+        specialBtn = binding.specialCallingBtn
+        specialBtn.setOnClickListener {
+            SpecialCallDialog(binding.root.context).show()
+        }
 
         sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
         val serialAddress = sharedPreferencesManager.readString(
@@ -156,4 +168,5 @@ class CallAdapter(private val binding : CallBinding) {
         val newPhoneNumber = currentPhoneNumber + digits
         phoneNumberTextView.text = newPhoneNumber
     }
+
 }

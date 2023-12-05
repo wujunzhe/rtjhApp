@@ -72,6 +72,16 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="dialogInputStyle">
+        <item name="android:layout_width">@dimen/short_edit_width</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:background">@drawable/border_input_box</item>
+        <item name="android:gravity">start</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <style name="mytoast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#fff</item>
@@ -97,5 +107,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/timingColor</item>
         <item name="android:layout_marginTop">3dp</item>
+    </style>
+
+    <style name="addBtnStyle">
+        <item name="android:background">@color/medicalTextColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:radius">30dp</item>
     </style>
 </resources>

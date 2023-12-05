@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         showTitle()
-
     }
 
     private fun showTitle() {

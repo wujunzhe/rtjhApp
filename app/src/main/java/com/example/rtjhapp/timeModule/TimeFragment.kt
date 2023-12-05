@@ -8,9 +8,16 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.rtjhapp.databinding.TopTimeBinding
+import com.example.rtjhapp.utils.AddMsgToDebugList
+import com.example.rtjhapp.utils.ByteUtil
+import com.example.rtjhapp.utils.Constants
+import com.example.rtjhapp.utils.MySerialHelper
+import com.example.rtjhapp.utils.MyToast
+import tp.xmaihh.serialport.bean.ComBean
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -32,7 +39,21 @@ class TimeFragment: Fragment() {
     private var dd1 = false
     private var dd2 = false
 
+
     private lateinit var binding: TopTimeBinding
+
+    //手术正计时按钮获取
+    private lateinit var ssTimeStart: ImageButton
+    private lateinit var ssTimeBackHome: ImageButton
+    private lateinit var ssTimeWait: ImageButton
+
+    private lateinit var ssShi: TextView
+    private lateinit var ssFen: TextView
+    private lateinit var ssMiao: TextView
+
+    private lateinit var timeSerialHelper : MySerialHelper
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable1: Runnable
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
@@ -40,9 +61,58 @@ class TimeFragment: Fragment() {
 
     ) : View {
        binding = TopTimeBinding.inflate(inflater,container,false)
+
+        //手术计时视图时分秒
+        ssFen = binding.surgeryTimingMinutes
+        ssMiao = binding.surgeryTimingSeconds
+        ssTimeStart = binding.surgeryTimingStart
+        ssTimeBackHome = binding.surgeryTimingReset
+        ssTimeWait = binding.surgeryTimingStop
+        ssShi = binding.surgeryTimingHours
+        runnable1 = object: Runnable{
+            override fun run() {
+                millisecondsRecord1 = SystemClock.uptimeMillis() - startTime1
+                val accumulatedTime = timeBuff1 + millisecondsRecord1
+
+                val seconds = accumulatedTime / 1000 % 60//秒
+                val minutes = accumulatedTime / 1000 / 60 % 60 //分
+                val hours = accumulatedTime / 1000 / 60 /60 % 60//时
+                val shi = String.format("%02d",hours)
+                val fen = String.format("%02d",minutes)
+                val miao = String.format("%02d",seconds)
+                ssShi.text = shi
+                ssFen.text = fen
+                ssMiao.text = miao
+                mHandler.postDelayed(this,0)
+            }
+        }
         //计时功能
         togoStart(binding)
         toGetNowTime()
+        timeSerialHelper = object : MySerialHelper("/dev/ttyS2",9600) {
+            override fun onDataReceived(comBean : ComBean) {
+                super.onDataReceived(comBean)
+                val hex = ByteUtil.comBeanToHex(comBean)
+                if (hex == "0001") {
+                    start1(runnable1)
+                    pd1 = true
+                    dd1 = false
+                } else if (hex == "0002") {
+                    pause1(runnable1)
+                    pd1 = false
+                    dd1 = true
+                }
+                handler.post {
+                    AddMsgToDebugList.addMsg("时间测试收到数据", hex)
+                }
+            }
+        }
+
+        try {
+            timeSerialHelper.open()
+        } catch (e : Exception) {
+            MyToast().error(binding.root.context, "电话模块串口未打开")
+        }
         return binding.root
     }
 //------------------------------------当前时间方法----------------------------------------------------
@@ -80,44 +150,46 @@ class TimeFragment: Fragment() {
 //------------------------------------两个计时方法----------------------------------------------------
     private fun togoStart(binding: TopTimeBinding) {
         //手术正计时按钮获取
-        val ssTimeStart = binding.surgeryTimingStart//开始按钮
-        val ssTimeBackHome = binding.surgeryTimingReset//重置按钮
-        val ssTimeWait = binding.surgeryTimingStop//暂停按钮
-
-        //手术计时视图时分秒
-        val ssShi = binding.surgeryTimingHours
-        val ssFen = binding.surgeryTimingMinutes
-        val ssMiao = binding.surgeryTimingSeconds
+//        val ssTimeStart = binding.surgeryTimingStart//开始按钮
+//        val ssTimeBackHome = binding.surgeryTimingReset//重置按钮
+//        val ssTimeWait = binding.surgeryTimingStop//暂停按钮
+//
+//        //手术计时视图时分秒
+//        val ssShi = binding.surgeryTimingHours
+//        val ssFen = binding.surgeryTimingMinutes
+//        val ssMiao = binding.surgeryTimingSeconds
         //计时方法
-        val runnable1 = object: Runnable{
-            override fun run() {
-                millisecondsRecord1 = SystemClock.uptimeMillis() - startTime1
-                val accumulatedTime = timeBuff1 + millisecondsRecord1
-
-                val seconds = accumulatedTime / 1000 % 60//秒
-                val minutes = accumulatedTime / 1000 / 60 % 60 //分
-                val hours = accumulatedTime / 1000 / 60 /60 % 60//时
-                val shi = String.format("%02d",hours)
-                val fen = String.format("%02d",minutes)
-                val miao = String.format("%02d",seconds)
-                ssShi.text = shi
-                ssFen.text = fen
-                ssMiao.text = miao
-                mHandler.postDelayed(this,0)
-            }
-        }
+//        val runnable1 = object: Runnable{
+//            override fun run() {
+//                millisecondsRecord1 = SystemClock.uptimeMillis() - startTime1
+//                val accumulatedTime = timeBuff1 + millisecondsRecord1
+//
+//                val seconds = accumulatedTime / 1000 % 60//秒
+//                val minutes = accumulatedTime / 1000 / 60 % 60 //分
+//                val hours = accumulatedTime / 1000 / 60 /60 % 60//时
+//                val shi = String.format("%02d",hours)
+//                val fen = String.format("%02d",minutes)
+//                val miao = String.format("%02d",seconds)
+//                ssShi.text = shi
+//                ssFen.text = fen
+//                ssMiao.text = miao
+//                mHandler.postDelayed(this,0)
+//            }
+//        }
         //监听开始按钮：开始功能
         ssTimeStart.setOnClickListener {
-            if(!pd1){
+//            if(!pd1){
                 start1(runnable1)
                 println("开始计时")
                 pd1 = true
                 dd1 = false
-            }else{
-                pause1(runnable1)
-                pd1 = false
-                dd1 = true
-            }
+                if (timeSerialHelper.isOpen) {
+                    timeSerialHelper.sendHex("001")
+                    handler.post {
+                        AddMsgToDebugList.addMsg("测试指令","发送001")
+                    }
+                }
+//            }
         }
         //监听重置按钮：计时重置功能
         ssTimeBackHome.setOnClickListener {
@@ -130,6 +202,12 @@ class TimeFragment: Fragment() {
             println("暂停计时")
             pd1 = false
             dd1 = true
+            if (timeSerialHelper.isOpen) {
+                timeSerialHelper.sendHex("002")
+                handler.post {
+                    AddMsgToDebugList.addMsg("测试指令","发送002")
+                }
+            }
         }
 //-------------------------------------------------------------------------------------------------
         //麻醉正计时按钮
@@ -191,14 +269,14 @@ class TimeFragment: Fragment() {
         mHandler.postDelayed(runnable,0)
     }
     private fun pause1(runnable:Runnable){
-        if(!dd1){
+//        if(!dd1){
             timeBuff1 += millisecondsRecord1
             mHandler.removeCallbacks(runnable)
             println("改变状态，判断开始")
             dd1 = true
-        }else{
-            println("禁止访问")
-        }
+//        }else{
+//            println("禁止访问")
+//        }
     }
     @SuppressLint("SetTextI18n")
     private fun rest1(shi:TextView, fen:TextView, miao:TextView){

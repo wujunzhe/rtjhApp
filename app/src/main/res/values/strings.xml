@@ -103,4 +103,12 @@
     <string name="back_button_description">返回</string>
     <string name="smartLightRemarks">当照明关闭延时为0时，关闭灯光不会延时关闭</string>
     <string name="lightDelayTime">照明延时:</string>
+    <string name="surgicalTime">手术正计时</string>
+    <string name="localTime">本地时间</string>
+    <string name="aneaTIme">麻醉计时</string>
+    <string name="add">添加</string>
+    <string name="cancel">取消</string>
+    <string name="phoneNumber">电话号码:</string>
+    <string name="specialName">专呼名称:</string>
+    <string name="sure">确定</string>
 </resources>
