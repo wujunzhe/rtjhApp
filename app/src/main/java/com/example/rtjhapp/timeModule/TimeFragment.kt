@@ -2,9 +2,11 @@ package com.example.rtjhapp.timeModule
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +22,16 @@ import java.util.TimerTask
 
 class TimeFragment: Fragment() {
     private var mHandler:Handler = Handler()
+
     private var millisecondsRecord1 = 0L
     private var startTime1 = 0L
     private var timeBuff1 = 0L
 
+
+    private var pauseTimeInMilliseconds = 0L
+
     private var millisecondsRecord2 = 0L
-    private var startTime2 = 0L
+    private var startTime2 = 5L
     private var timeBuff2 = 0L
     private var pd1 = false
     private var pd2 = false
@@ -78,6 +84,7 @@ class TimeFragment: Fragment() {
         timer.schedule(timerTask, 0, 1000)
     }
 //------------------------------------两个计时方法----------------------------------------------------
+    //手术正计时
     private fun togoStart(binding: TopTimeBinding) {
         //手术正计时按钮获取
         val ssTimeStart = binding.surgeryTimingStart//开始按钮
@@ -93,7 +100,6 @@ class TimeFragment: Fragment() {
             override fun run() {
                 millisecondsRecord1 = SystemClock.uptimeMillis() - startTime1
                 val accumulatedTime = timeBuff1 + millisecondsRecord1
-
                 val seconds = accumulatedTime / 1000 % 60//秒
                 val minutes = accumulatedTime / 1000 / 60 % 60 //分
                 val hours = accumulatedTime / 1000 / 60 /60 % 60//时
@@ -137,26 +143,38 @@ class TimeFragment: Fragment() {
         val mzTimeBackHome = binding.anaesthesiaTimingReset//重置按钮
         val mzTimeWait = binding.anaesthesiaTimingStop//暂停按钮
 
-        //麻醉计时视图时分秒
+        //麻醉计时视图时分秒控件
         val mzShi = binding.anaesthesiaTimingHours
         val mzFen = binding.anaesthesiaTimingMinutes
         val mzMiao = binding.anaesthesiaTimingSeconds
 
-        val runnable2 = object: Runnable{
+    // 倒计时相关变量
+        var targetTimeInMilliseconds = 10000L
+        var handler = Handler(Looper.getMainLooper())
+        val runnable2 = object : Runnable {
             override fun run() {
-                millisecondsRecord2 = SystemClock.uptimeMillis() - startTime2
-                val accumulatedTime = timeBuff2 + millisecondsRecord2
+                val currentTime = System.currentTimeMillis()
+                val remainingTime = targetTimeInMilliseconds - currentTime
 
-                val seconds = accumulatedTime / 1000 % 60//秒
-                val minutes = accumulatedTime / 1000 / 60 % 60 //分
-                val hours = accumulatedTime / 1000 / 60 /60 % 60//时
-                val shi = String.format("%02d",hours)
-                val fen = String.format("%02d",minutes)
-                val miao = String.format("%02d",seconds)
-                mzShi.text = shi
-                mzFen.text = fen
-                mzMiao.text = miao
-                mHandler.postDelayed(this,0)
+                val hours = (remainingTime / DateUtils.HOUR_IN_MILLIS) % 24
+                val minutes = (remainingTime / DateUtils.MINUTE_IN_MILLIS) % 60
+                val seconds = (remainingTime / DateUtils.SECOND_IN_MILLIS) % 60
+
+                println(remainingTime)
+
+                if (remainingTime > 0) {
+                    ssShi.text = hours.toString()
+                    ssFen.text = minutes.toString()
+                    ssMiao.text = seconds.toString()
+                    handler.postDelayed(this, DateUtils.SECOND_IN_MILLIS)
+                    println("222")
+                } else {
+                    ssShi.text = "00"
+                    ssFen.text = "00"
+                    ssMiao.text = "00"
+                    handler.removeCallbacks(this)
+                    println("333")
+                }
             }
         }
         //麻醉开始按钮：麻醉功能
@@ -185,7 +203,7 @@ class TimeFragment: Fragment() {
             dd2 = true
         }
     }
-    //------------------------------------计时方法函数------------------------------------------------
+    //--------------------------------正计时部分------------------------------------------------------
     private fun start1(runnable:Runnable){
         startTime1 = SystemClock.uptimeMillis()
         mHandler.postDelayed(runnable,0)
@@ -195,6 +213,7 @@ class TimeFragment: Fragment() {
             timeBuff1 += millisecondsRecord1
             mHandler.removeCallbacks(runnable)
             println("改变状态，判断开始")
+            println(timeBuff1)
             dd1 = true
         }else{
             println("禁止访问")
@@ -212,8 +231,9 @@ class TimeFragment: Fragment() {
             miao.text = "00"
         }
     }
+//------------------------------------麻醉部分-------------------------------------------------------
     private fun start2(runnable:Runnable){
-        startTime2 = SystemClock.uptimeMillis()
+        pauseTimeInMilliseconds = System.currentTimeMillis()
         mHandler.postDelayed(runnable,0)
     }
     private fun pause2(runnable:Runnable){
@@ -223,17 +243,16 @@ class TimeFragment: Fragment() {
             println("改变状态，判断开始")
             dd2 = true
         }else{
-            println("禁止访问")
+            println("不可同步操作")
         }
-
     }
     @SuppressLint("SetTextI18n")
     private fun reset2(shi:TextView, fen:TextView, miao:TextView){
         if(pd2){
             println("请暂停计时后，再重置")
         }else{
-            millisecondsRecord2 = 0L
-            timeBuff2 = 0L
+            millisecondsRecord2 = 0L//设置的计时
+            timeBuff2 = 0L//衰减的计时
             shi.text = "00"
             fen.text = "00"
             miao.text = "00"
