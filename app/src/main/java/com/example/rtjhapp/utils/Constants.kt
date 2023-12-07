@@ -16,7 +16,7 @@ object Constants {
         object Default {
             const val call = "/dev/ttyS9"
             const val airCondition = "/dev/ttyS0"
-            const val control = "/dev/ttyS4"
+            const val control = "/dev/ttyS2"
             const val music = "/dev/ttyS5"
         }
     }
