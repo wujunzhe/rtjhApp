@@ -155,7 +155,6 @@ class TimeFragment: Fragment() {
             MyToast().error(binding.root.context, "电话模块串口未打开")//看板输出
         }
         return binding.root//返回视图控制权限
-
     }
 //--------------------------------------当前时间------------------------------------------------------
     private fun toGetNowTime(){

@@ -16,7 +16,7 @@ object Constants {
         object Default {
             const val call = "/dev/ttyS9"
             const val airCondition = "/dev/ttyS0"
-            const val control = "/dev/ttyS4"
+            const val control = "/dev/ttyS2"
             const val music = "/dev/ttyS5"
         }
     }
@@ -78,27 +78,27 @@ object Constants {
             object Order {
                 const val powerOn = "默认开机指令"
                 const val powerOff = "默认关机指令"
-                const val getStatus = "0103000200156407"
+                const val getStatus = "01030002001665C4"
             }
 
             object Register {
-                const val returnHum = "2"
-                const val returnTem = "1"
-                const val settingHum = "4"
-                const val settingTem = "3"
-                const val runningState = "9"
-                const val unitFailure = "6"
-                const val dutyMode = "5"
-                const val neStressToggle = "8"
-                const val systemError = "7"
+                const val returnHum = "2" // 回风湿度
+                const val returnTem = "1" // 回风温度
+                const val settingHum = "4" // 设定湿度
+                const val settingTem = "3" // 设定温度
+                const val runningState = "5" // 运行状态
+                const val unitFailure = "6" // 设备故障
+                const val dutyMode = "7" // 值班模式
+                const val neStressToggle = "8" // 正负压切换
+                const val systemError = "10" //系统报警
                 const val runningTime = "默认运势时间寄存器号"
-                const val oxygenStatus = "10" // 氧气
-                const val negativePressureStatus = "11" // 负压吸引
-                const val pressurizedAirStatus = "12" // 压缩空气
-                const val carbonDioxideStatus = "13" // 二氧化碳
-                const val nitrogenStatus = "14" // 氮气
-                const val nitrousOxideStatus = "15" // 笑气
-                const val hydrogenStatus = "16" // 氢气
+                const val oxygenStatus = "13" // 氧气
+                const val negativePressureStatus = "14" // 负压吸引
+                const val pressurizedAirStatus = "15" // 压缩空气
+                const val carbonDioxideStatus = "16" // 二氧化碳
+                const val nitrogenStatus = "17" // 氮气
+                const val nitrousOxideStatus = "18" // 笑气
+                const val hydrogenStatus = "19" // 氢气
             }
 
             object Max {
@@ -178,16 +178,16 @@ object Constants {
      */
     object AirConditionOrder {
         object StartWith {
-            const val getStatus = "0103"
+            const val getStatus = "01032C"
         }
 
         object AirCondition {
-            const val dutyStart = "" // 空调值班启动
-            const val dutyStop = "" // 空调值班停止
-            const val start = "01050000ff00" // 空调启动
-            const val stop = "010500000000" // 空调停止
-            const val neStress = "" // 正负压正
-            const val geStress = "" // 正负压负
+            const val dutyStart = "01050002FF002DFA" // 空调值班启动
+            const val dutyStop = "0105000200006C0A" // 空调值班停止
+            const val start = "01050000FF008C3A" // 空调启动
+            const val stop = "010500000000CDCA" // 空调停止
+            const val neStress = "01050003FF007C3A" // 正负压开
+            const val geStress = "0105000300003DCA" // 正负压关
         }
     }
 

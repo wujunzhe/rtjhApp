@@ -145,6 +145,8 @@ class MusicFragment : Fragment() {
         }
         // 本地音乐列表按钮监听
         musicListBtn.setOnClickListener {
+            isBackgroundMusic = false
+            MyToast().info(binding.root.context,"切换到本地音乐")
             val mp3FileList = getMp3Files()
             if (mp3FileList.isEmpty()) {
                 MyToast().info(binding.root.context, "暂无可播放列表")
@@ -178,6 +180,7 @@ class MusicFragment : Fragment() {
         backgroundMusicBtn.setOnClickListener {
             if (musicSerialHelper.isOpen) {
                 isBackgroundMusic = true
+                MyToast().info(binding.root.context,"切换到背景音乐")
             } else {
                 MyToast().error(binding.root.context, "音乐模块串口未打开")
             }
