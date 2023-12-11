@@ -24,9 +24,7 @@ class AirConditionFragment : Fragment() {
     ) : View {
         binding = AirConditionBinding.inflate(inflater, container, false)
         adapter = AirConditionAdapter(binding)
-        if (adapter.serialPortIsOpen()) {
-            startStatusPolling()
-        }
+        startStatusPolling()
         return binding.root
     }
 
@@ -40,7 +38,7 @@ class AirConditionFragment : Fragment() {
     }
 
     @Subscribe
-    fun onUpdateUI(event: UpdateAirConditionFragmentUIEvent) {
+    fun onUpdateUI(event : UpdateAirConditionFragmentUIEvent) {
         adapter.isShow()
     }
 
@@ -52,6 +50,7 @@ class AirConditionFragment : Fragment() {
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
         EventBus.getDefault().unregister(this)
+        adapter.closeHelper()
         super.onDestroy()
     }
 }

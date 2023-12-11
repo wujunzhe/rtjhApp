@@ -10,17 +10,11 @@ import com.example.rtjhapp.databinding.BottomBinding
 import com.example.rtjhapp.utils.AddMsgToDebugList
 import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
+import com.example.rtjhapp.utils.ControlSerialHelper
 import com.example.rtjhapp.utils.DebounceClickListener
-import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.OnDataReceivedListener
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.modbus.ModbusRtuMaster
-import tp.xmaihh.serialport.bean.ComBean
-
-interface OnDataReceivedListener {
-    fun onDataReceived(receivedData : String)
-}
 
 class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListener {
     private var lighting1Btn : ImageView = binding.lighting1Btn
@@ -44,8 +38,7 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
     private var differentGaugeLayout : LinearLayout = binding.differentGauge
     private var sharedPreferencesManager : SharedPreferencesManager =
         SharedPreferencesManager(binding.root.context)
-    private var controlSerialHelper : MySerialHelper
-    private var modbusRtuMaster : ModbusRtuMaster
+    private var controlSerialHelper : ControlSerialHelper
     private var lighting1Flag = false
     private var lighting2Flag = false
     private var viewingLightsFlag = false
@@ -57,7 +50,7 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
     private var powerFlag = false
     private var silenceFlag = false
     private var spare1Flag = false
-    private val handler = Handler(Looper.getMainLooper())
+    private val bottomHandler = Handler(Looper.getMainLooper())
 
     init {
         val serialAddress = sharedPreferencesManager.readString(
@@ -65,24 +58,15 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
             Constants.SerialPort.Default.control
         )
         val baudRate = Constants.SerialPortDefaultConfig.baudRate
-        controlSerialHelper = object : MySerialHelper(serialAddress, baudRate) {
-            override fun onDataReceived(comBean : ComBean) {
-                super.onDataReceived(comBean)
-                val hex = ByteUtil.comBeanToHex(comBean)
-                if (hex.length > 16 && hex.startsWith(Constants.ControlOrder.StartWith.getStatus)) {
-                    setControlStatus(hex)
-                }
-                handler.post {
-                    AddMsgToDebugList.addMsg("获取继电器状态", hex)
-                }
-            }
-        }
-        modbusRtuMaster = ModbusRtuMaster(controlSerialHelper)
+        controlSerialHelper = ControlSerialHelper(serialAddress, baudRate)
+        controlSerialHelper.setOnDataReceivedListener(this)
         try {
             controlSerialHelper.open()
+            controlSerialHelper.sendHex("FF060008000A9DD1")
         } catch (e : Exception) {
             MyToast().error(binding.root.context, "控制模块串口未打开")
         }
+//        setDataListener()
         setTimeSettings()
         setBtnClickListeners()
     }
@@ -94,6 +78,49 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
         }
     }
 
+    override fun onControlDataReceived(receivedData : String, hex : String) {
+        super.onControlDataReceived(receivedData, hex)
+        bottomHandler.postDelayed({
+            AddMsgToDebugList.addMsg(
+                "当前串口地址${controlSerialHelper.port},获取继电器状态",
+                hex
+            )
+            try {
+                if (hex.startsWith(Constants.ControlOrder.StartWith.getStatus)) {
+                    setControlStatus(hex)
+                }
+            } catch (e : Exception) {
+                AddMsgToDebugList.addMsg("错误", e.message.toString())
+            }
+        }, 0)
+        if (receivedData.length > 16 && receivedData.startsWith(Constants.ControlOrder.StartWith.getStatus)) {
+            setControlStatus(receivedData)
+            bottomHandler.post {
+                AddMsgToDebugList.addMsg(
+                    "当前串口地址${controlSerialHelper.port},获取继电器状态",
+                    receivedData
+                )
+            }
+        }
+    }
+//    private fun setDataListener(){
+//        controlSerialHelper.setOnDataReceivedListener(object : OnDataReceivedListener {
+//            override fun onControlDataReceived(receivedData : String, hex : String) {
+//                bottomHandler.post {
+//                    AddMsgToDebugList.addMsg("接收到了控制模块数据", hex)
+//                }
+//                if (receivedData.length > 16 && receivedData.startsWith(Constants.ControlOrder.StartWith.getStatus)) {
+//                    setControlStatus(receivedData)
+//                    bottomHandler.post {
+//                        AddMsgToDebugList.addMsg(
+//                            "当前串口地址${controlSerialHelper.port},获取继电器状态",
+//                            hex
+//                        )
+//                    }
+//                }
+//            }
+//        })
+//    }
 
     fun isShow() {
         val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
@@ -142,8 +169,8 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
             )
             if (lightDelayTime != null) {
                 if (lightDelayTime.toInt() == 0) {
-                    controlSerialHelper.sendHex("FF06000800009DD1")
-                    AddMsgToDebugList.addMsg("下发设置照明延时时间为0指令", "FF06000800009DD1")
+                    controlSerialHelper.sendHex("FF060008000A9DD1")
+                    AddMsgToDebugList.addMsg("下发设置照明延时时间为0指令", "FF060008000A9DD1")
                 } else {
                     val timeHex = ByteUtil.intToHex(lightDelayTime.toInt(), 4)
                     val hex = "FF060008${timeHex}9DD1"
@@ -278,7 +305,7 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
                         Constants.SmartSettings.Default.lightDelayTime
                     )
                     if (lightDelayTime != null) {
-                        if (lightDelayTime.toInt() != 0 && ! lighting2Flag) {
+                        if (! lighting2Flag) {
                             MyToast().info(
                                 binding.root.context,
                                 "照明还有${lightDelayTime}分钟关闭"
@@ -312,7 +339,7 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
                         Constants.SmartSettings.Default.lightDelayTime
                     )
                     if (lightDelayTime != null) {
-                        if (lightDelayTime.toInt() != 0 && ! lighting1Flag) {
+                        if (! lighting1Flag) {
                             MyToast().info(
                                 binding.root.context,
                                 "照明还有${lightDelayTime}分钟关闭"
@@ -467,7 +494,8 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
         return controlSerialHelper.isOpen
     }
 
-    override fun onDataReceived(receivedData : String) {
-        AddMsgToDebugList.addMsg("接收到继电器状态", receivedData)
+
+    fun closeHelper() {
+        controlSerialHelper.close()
     }
 }

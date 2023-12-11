@@ -69,4 +69,13 @@ object ByteUtil {
         return BigDecimal(intVal).setScale(1, RoundingMode.DOWN).divide(BigDecimal(10))
     }
 
+    fun byteArrayToHex(byteArray: ByteArray): String {
+        val hexChars = CharArray(byteArray.size * 2)
+        for (i in byteArray.indices) {
+            val v = byteArray[i].toInt() and 0xFF
+            hexChars[i * 2] = "0123456789ABCDEF"[v ushr 4]
+            hexChars[i * 2 + 1] = "0123456789ABCDEF"[v and 0x0F]
+        }
+        return String(hexChars)
+    }
 }

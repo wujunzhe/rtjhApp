@@ -11,17 +11,17 @@ import android.widget.TextView
 import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.AirConditionBinding
 import com.example.rtjhapp.utils.AddMsgToDebugList
+import com.example.rtjhapp.utils.AirConditionSerialHelper
 import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.DebounceClickListener
-import com.example.rtjhapp.utils.GlobalData
-import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
+import com.example.rtjhapp.utils.OnDataReceivedListener
 import com.example.rtjhapp.utils.SharedPreferencesManager
 import com.example.rtjhapp.utils.modbus.CRC16
-import tp.xmaihh.serialport.bean.ComBean
+import kotlin.math.min
 
-class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataReceivedListener {
+class AirConditionAdapter(private val binding : AirConditionBinding) {
     private val dutyRunningLayout : LinearLayout = binding.dutyRunningLayout
     private val neLayout : LinearLayout = binding.neRunningLayout
     private val airDutyLayout : LinearLayout = binding.airDutyLayout
@@ -60,13 +60,12 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
     private var airConditionStartStopFlag : Boolean = false
     private val airConditionNegeStressBtn : ImageButton = binding.positiveNegativePressureBtn
     private var airConditionNegeStressFlag : Boolean = false
-    private val airConditionSerialHelper : MySerialHelper
+    private val airConditionSerialHelper : AirConditionSerialHelper
     private val sharedPreferencesManager : SharedPreferencesManager =
         SharedPreferencesManager(binding.root.context)
-    private val handler = Handler(Looper.getMainLooper())
+    private val airConditionHandler = Handler(Looper.getMainLooper())
 
     init {
-
         reHumReg = sharedPreferencesManager.readString(
             Constants.AirConditionSettings.Register.returnHum,
             Constants.AirConditionSettings.Default.Register.returnHum
@@ -161,19 +160,20 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
             Constants.SerialPort.Default.airCondition
         )
         airConditionSerialHelper =
-            object : MySerialHelper(airConditionPort, Constants.SerialPortDefaultConfig.baudRate) {
-                override fun onDataReceived(comBean : ComBean) {
-                    super.onDataReceived(comBean)
-                    val hex = ByteUtil.comBeanToHex(comBean)
-                    if (hex.length > 16 && hex.startsWith(Constants.AirConditionOrder.StartWith.getStatus)) {
-                        setAirConditionStatus(hex, binding)
-                        GlobalData.airConditionStatusHex = hex
-                    }
-                    handler.post {
-                        AddMsgToDebugList.addMsg("获取空调状态", hex)
+            AirConditionSerialHelper(airConditionPort, Constants.SerialPortDefaultConfig.baudRate)
+        airConditionSerialHelper.setOnDataReceivedListener(object : OnDataReceivedListener {
+            override fun onDataReceived(receivedData : String) {
+                if (receivedData.length > 16 && receivedData.startsWith(Constants.AirConditionOrder.StartWith.getStatus)) {
+                    setAirConditionStatus(receivedData, binding)
+                    airConditionHandler.post {
+                        AddMsgToDebugList.addMsg(
+                            "获取空调状态",
+                            receivedData
+                        )
                     }
                 }
             }
+        })
         try {
             airConditionSerialHelper.open()
         } catch (e : Exception) {
@@ -183,7 +183,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
     }
 
     fun isShow() {
-        val showDutyFlag = sharedPreferencesManager.readBoolean("DutyDisplayState", false)
+        val showDutyFlag = sharedPreferencesManager.readBoolean("DutyDisplayState", true)
         val showNeFlag = sharedPreferencesManager.readBoolean("NeGeStressToggleDisplayState", true)
 
         if (! showDutyFlag) {
@@ -201,10 +201,6 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
             neLayout.visibility = View.VISIBLE
             airNegeLayout.visibility = View.VISIBLE
         }
-    }
-
-    fun serialPortIsOpen() : Boolean {
-        return airConditionSerialHelper.isOpen
     }
 
     fun getStatus() {
@@ -228,7 +224,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 } else {
                     bytes.toInt(16).toString()
                 }
-                handler.post {
+                airConditionHandler.post {
                     binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
                 }
             } else if (index + 1 == reHumReg !!.toInt()) {
@@ -237,7 +233,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 } else {
                     bytes.toInt(16).toString()
                 }
-                handler.post {
+                airConditionHandler.post {
                     binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
                 }
             } else if (index + 1 == dutyReg !!.toInt()) {
@@ -290,7 +286,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 val hex = "0106${setTemRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
                 if (airConditionSerialHelper.isOpen) {
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         setTemText.text = (currentTempVal + 1).toString()
                         AddMsgToDebugList.addMsg("下发设置温度指令", hex + crc)
@@ -318,7 +314,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 val hex = "0106${setTemRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
                 if (airConditionSerialHelper.isOpen) {
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         setTemText.text = (currentTempVal - 1).toString()
                         AddMsgToDebugList.addMsg("下发设置温度指令", hex + crc)
@@ -346,7 +342,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 val hex = "0106${setHumRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
                 if (airConditionSerialHelper.isOpen) {
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         setHumText.text = (currentHumVal + 1).toString()
                         AddMsgToDebugList.addMsg("下发设置湿度指令", hex + crc)
@@ -374,7 +370,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 val hex = "0106${setHumRegHex}${tempHex}"
                 val crc = CRC16.getCRC(hex)
                 if (airConditionSerialHelper.isOpen) {
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         setHumText.text = (currentHumVal - 1).toString()
                         AddMsgToDebugList.addMsg("下发设置湿度指令", hex + crc)
@@ -391,7 +387,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 if (! airConditionDutyFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.dutyStart
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发空调值班开启指令", hex + crc)
                         airConditionDutyBtn.setImageResource(R.drawable.air_condition_duty_selected)
@@ -400,7 +396,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 } else {
                     val hex = Constants.AirConditionOrder.AirCondition.dutyStop
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发空调值班停止指令", hex + crc)
                         airConditionDutyBtn.setImageResource(R.drawable.air_condition_duty)
@@ -418,7 +414,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 if (! airConditionStartStopFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.start
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发空调启动指令", hex + crc)
                         airConditionStartStopBtn.setImageResource(R.drawable.air_condition_start_stop_selected)
@@ -427,7 +423,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 } else {
                     val hex = Constants.AirConditionOrder.AirCondition.stop
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发空调停止指令", hex + crc)
                         airConditionStartStopBtn.setImageResource(R.drawable.air_condition_start_stop)
@@ -445,7 +441,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 if (! airConditionNegeStressFlag) {
                     val hex = Constants.AirConditionOrder.AirCondition.neStress
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发正负压指令", hex + crc)
                         airConditionNegeStressBtn.setImageResource(R.drawable.nege_stress_selected)
@@ -454,11 +450,11 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
                 } else {
                     val hex = Constants.AirConditionOrder.AirCondition.geStress
                     val crc = CRC16.getCRC(hex)
-                    handler.post {
+                    airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
                         AddMsgToDebugList.addMsg("下发正负压指令", hex + crc)
                         airConditionNegeStressBtn.setImageResource(R.drawable.positive_negative_pressure)
-                        airConditionNegeStressFlag = true
+                        airConditionNegeStressFlag = false
                     }
                 }
             } else {
@@ -467,7 +463,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) : OnDataRec
         }, debounceInterval))
     }
 
-    override fun onDataReceived(receivedData : String) {
-        TODO("Not yet implemented")
+    fun closeHelper() {
+        airConditionSerialHelper.close()
     }
 }

@@ -29,9 +29,7 @@ class BottomFragment : Fragment() {
         adapter = BottomAdapter(binding)
         adapter.isShow()
         // 启动定时任务
-        if (adapter.serialIsOpen()) {
-            startStatusPolling()
-        }
+        startStatusPolling()
         return binding.root
     }
 
@@ -60,9 +58,9 @@ class BottomFragment : Fragment() {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 adapter.getStatus()
-                handler.postDelayed(this, 6000)
+                handler.postDelayed(this, 5000)
             }
-        }, 6000)
+        }, 5000)
     }
 
     @Subscribe
@@ -76,7 +74,9 @@ class BottomFragment : Fragment() {
     }
 
     override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
         EventBus.getDefault().unregister(this)
+        adapter.closeHelper()
         super.onDestroy()
     }
 }

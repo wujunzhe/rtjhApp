@@ -12,16 +12,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.rtjhapp.databinding.TopTimeBinding
-import com.example.rtjhapp.utils.AddMsgToDebugList
-import com.example.rtjhapp.utils.ByteUtil
-import com.example.rtjhapp.utils.Constants
-import com.example.rtjhapp.utils.MySerialHelper
-import com.example.rtjhapp.utils.MyToast
-import tp.xmaihh.serialport.bean.ComBean
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.Calendar
 import java.util.Timer
 import java.util.TimerTask
 
@@ -51,8 +43,6 @@ class TimeFragment: Fragment() {
     private lateinit var ssFen: TextView
     private lateinit var ssMiao: TextView
 
-    private lateinit var timeSerialHelper : MySerialHelper
-    private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable1: Runnable
     override fun onCreateView(
         inflater : LayoutInflater,
@@ -89,30 +79,6 @@ class TimeFragment: Fragment() {
         //计时功能
         togoStart(binding)
         toGetNowTime()
-        timeSerialHelper = object : MySerialHelper("/dev/ttyS2",9600) {
-            override fun onDataReceived(comBean : ComBean) {
-                super.onDataReceived(comBean)
-                val hex = ByteUtil.comBeanToHex(comBean)
-                if (hex == "0001") {
-                    start1(runnable1)
-                    pd1 = true
-                    dd1 = false
-                } else if (hex == "0002") {
-                    pause1(runnable1)
-                    pd1 = false
-                    dd1 = true
-                }
-                handler.post {
-                    AddMsgToDebugList.addMsg("时间测试收到数据", hex)
-                }
-            }
-        }
-
-        try {
-            timeSerialHelper.open()
-        } catch (e : Exception) {
-            MyToast().error(binding.root.context, "电话模块串口未打开")
-        }
         return binding.root
     }
 //------------------------------------当前时间方法----------------------------------------------------
@@ -183,12 +149,6 @@ class TimeFragment: Fragment() {
                 println("开始计时")
                 pd1 = true
                 dd1 = false
-                if (timeSerialHelper.isOpen) {
-                    timeSerialHelper.sendHex("001")
-                    handler.post {
-                        AddMsgToDebugList.addMsg("测试指令","发送001")
-                    }
-                }
 //            }
         }
         //监听重置按钮：计时重置功能
@@ -202,12 +162,6 @@ class TimeFragment: Fragment() {
             println("暂停计时")
             pd1 = false
             dd1 = true
-            if (timeSerialHelper.isOpen) {
-                timeSerialHelper.sendHex("002")
-                handler.post {
-                    AddMsgToDebugList.addMsg("测试指令","发送002")
-                }
-            }
         }
 //-------------------------------------------------------------------------------------------------
         //麻醉正计时按钮

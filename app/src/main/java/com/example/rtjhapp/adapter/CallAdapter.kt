@@ -1,11 +1,7 @@
 package com.example.rtjhapp.adapter
 
-import android.view.LayoutInflater
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.CallBinding
 import com.example.rtjhapp.dialog.SpecialCallDialog
 import com.example.rtjhapp.event.UpdateDebugMessageEvent
@@ -13,7 +9,6 @@ import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
 
 
@@ -104,7 +99,6 @@ class CallAdapter(private val binding : CallBinding) {
             callSerialHelper.sendHex(phoneNumber.toString())
             "下发拨号指令：$phoneNumber"
         }
-
         EventBus.getDefault().post(UpdateDebugMessageEvent(msg))
     }
 

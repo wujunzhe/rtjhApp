@@ -9,7 +9,7 @@ class DisplaySettingsAdapter(private val binding : DisplaySettingsDialogBinding)
     fun initSettings() {
 
         val localDutyDisplayState =
-            sharedPreferencesManager.readBoolean(Constants.DisplayState.duty, false)
+            sharedPreferencesManager.readBoolean(Constants.DisplayState.duty, true)
         binding.dutyDisplaySwitch.isChecked = localDutyDisplayState
 
         val localNeGeStressToggleDisplayState =
