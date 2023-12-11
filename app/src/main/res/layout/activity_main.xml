@@ -4,18 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
-    tools:context=".MainActivity"
-    android:paddingTop="70dp">
+    android:background="@drawable/testbg"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/container_time"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="1"
+        tools:ignore="MissingConstraints" />
+
     <FrameLayout
         android:id="@+id/container_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="0.25"
-        app:layout_constraintTop_toTopOf="parent"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/container_center"
+        app:layout_constraintHeight_percent="0.22"
+        app:layout_constraintTop_toBottomOf="@+id/container_title"
+        app:layout_constraintWidth_percent="1"
         tools:ignore="MissingConstraints">
         <!-- 时间模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
@@ -24,9 +35,9 @@
         android:id="@+id/container_center"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="0.53"
+        app:layout_constraintHeight_percent="0.5"
         app:layout_constraintTop_toBottomOf="@+id/container_time"
+        app:layout_constraintWidth_percent="1"
         tools:ignore="MissingConstraints">
         <!-- 中心模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
@@ -35,9 +46,9 @@
         android:id="@+id/containerBottom"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="1"
         app:layout_constraintHeight_percent="0.18"
         app:layout_constraintTop_toBottomOf="@+id/container_center"
+        app:layout_constraintWidth_percent="1"
         tools:ignore="MissingConstraints">
         <!-- 底部模块的 Fragment 将在运行时加载到这里 -->
     </FrameLayout>
@@ -46,10 +57,10 @@
         android:id="@+id/debug_list_layout"
         android:layout_width="300dp"
         android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints">
-        <include layout="@layout/debug_list"/>
-    </FrameLayout>
 
+        <include layout="@layout/debug_list" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,15 +11,15 @@ import com.example.rtjhapp.databinding.FragmentCenterBinding
 import com.example.rtjhapp.gasModule.GasFragment
 import com.example.rtjhapp.musicModule.MusicFragment
 
-class CenterContainerFragment: Fragment() {
-    private lateinit var binding: FragmentCenterBinding
+class CenterContainerFragment : Fragment() {
+    private lateinit var binding : FragmentCenterBinding
 
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
         savedInstanceState : Bundle?
     ) : View {
-        binding = FragmentCenterBinding.inflate(inflater,container,false)
+        binding = FragmentCenterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,25 +28,24 @@ class CenterContainerFragment: Fragment() {
 
         // 添加空调模块
         childFragmentManager.beginTransaction()
-            .replace(binding.containerAirCondition.id,AirConditionFragment())
+            .replace(binding.containerAirCondition.id, AirConditionFragment())
             .commit()
 
         // 添加电话模块
         childFragmentManager.beginTransaction()
-            .replace(binding.containerCall.id,CallFragment())
+            .replace(binding.containerCall.id, CallFragment())
             .commit()
 
         // 添加音乐模块
         childFragmentManager.beginTransaction()
-            .replace(binding.containerMusic.id,MusicFragment())
+            .replace(binding.containerMusic.id, MusicFragment())
             .commit()
 
         //添加气体模块
         childFragmentManager.beginTransaction()
-            .replace(binding.containerGas.id,GasFragment())
+            .replace(binding.containerGas.id, GasFragment())
             .commit()
     }
-
 
 
 }

@@ -13,11 +13,12 @@ import com.example.rtjhapp.dialog.SerialPortSettingsDialog
 import com.example.rtjhapp.dialog.SmartSettingsDialog
 
 class SettingOptionsAdapter(
-    private val objects: Array<out String>,
-    private val iconFontCodes: Array<out String>,
+    private val objects : Array<out String>,
+    private val iconFontCodes : Array<out String>,
 ) : RecyclerView.Adapter<SettingOptionsAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = CustomListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ViewHolder {
+        val binding =
+            CustomListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         // 获取屏幕宽度
         val displayMetrics = parent.context.resources.displayMetrics
@@ -33,20 +34,21 @@ class SettingOptionsAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder : ViewHolder, position : Int) {
         val item = objects[position]
         val iconFontCode = iconFontCodes[position]
         holder.binding.iconTextView.text = iconFontCode
         holder.binding.customTextView.text = item
         holder.binding.root.setOnClickListener {
-            when(item){
+            when (item) {
                 "串口设置" -> {
                     val serialPortSettingsDialog = SerialPortSettingsDialog(holder.itemView.context)
                     serialPortSettingsDialog.show()
                 }
 
                 "空调设置" -> {
-                    val airConditionSettingsDialog = AirConditionSettingsDialog(holder.itemView.context)
+                    val airConditionSettingsDialog =
+                        AirConditionSettingsDialog(holder.itemView.context)
                     airConditionSettingsDialog.show()
                 }
 
@@ -55,13 +57,13 @@ class SettingOptionsAdapter(
                     displaySettingsDialog.show()
                 }
 
-                "智能模式及消毒设置" -> {
+                "智能模式及消毒" -> {
                     val smartModeSettingsDialog = SmartSettingsDialog(holder.itemView.context)
                     smartModeSettingsDialog.show()
                 }
 
                 "使用说明书" -> {
-                    val intent = Intent(holder.itemView.context,PdfPreviewActivity::class.java)
+                    val intent = Intent(holder.itemView.context, PdfPreviewActivity::class.java)
                     holder.itemView.context.startActivity(intent)
                 }
 
@@ -72,7 +74,8 @@ class SettingOptionsAdapter(
         }
     }
 
-    override fun getItemCount(): Int = objects.size
+    override fun getItemCount() : Int = objects.size
 
-    inner class ViewHolder(val binding: CustomListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding : CustomListItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

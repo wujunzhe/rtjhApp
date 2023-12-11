@@ -21,6 +21,7 @@ class DisplaySettingsDialog(context : Context) {
         .create()
 
     private val adapter = DisplaySettingsAdapter(binding)
+
     init {
         dialog.setOnShowListener {
             val width = context.resources.getDimensionPixelSize(R.dimen.dialog_width)
@@ -33,12 +34,14 @@ class DisplaySettingsDialog(context : Context) {
         adapter.initSettings()
         adapter.setSaveButtonClickListener { saveSettings() }
     }
-    fun show(){
+
+    fun show() {
         dialog.show()
     }
-    private fun saveSettings(){
+
+    private fun saveSettings() {
         adapter.saveSettings()
-        MyToast().success(binding.root.context)
+        MyToast().success(binding.root.context, "保存成功")
         EventBus.getDefault().post(UpdateAirConditionFragmentUIEvent())
         EventBus.getDefault().post(UpdateBottomFragmentUIEvent())
         dialog.dismiss()

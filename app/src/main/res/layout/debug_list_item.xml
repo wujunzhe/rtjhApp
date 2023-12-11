@@ -1,9 +1,8 @@
 <!-- debug_list_item.xml -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.rtjhapp.model.DebugItemViewModel" />
@@ -21,8 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@{viewModel.debugInfo}"
             android:textColor="@color/red"
-            android:textStyle="bold"
-            android:text="@{viewModel.debugInfo}" />
+            android:textStyle="bold" />
     </LinearLayout>
 </layout>

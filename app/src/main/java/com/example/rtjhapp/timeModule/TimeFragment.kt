@@ -2,56 +2,162 @@ package com.example.rtjhapp.timeModule
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
-import android.os.SystemClock
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.rtjhapp.databinding.TopTimeBinding
+import com.example.rtjhapp.dialog.TimeDialog
+import com.example.rtjhapp.utils.AddMsgToDebugList
+import com.example.rtjhapp.utils.ByteUtil
+import com.example.rtjhapp.utils.GlobalData
+import com.example.rtjhapp.utils.GlobalData.mzPd
+import com.example.rtjhapp.utils.MySerialHelper
+import com.example.rtjhapp.utils.MyToast
+import tp.xmaihh.serialport.bean.ComBean
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.Calendar
 import java.util.Timer
 import java.util.TimerTask
 
 class TimeFragment: Fragment() {
     private var mHandler:Handler = Handler()
+    private var ssStartTime = 0//手术计时介质
+    private var ssTimeBuff = 0//辅助
+    private var mzStartTime = 0//麻醉计时介质
+    private var mzTimeBuff = 0//辅助
 
-    private var millisecondsRecord1 = 0L
-    private var startTime1 = 0L
-    private var timeBuff1 = 0L
+    private var ssKaisiZt = false//正计时开始状态
+    private var ssZhantZt = false//正计时暂停状态
+    private var ssFuweiZt = false//正计时复位状态
 
-
-    private var pauseTimeInMilliseconds = 0L
-
-    private var millisecondsRecord2 = 0L
-    private var startTime2 = 5L
-    private var timeBuff2 = 0L
-    private var pd1 = false
-    private var pd2 = false
-    private var dd1 = false
-    private var dd2 = false
+    private var mzKaisiZt = false//麻醉开始状态
+    private var mzZhantZt = false//麻醉暂停状态
+    private var mzFuweiZt = false//麻醉复位状态
 
     private lateinit var binding: TopTimeBinding
+
+    //手术正计时按钮获取+视图
+    private lateinit var ssTimeStart: ImageButton
+    private lateinit var ssTimeBackHome: ImageButton
+    private lateinit var ssTimeWait: ImageButton
+    private lateinit var ssShi: TextView
+    private lateinit var ssFen: TextView
+    private lateinit var ssMiao: TextView
+
+    //手术正计时按钮获取+视图
+    private lateinit var mzTimeStart: ImageButton
+    private lateinit var mzTimeBackHome: ImageButton
+    private lateinit var mzTimeWait: ImageButton
+    private lateinit var mzShi: TextView
+    private lateinit var mzFen: TextView
+    private lateinit var mzMiao: TextView
+
+    private lateinit var mzSetTime: LinearLayout
+
+    private lateinit var timeSerialHelper : MySerialHelper
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable1: Runnable
+    private lateinit var runnable2: Runnable
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
         savedInstanceState : Bundle?
-
     ) : View {
        binding = TopTimeBinding.inflate(inflater,container,false)
-        //计时功能
+        //手术计时视图时分秒
+        ssShi = binding.surgeryTimingHours//视图：时
+        ssFen = binding.surgeryTimingMinutes//视图：分
+        ssMiao = binding.surgeryTimingSeconds//视图：秒
+        ssTimeStart = binding.surgeryTimingStart//按钮：计时开始
+        ssTimeBackHome = binding.surgeryTimingReset//按钮：计时复位
+        ssTimeWait = binding.surgeryTimingStop//按钮：计时暂停
+        //麻醉计时视图时分秒
+        mzShi = binding.anaesthesiaTimingHours//视图：时
+        mzFen = binding.anaesthesiaTimingMinutes//视图：分
+        mzMiao = binding.anaesthesiaTimingSeconds//视图：秒
+        mzTimeStart = binding.anaesthesiaTimingStart//按钮：麻醉开始
+        mzTimeBackHome = binding.anaesthesiaTimingReset//按钮：麻醉复位
+        mzTimeWait = binding.anaesthesiaTimingStop//按钮：麻醉暂停
+
+        mzSetTime = binding.mzTimingStart//麻醉界面
+
+        //手术正计时线程
+        runnable1 = object: Runnable{
+            override fun run() {
+                ssStartTime++
+                val seconds = ssStartTime % 60 //秒
+                val minutes = ssStartTime / 60 % 60 //分
+                val hours = ssStartTime / 60 / 60 % 60//时
+                val shi = String.format("%02d",hours)
+                val fen = String.format("%02d",minutes)
+                val miao = String.format("%02d",seconds)
+                ssShi.text = shi
+                ssFen.text = fen
+                ssMiao.text = miao
+                mHandler.postDelayed(this,1000)
+            }
+        }
+        //麻醉计时线程
+        runnable2 = object: Runnable{
+            override fun run() {
+                mzStartTime--
+                if(mzStartTime < 0){
+                    mzKaisiZt = false
+                    mzZhantZt = false
+                    mzFuweiZt = false
+                    GlobalData.mzStartTime = 0
+                    GlobalData.mzTimeBuff = 0
+                    mzStartTime = 0
+                    mzTimeBuff = 0
+                    return
+                }
+                val seconds = mzStartTime % 60 //秒
+                val minutes = mzStartTime / 60 % 60 //分
+                val hours = mzStartTime / 60 / 60 % 60//时
+                val shi = String.format("%02d",hours)
+                val fen = String.format("%02d",minutes)
+                val miao = String.format("%02d",seconds)
+                mzShi.text = shi
+                mzFen.text = fen
+                mzMiao.text = miao
+                mHandler.postDelayed(this,1000)
+                println(mzStartTime)
+            }
+        }
+        //加载计时功能+当前时间
         togoStart(binding)
         toGetNowTime()
-        return binding.root
+
+        //监听串口数据返回
+        timeSerialHelper = object : MySerialHelper("/dev/ttyS2",9600) {
+            override fun onDataReceived(comBean : ComBean) {
+                super.onDataReceived(comBean)//处理接收到的数据
+                val hex = ByteUtil.comBeanToHex(comBean)//存放处理好的数据
+                if (hex == "0001") {
+                    start1(runnable1)
+                } else if (hex == "0002") {
+                    pause1(runnable1)
+                }
+                handler.post {
+                    AddMsgToDebugList.addMsg("时间测试收到数据", hex)//看板输出
+                }
+            }
+        }
+        try {
+            timeSerialHelper.open()
+        } catch (e : Exception) {
+            MyToast().error(binding.root.context, "电话模块串口未打开")//看板输出
+        }
+        return binding.root//返回视图控制权限
+
     }
-//------------------------------------当前时间方法----------------------------------------------------
+//--------------------------------------当前时间------------------------------------------------------
     private fun toGetNowTime(){
         val timer = Timer()
         //当前时间时分秒
@@ -71,6 +177,22 @@ class TimeFragment: Fragment() {
                 val nian = nowDay.year
                 val months = nowDay.monthValue
                 val days = nowDay.dayOfMonth
+                //轮询检查是否已设置麻醉时长
+                val msys = GlobalData.mzStartTime!!
+                if(mzPd!!){
+                    val seconds = msys % 60 //秒
+                    val minutes = msys / 60 % 60 //分
+                    val hours = msys / 60 / 60 % 60//时
+                    val shi = String.format("%02d",hours)
+                    val fen = String.format("%02d",minutes)
+                    val miao = String.format("%02d",seconds)
+                    handler.post {
+                        // 在 UI 线程上运行的代码
+                        mzShi.text = shi
+                        mzFen.text = fen
+                        mzMiao.text = miao
+                    }
+                }
                 handler.post {
                     // 在 UI 线程上运行的代码
                     itShi.text = shi
@@ -78,184 +200,164 @@ class TimeFragment: Fragment() {
                     itMiao.text = miao
                     years.text = nian.toString()+"年"+months+"月"+days+"日"
                 }
-
             }
         }
         timer.schedule(timerTask, 0, 1000)
     }
-//------------------------------------两个计时方法----------------------------------------------------
-    //手术正计时
+//--------------------------------------按钮监听------------------------------------------------------
+    //手术正计时按钮监听
     private fun togoStart(binding: TopTimeBinding) {
-        //手术正计时按钮获取
-        val ssTimeStart = binding.surgeryTimingStart//开始按钮
-        val ssTimeBackHome = binding.surgeryTimingReset//重置按钮
-        val ssTimeWait = binding.surgeryTimingStop//暂停按钮
 
-        //手术计时视图时分秒
-        val ssShi = binding.surgeryTimingHours
-        val ssFen = binding.surgeryTimingMinutes
-        val ssMiao = binding.surgeryTimingSeconds
-        //计时方法
-        val runnable1 = object: Runnable{
-            override fun run() {
-                millisecondsRecord1 = SystemClock.uptimeMillis() - startTime1
-                val accumulatedTime = timeBuff1 + millisecondsRecord1
-                val seconds = accumulatedTime / 1000 % 60//秒
-                val minutes = accumulatedTime / 1000 / 60 % 60 //分
-                val hours = accumulatedTime / 1000 / 60 /60 % 60//时
-                val shi = String.format("%02d",hours)
-                val fen = String.format("%02d",minutes)
-                val miao = String.format("%02d",seconds)
-                ssShi.text = shi
-                ssFen.text = fen
-                ssMiao.text = miao
-                mHandler.postDelayed(this,0)
-            }
-        }
         //监听开始按钮：开始功能
         ssTimeStart.setOnClickListener {
-            if(!pd1){
-                start1(runnable1)
-                println("开始计时")
-                pd1 = true
-                dd1 = false
+            if(ssKaisiZt){//如果开始程序在运行
+                if(ssZhantZt){//如果程序暂停了
+                    ssZhantZt = false
+                    ssKaisiZt = true
+                    start1(runnable1)
+                }else{
+                    println("禁止访问，因为程序已经开始")
+                }
             }else{
-                pause1(runnable1)
-                pd1 = false
-                dd1 = true
+                ssKaisiZt = true
+                ssTimeBuff =0
+                start1(runnable1)
+                println("开始运行计时")
+                //显示串口发送数据信息
+                if (timeSerialHelper.isOpen) {
+                    timeSerialHelper.sendHex("002")
+                    handler.post {
+                        AddMsgToDebugList.addMsg("测试指令","发送002")
+                    }
+                }
             }
         }
         //监听重置按钮：计时重置功能
         ssTimeBackHome.setOnClickListener {
-            rest1(ssShi,ssFen,ssMiao)
-            println("重置计时")
+            ssKaisiZt = false//正计时开始状态
+            ssZhantZt = false//正计时暂停状态
+            ssFuweiZt = false//正计时复位状态
+            ssStartTime = 0
+            ssTimeBuff = 0
+            rest1(ssShi,ssFen,ssMiao,runnable1)
+            println("已经全部复位")
         }
         //监听暂停按钮：计时暂停功能
         ssTimeWait.setOnClickListener {
-            pause1(runnable1)
-            println("暂停计时")
-            pd1 = false
-            dd1 = true
-        }
-//-------------------------------------------------------------------------------------------------
-        //麻醉正计时按钮
-        val mzTimeStart = binding.anaesthesiaTimingStart//开始按钮
-        val mzTimeBackHome = binding.anaesthesiaTimingReset//重置按钮
-        val mzTimeWait = binding.anaesthesiaTimingStop//暂停按钮
-
-        //麻醉计时视图时分秒控件
-        val mzShi = binding.anaesthesiaTimingHours
-        val mzFen = binding.anaesthesiaTimingMinutes
-        val mzMiao = binding.anaesthesiaTimingSeconds
-
-    // 倒计时相关变量
-        var targetTimeInMilliseconds = 10000L
-        var handler = Handler(Looper.getMainLooper())
-        val runnable2 = object : Runnable {
-            override fun run() {
-                val currentTime = System.currentTimeMillis()
-                val remainingTime = targetTimeInMilliseconds - currentTime
-
-                val hours = (remainingTime / DateUtils.HOUR_IN_MILLIS) % 24
-                val minutes = (remainingTime / DateUtils.MINUTE_IN_MILLIS) % 60
-                val seconds = (remainingTime / DateUtils.SECOND_IN_MILLIS) % 60
-
-                println(remainingTime)
-
-                if (remainingTime > 0) {
-                    ssShi.text = hours.toString()
-                    ssFen.text = minutes.toString()
-                    ssMiao.text = seconds.toString()
-                    handler.postDelayed(this, DateUtils.SECOND_IN_MILLIS)
-                    println("222")
-                } else {
-                    ssShi.text = "00"
-                    ssFen.text = "00"
-                    ssMiao.text = "00"
-                    handler.removeCallbacks(this)
-                    println("333")
-                }
+            if(ssKaisiZt){//如果程序已开始
+                ssTimeBuff = ssStartTime
+                ssStartTime = 0
+                ssZhantZt = true
+                pause1(runnable1)
+                println("暂停程序")
+            }else{
+                println("程序尚为启动")
             }
         }
-        //麻醉开始按钮：麻醉功能
+//-------------------------------------------------------------------------------------------------
+        //麻醉开始按钮：麻醉计时开始
         mzTimeStart.setOnClickListener {
-            if(!pd2){
-                start2(runnable2)
-                println("开始计时")
-                pd2 = true
-                dd2 = false
+            val yys = GlobalData.mzStartTime!!
+            val yyd = GlobalData.mzTimeBuff!!
+            if(yys == 0){
+                println("禁止开始，尚未设置时间")
             }else{
-                pause2(runnable2)
-                pd2 = false
-                dd1 = true
+                mzPd = false
+                if(mzKaisiZt){//如果开始程序在运行
+                    if(mzZhantZt){//如果程序暂停了
+                        mzZhantZt = false
+                        mzKaisiZt = true
+                        start2(runnable2)
+                    }else{
+                        println("禁止访问，因为程序已经开始")
+                    }
+                }else{
+                    mzKaisiZt = true
+                    mzStartTime = yys
+                    mzTimeBuff = yyd
+                    mzTimeBuff =mzStartTime
+                    start2(runnable2)
+                    println("开始运行计时")
+                    //显示串口发送数据信息
+                    if (timeSerialHelper.isOpen) {
+                        timeSerialHelper.sendHex("002")
+                        handler.post {
+                            AddMsgToDebugList.addMsg("测试指令","发送002")
+                        }
+                    }
+                }
             }
         }
         //麻醉重置按钮：麻醉重置功能
         mzTimeBackHome.setOnClickListener {
-            reset2(mzShi,mzFen,mzMiao)
-            println("重置计时")
+            mzKaisiZt = false//正计时开始状态
+            mzZhantZt = false//正计时暂停状态
+            mzFuweiZt = false//正计时复位状态
+            mzStartTime = 120
+            mzTimeBuff = 120
+            rest2(mzShi,mzFen,mzMiao,runnable2)
+            println("已经全部复位")
         }
         //麻醉暂停按钮：麻醉暂停功能
         mzTimeWait.setOnClickListener {
-            pause2(runnable2)
-            println("暂停计时")
-            pd2 = false
-            dd2 = true
+            if(mzKaisiZt){//如果程序已开始
+                if(!mzZhantZt){
+                    mzTimeBuff = mzStartTime
+                    mzStartTime = 0
+                    mzZhantZt = true
+                    println("暂停程序")
+                }else{
+                    println("重复点击")
+                }
+                pause2(runnable2)
+            }else{
+                println("程序尚为启动")
+            }
+        }
+        //设置麻醉计算时间
+        mzSetTime.setOnClickListener{
+            if(mzKaisiZt){
+                println("禁止设置时间")
+            }else{
+                val dialog = TimeDialog(binding.root.context)
+                dialog.show()
+
+            }
+
         }
     }
-    //--------------------------------正计时部分------------------------------------------------------
-    private fun start1(runnable:Runnable){
-        startTime1 = SystemClock.uptimeMillis()
+
+    //--------------------------------正计时功能------------------------------------------------------
+    private fun start1(runnable:Runnable){//开始
+        ssStartTime = ssTimeBuff
         mHandler.postDelayed(runnable,0)
     }
-    private fun pause1(runnable:Runnable){
-        if(!dd1){
-            timeBuff1 += millisecondsRecord1
-            mHandler.removeCallbacks(runnable)
-            println("改变状态，判断开始")
-            println(timeBuff1)
-            dd1 = true
-        }else{
-            println("禁止访问")
-        }
+    private fun pause1(runnable:Runnable){//暂停
+        mHandler.removeCallbacks(runnable)
     }
     @SuppressLint("SetTextI18n")
-    private fun rest1(shi:TextView, fen:TextView, miao:TextView){
-        if(pd1){
-            println("请暂停计时后，再重置")
-        }else{
-            millisecondsRecord1 = 0L
-            timeBuff1 = 0L
-            shi.text = "00"
-            fen.text = "00"
-            miao.text = "00"
-        }
+    private fun rest1(shi:TextView, fen:TextView, miao:TextView,runnable:Runnable){//复位
+        shi.text = "00"
+        fen.text = "00"
+        miao.text = "00"
+        mHandler.removeCallbacks(runnable)
     }
-//------------------------------------麻醉部分-------------------------------------------------------
-    private fun start2(runnable:Runnable){
-        pauseTimeInMilliseconds = System.currentTimeMillis()
+//------------------------------------麻醉功能-------------------------------------------------------
+    private fun start2(runnable:Runnable){//麻醉开始
+        mzStartTime = mzTimeBuff
         mHandler.postDelayed(runnable,0)
     }
-    private fun pause2(runnable:Runnable){
-        if(!dd2){
-            timeBuff2 += millisecondsRecord2
-            mHandler.removeCallbacks(runnable)
-            println("改变状态，判断开始")
-            dd2 = true
-        }else{
-            println("不可同步操作")
-        }
+    private fun pause2(runnable:Runnable){//麻醉暂停
+        mHandler.removeCallbacks(runnable)
     }
     @SuppressLint("SetTextI18n")
-    private fun reset2(shi:TextView, fen:TextView, miao:TextView){
-        if(pd2){
-            println("请暂停计时后，再重置")
-        }else{
-            millisecondsRecord2 = 0L//设置的计时
-            timeBuff2 = 0L//衰减的计时
-            shi.text = "00"
-            fen.text = "00"
-            miao.text = "00"
-        }
+    private fun rest2(shi:TextView, fen:TextView, miao:TextView,runnable:Runnable){//麻醉复位
+        shi.text = "00"
+        fen.text = "00"
+        miao.text = "00"
+        GlobalData.mzStartTime = 0
+        GlobalData.mzTimeBuff = 0
+        mHandler.removeCallbacks(runnable)
+        println("已停止该进程")
     }
 }

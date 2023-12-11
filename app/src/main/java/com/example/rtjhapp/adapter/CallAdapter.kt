@@ -1,30 +1,31 @@
 package com.example.rtjhapp.adapter
 
-import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.CallBinding
+import com.example.rtjhapp.dialog.SpecialCallDialog
 import com.example.rtjhapp.event.UpdateDebugMessageEvent
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.MySerialHelper
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.modbus.CRC16
-import com.example.rtjhapp.utils.modbus.ModbusRtuMaster
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.greenrobot.eventbus.EventBus
-import tp.xmaihh.serialport.SerialHelper
-import java.lang.Exception
-import java.lang.StringBuilder
 
 
-class CallAdapter(private val binding : CallBinding){
-    private lateinit var phoneNumberTextView: TextView
-    private val digitButtons: MutableList<ImageButton> = mutableListOf()
-    private lateinit var delBtn: ImageButton
-    private lateinit var callBtn: ImageButton
-    private lateinit var hangUpBtn: ImageButton
+class CallAdapter(private val binding : CallBinding) {
+    private lateinit var phoneNumberTextView : TextView
+    private val digitButtons : MutableList<ImageButton> = mutableListOf()
+    private lateinit var delBtn : ImageButton
+    private lateinit var callBtn : ImageButton
+    private lateinit var hangUpBtn : ImageButton
     private lateinit var sharedPreferencesManager : SharedPreferencesManager
-    private lateinit var callSerialHelper: MySerialHelper
+    private lateinit var callSerialHelper : MySerialHelper
+    private lateinit var specialBtn: ImageButton
 
     fun initViews() {
         phoneNumberTextView = binding.phoneNumText
@@ -45,14 +46,22 @@ class CallAdapter(private val binding : CallBinding){
         callBtn = binding.callBtn
         hangUpBtn = binding.hangUpBtn
 
+        specialBtn = binding.specialCallingBtn
+        specialBtn.setOnClickListener {
+            SpecialCallDialog(binding.root.context).show()
+        }
+
         sharedPreferencesManager = SharedPreferencesManager(binding.root.context)
-        val serialAddress = sharedPreferencesManager.readString(Constants.SerialPort.call,Constants.SerialPort.Default.call)
+        val serialAddress = sharedPreferencesManager.readString(
+            Constants.SerialPort.call,
+            Constants.SerialPort.Default.call
+        )
         val iBaudRate = Constants.SerialPortDefaultConfig.baudRate
         callSerialHelper = serialAddress?.let { MySerialHelper(it, iBaudRate) } !!
         try {
             callSerialHelper.open()
-        } catch (e:Exception) {
-            MyToast().error(binding.root.context,"电话模块串口未打开")
+        } catch (e : Exception) {
+            MyToast().error(binding.root.context, "电话模块串口未打开")
         }
         setButtonClickListeners()
     }
@@ -69,29 +78,28 @@ class CallAdapter(private val binding : CallBinding){
         }
 
         callBtn.setOnClickListener {
-            if (callSerialHelper.isOpen){
+            if (callSerialHelper.isOpen) {
                 handleCallBtnClick()
-            }else {
-                MyToast().error(binding.root.context,"电话模块串口未打开")
+            } else {
+                MyToast().error(binding.root.context, "电话模块串口未打开")
             }
         }
         hangUpBtn.setOnClickListener {
-            if(callSerialHelper.isOpen){
+            if (callSerialHelper.isOpen) {
                 handleHangUpBtnClick()
             }
         }
     }
 
-    private fun handleCallBtnClick(){
-
+    private fun handleCallBtnClick() {
         val number = phoneNumberTextView.text.toString()
         var msg = ""
-        msg = if (number.isEmpty()){
+        msg = if (number.isEmpty()) {
             // 发送接听指令
             val answerCommand = "FE10000A000810EEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
             callSerialHelper.sendHex(answerCommand)
             "下发接听指令：$answerCommand"
-        }else {
+        } else {
             val phoneNumber = handlePhoneNumberToHex(number)
             callSerialHelper.sendHex(phoneNumber.toString())
             "下发拨号指令：$phoneNumber"
@@ -104,13 +112,13 @@ class CallAdapter(private val binding : CallBinding){
         val header = "FE10000A000810"
         val stringBuffer = StringBuffer()
         stringBuffer.append(header)
-        stringBuffer.append("EE")
+        stringBuffer.append("FF")
         var phone = ""
         for (i in phoneNumber.indices) {
             phone = phone + "0" + phoneNumber.substring(i, i + 1)
         }
         if (phone.length < 30) {
-            for (i in phone.length..29) {
+            for (i in phone.length .. 29) {
                 phone += "F"
             }
         }
@@ -121,7 +129,7 @@ class CallAdapter(private val binding : CallBinding){
     /**
      * 处理拒接按键
      */
-    private fun handleHangUpBtnClick(){
+    private fun handleHangUpBtnClick() {
         val hex = "FE06000900018C07"
         callSerialHelper.sendHex(hex)
         EventBus.getDefault().post(UpdateDebugMessageEvent("拒接：$hex"))
@@ -130,10 +138,10 @@ class CallAdapter(private val binding : CallBinding){
     /**
      * 处理删除按键
      */
-    private fun handleDelBtnClick(){
+    private fun handleDelBtnClick() {
         val currentPhoneNumber = phoneNumberTextView.text.toString()
-        if (currentPhoneNumber.isNotEmpty()){
-            val newPhoneNumber = currentPhoneNumber.substring(0,currentPhoneNumber.length -1)
+        if (currentPhoneNumber.isNotEmpty()) {
+            val newPhoneNumber = currentPhoneNumber.substring(0, currentPhoneNumber.length - 1)
             phoneNumberTextView.text = newPhoneNumber
         }
     }
@@ -141,16 +149,18 @@ class CallAdapter(private val binding : CallBinding){
     /**
      * 处理数字按键
      */
-    private fun handleButtonClick(digit: String){
+    private fun handleButtonClick(digit : String) {
         val currentPhoneNumber = phoneNumberTextView.text.toString()
         var digits = digit
-        when(digit){
+        when (digit) {
             "10" -> {
                 digits = "*"
             }
+
             "11" -> {
                 digits = "0"
             }
+
             "12" -> {
                 digits = "#"
             }
@@ -158,4 +168,5 @@ class CallAdapter(private val binding : CallBinding){
         val newPhoneNumber = currentPhoneNumber + digits
         phoneNumberTextView.text = newPhoneNumber
     }
+
 }

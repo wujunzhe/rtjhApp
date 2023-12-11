@@ -3,30 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/icon_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="end|center_vertical"
-        android:textSize="20sp"
-        android:textColor="@color/iconFontColor"
         android:fontFamily="@font/iconfont"
+        android:gravity="end|center_vertical"
         android:padding="10dp"
+        android:textColor="@color/iconFontColor"
+        android:textSize="20sp"
         tools:ignore="RtlSymmetry" />
 
     <TextView
         android:id="@+id/custom_text_view"
+        style="@style/settingOptionsTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="start|center_vertical"
-        android:textAppearance="?android:textAppearanceListItemSmall"
-        style="@style/settingOptionsTextStyle"
-        />
+        android:textAppearance="?android:textAppearanceListItemSmall" />
 
 </LinearLayout>

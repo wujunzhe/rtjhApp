@@ -1,62 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/smart_mode_settings_dialog"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/smart_mode_settings_dialog"
     android:layout_width="@dimen/dialog_width"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
     android:layout_gravity="center"
-    >
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:padding="20dp"
-        >
-        <!-- 消毒部分 -->
+        android:orientation="vertical"
+        android:padding="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disinfectSettings"
-                android:textColor="@color/grayTextColor"/>
+                android:textColor="@color/grayTextColor" />
             <!-- 消毒部分 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
                 <TextView
+                    style="@style/settingTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/disinfectRemarks"
-                    style="@style/settingTextStyle"/>
+                    android:text="@string/disinfectRemarks" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="horizontal"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     android:paddingStart="18dp"
                     tools:ignore="RtlSymmetry">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/disinfectTime"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:text="@string/disinfectTime" />
+
                     <EditText
                         android:id="@+id/disinfect_time"
-                        android:hint="@string/basic"
                         style="@style/InputBoxStyle"
                         android:autofillHints="@string/basic"
+                        android:hint="@string/basic"
                         android:inputType="text" />
                 </LinearLayout>
             </LinearLayout>
@@ -65,40 +68,46 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="@string/smartSettings"
-                android:textColor="@color/grayTextColor"
-                android:layout_marginTop="30dp"/>
+                android:textColor="@color/grayTextColor" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
                 <TextView
+                    style="@style/settingTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/smartRemarks"
                     android:gravity="center"
-                    style="@style/settingTextStyle"/>
+                    android:text="@string/smartRemarks" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal"
                     android:paddingStart="18dp"
-                    android:layout_marginTop="20dp"
                     tools:ignore="RtlSymmetry">
+
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
                         android:paddingStart="10dp"
-                        android:text="@string/powerOnDisinfect"
-                        android:layout_marginTop="10dp"/>
+                        android:text="@string/powerOnDisinfect" />
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical"
                         android:layout_weight="1"
+                        android:gravity="start|center_vertical"
                         android:paddingStart="20dp">
+
                         <com.suke.widget.SwitchButton
                             android:id="@+id/power_on_disinfect_switch"
                             android:layout_width="60dp"
@@ -106,17 +115,53 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/settingTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/smartLightRemarks" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="18dp"
+                        tools:ignore="RtlSymmetry">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/lightDelayTime" />
+
+                        <EditText
+                            android:id="@+id/lights_delay_time"
+                            style="@style/InputBoxStyle"
+                            android:autofillHints="@string/basic"
+                            android:hint="@string/basic"
+                            android:inputType="text" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/display_setting_save_btn"
+                style="@style/btnStyle"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="@string/save" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/display_setting_save_btn"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:text="@string/save"
-            android:gravity="center"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginTop="40dp"
-            style="@style/btnStyle"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    圆形进度条-->
+    <!--    圆形进度条-->
     <declare-styleable name="CircleProgressView">
-        <attr name="mCirWidth" format="dimension"/>
+        <attr name="mCirWidth" format="dimension" />
         <attr name="mCirColor" format="color" />
         <attr name="mBgCirWidth" format="dimension" />
         <attr name="mBgCirColor" format="color" />
@@ -17,7 +17,7 @@
         <attr name="hint" format="string" />
         <attr name="hintSize" format="dimension" />
         <attr name="hintColor" format="color" />
-        <attr name="hintDrawable" format="integer"/>
+        <attr name="hintDrawable" format="integer" />
         <attr name="gradient" format="dimension" />
         <attr name="isGradient" format="boolean" />
         <attr name="shadowSize" format="float" />
@@ -25,5 +25,6 @@
         <attr name="shadowShow" format="boolean" />
         <attr name="digit" format="integer" />
         <attr name="isanim" format="boolean" />
+        <attr name="hintText" format="string" />
     </declare-styleable>
 </resources>

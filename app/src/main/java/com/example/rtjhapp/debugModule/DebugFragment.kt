@@ -18,24 +18,25 @@ import org.greenrobot.eventbus.Subscribe
 
 class DebugFragment : Fragment() {
 
-    private lateinit var binding: DebugListBinding
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: DebugListAdapter // 假设有一个 DebugListAdapter
+    private lateinit var binding : DebugListBinding
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var adapter : DebugListAdapter // 假设有一个 DebugListAdapter
 
     // 假设你的调试信息数据列表
     private val debugDataList = mutableListOf<String>()
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater : LayoutInflater, container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View {
         binding = DataBindingUtil.inflate(inflater, R.layout.debug_list, container, false)
         recyclerView = binding.debugListView
 
         // 设置 RecyclerView 的布局管理器和适配器
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = DebugListAdapter(debugDataList)
+        adapter = DebugListAdapter(recyclerView, debugDataList)
         recyclerView.adapter = adapter
 
         return binding.root
@@ -43,17 +44,23 @@ class DebugFragment : Fragment() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
+        try {
+            EventBus.getDefault().register(this)
+        } catch (e : Exception) {
+            // 处理注册失败的情况
+            e.printStackTrace()
+        }
     }
 
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
-    @Subscribe
-    fun onDebugMessageEvent(event:UpdateDebugMessageEvent){
-        debugDataList.add(0,event.debugMsg)
 
-        adapter.notifyItemInserted(0)
+    @Subscribe
+    fun onDebugMessageEvent(event : UpdateDebugMessageEvent) {
+        debugDataList.add(event.debugMsg)
+        adapter.notifyItemInserted(debugDataList.size - 1)
+        recyclerView.scrollToPosition(debugDataList.size - 1)
     }
 }
