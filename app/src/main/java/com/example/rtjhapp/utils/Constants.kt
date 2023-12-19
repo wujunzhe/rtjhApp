@@ -78,7 +78,7 @@ object Constants {
             object Order {
                 const val powerOn = "默认开机指令"
                 const val powerOff = "默认关机指令"
-                const val getStatus = "01030002001665C4"
+                const val getStatus = "010300020017A404"
             }
 
             object Register {
@@ -178,16 +178,16 @@ object Constants {
      */
     object AirConditionOrder {
         object StartWith {
-            const val getStatus = "01032C"
+            const val getStatus = "0103"
         }
 
         object AirCondition {
-            const val dutyStart = "01050002FF002DFA" // 空调值班启动
-            const val dutyStop = "0105000200006C0A" // 空调值班停止
-            const val start = "01050000FF008C3A" // 空调启动
-            const val stop = "010500000000CDCA" // 空调停止
-            const val neStress = "01050003FF007C3A" // 正负压开
-            const val geStress = "0105000300003DCA" // 正负压关
+            const val dutyStart = "01050002FF00" // 空调值班启动
+            const val dutyStop = "010500020000" // 空调值班停止
+            const val start = "01050000FF00" // 空调启动
+            const val stop = "010500000000" // 空调停止
+            const val neStress = "01050005FF00" // 正负压开
+            const val geStress = "010500050000" // 正负压关
         }
     }
 

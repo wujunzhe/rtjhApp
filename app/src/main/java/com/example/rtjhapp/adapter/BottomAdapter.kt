@@ -12,6 +12,7 @@ import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.ControlSerialHelper
 import com.example.rtjhapp.utils.DebounceClickListener
+import com.example.rtjhapp.utils.GlobalData
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.OnDataReceivedListener
 import com.example.rtjhapp.utils.SharedPreferencesManager
@@ -103,24 +104,6 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
             }
         }
     }
-//    private fun setDataListener(){
-//        controlSerialHelper.setOnDataReceivedListener(object : OnDataReceivedListener {
-//            override fun onControlDataReceived(receivedData : String, hex : String) {
-//                bottomHandler.post {
-//                    AddMsgToDebugList.addMsg("接收到了控制模块数据", hex)
-//                }
-//                if (receivedData.length > 16 && receivedData.startsWith(Constants.ControlOrder.StartWith.getStatus)) {
-//                    setControlStatus(receivedData)
-//                    bottomHandler.post {
-//                        AddMsgToDebugList.addMsg(
-//                            "当前串口地址${controlSerialHelper.port},获取继电器状态",
-//                            hex
-//                        )
-//                    }
-//                }
-//            }
-//        })
-//    }
 
     fun isShow() {
         val sharedPreferencesManager = SharedPreferencesManager(binding.root.context)

@@ -1,5 +1,6 @@
 package com.example.rtjhapp.utils
 
+import com.example.rtjhapp.utils.ByteUtil.comBeanToHex
 import tp.xmaihh.serialport.SerialHelper
 import tp.xmaihh.serialport.bean.ComBean
 import java.nio.charset.Charset
@@ -63,6 +64,19 @@ open class AirConditionSerialHelper(sPort: String?, iBaudRate: Int) : SerialHelp
             hexStringBuilder.append(hex)
         }
         return hexStringBuilder.toString()
+    }
+
+    override fun onDataReceived(comBean: ComBean) {
+        val receivedString = comBeanToHex(comBean)
+        onDataReceivedListener?.onDataReceived(receivedString)
+    }
+}
+
+open class VTOSerialHelper(sPort : String?, iBaudRate : Int) : SerialHelper(sPort, iBaudRate){
+    private var onDataReceivedListener: OnDataReceivedListener? = null
+
+    fun setOnDataReceivedListener(listener: OnDataReceivedListener) {
+        this.onDataReceivedListener = listener
     }
 
     override fun onDataReceived(comBean: ComBean) {

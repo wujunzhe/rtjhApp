@@ -15,11 +15,12 @@ import com.example.rtjhapp.utils.AirConditionSerialHelper
 import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.DebounceClickListener
+import com.example.rtjhapp.utils.GlobalData
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.OnDataReceivedListener
 import com.example.rtjhapp.utils.SharedPreferencesManager
+import com.example.rtjhapp.utils.VTOSerialHelper
 import com.example.rtjhapp.utils.modbus.CRC16
-import kotlin.math.min
 
 class AirConditionAdapter(private val binding : AirConditionBinding) {
     private val dutyRunningLayout : LinearLayout = binding.dutyRunningLayout
@@ -159,6 +160,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
             Constants.SerialPort.airCondition,
             Constants.SerialPort.Default.airCondition
         )
+
         airConditionSerialHelper =
             AirConditionSerialHelper(airConditionPort, Constants.SerialPortDefaultConfig.baudRate)
         airConditionSerialHelper.setOnDataReceivedListener(object : OnDataReceivedListener {
@@ -179,8 +181,10 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
         } catch (e : Exception) {
             MyToast().error(binding.root.context, "空调模块串口未打开")
         }
+
         setOnClickListener()
     }
+
 
     fun isShow() {
         val showDutyFlag = sharedPreferencesManager.readBoolean("DutyDisplayState", true)
@@ -217,49 +221,84 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
         val data = hex.substring(6, hex.length - 1)
         val dataList = data.chunked(4)
         for ((index, bytes) in dataList.withIndex()) {
-            if (index + 1 == reTemReg !!.toInt()) {
-                val reTemVal = if (reTemNeedDivision) {
-                    ByteUtil.hexToDecimal(bytes).toString()
+            when (index + 1) {
+                reTemReg !!.toInt() -> {
+                    val reTemVal = if (reTemNeedDivision) {
+                        ByteUtil.hexToDecimal(bytes).toString()
+                    } else {
+                        bytes.toInt(16).toString()
+                    }
+                    airConditionHandler.post {
+                        binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
+                    }
+                }
 
-                } else {
-                    bytes.toInt(16).toString()
+                reHumReg !!.toInt() -> {
+                    val reHumVal = if (reHumNeedDivision) {
+                        ByteUtil.hexToDecimal(bytes).toString()
+                    } else {
+                        bytes.toInt(16).toString()
+                    }
+                    airConditionHandler.post {
+                        binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
+                    }
                 }
-                airConditionHandler.post {
-                    binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
+
+                setTemReg !!.toInt() -> {
+                    val setTemVal = if (setTemNeedMulti) {
+                        ByteUtil.hexToDecimal(bytes).toInt().toString()
+                    } else {
+                        bytes.toInt(16).toString()
+                    }
+                    airConditionHandler.post {
+                        binding.settingTemText.text = setTemVal
+                    }
                 }
-            } else if (index + 1 == reHumReg !!.toInt()) {
-                val reHumVal = if (reHumNeedDivision) {
-                    ByteUtil.hexToDecimal(bytes).toString()
-                } else {
-                    bytes.toInt(16).toString()
+
+                setHumReg !!.toInt() -> {
+                    val setHumVal = if (setTemNeedMulti) {
+                        ByteUtil.hexToDecimal(bytes).toInt().toString()
+                    } else {
+                        bytes.toInt(16).toString()
+                    }
+                    airConditionHandler.post {
+                        binding.settingHumText.text = setHumVal
+                    }
                 }
-                airConditionHandler.post {
-                    binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
+
+                dutyReg !!.toInt() -> {
+                    val dutyVal = bytes.lastOrNull().toString()
+                    if (dutyVal.toInt() == 1) {
+                        dutyStatusImg.setImageResource(R.drawable.air_system_green)
+                    }
                 }
-            } else if (index + 1 == dutyReg !!.toInt()) {
-                val dutyVal = bytes.lastOrNull().toString()
-                if (dutyVal.toInt() == 1) {
-                    dutyStatusImg.setImageResource(R.drawable.air_system_green)
+
+                negeReg !!.toInt() -> {
+                    val negeVal = bytes.lastOrNull().toString()
+                    if (negeVal.toInt() == 1) {
+                        negeStatusImg.setImageResource(R.drawable.air_system_green)
+                    }
                 }
-            } else if (index + 1 == negeReg !!.toInt()) {
-                val negeVal = bytes.lastOrNull().toString()
-                if (negeVal.toInt() == 1) {
-                    negeStatusImg.setImageResource(R.drawable.air_system_green)
+
+                systemNormalReg !!.toInt() -> {
+                    val status = bytes.lastOrNull().toString()
+                    if (status.toInt() == 1) {
+                        systemNormalStatusImg.setImageResource(R.drawable.air_system_green)
+                    }
                 }
-            } else if (index + 1 == systemNormalReg !!.toInt()) {
-                val status = bytes.lastOrNull().toString()
-                if (status.toInt() == 1) {
-                    systemNormalStatusImg.setImageResource(R.drawable.air_system_green)
+
+                systemWarningReg !!.toInt() -> {
+                    val status = bytes.lastOrNull().toString()
+                    if (status.toInt() == 1) {
+                        systemWarningImg.setImageResource(R.drawable.air_system_yellow)
+                    }
                 }
-            } else if (index + 1 == systemWarningReg !!.toInt()) {
-                val status = bytes.lastOrNull().toString()
-                if (status.toInt() == 1) {
-                    systemWarningImg.setImageResource(R.drawable.air_system_yellow)
-                }
-            } else if (index + 1 == systemErrorReg !!.toInt()) {
-                val status = bytes.lastOrNull().toString()
-                if (status.toInt() == 1) {
-                    systemErrorImg.setImageResource(R.drawable.air_system_red)
+
+                systemErrorReg !!.toInt() -> {
+                    val status = bytes.lastOrNull().toString()
+                    if (status.toInt() == 1) {
+                        systemErrorImg.setImageResource(R.drawable.air_system_red)
+                    }
                 }
             }
         }

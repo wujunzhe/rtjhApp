@@ -62,7 +62,7 @@ dependencies {
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("io.github.muddz:styleabletoast:2.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.databinding:databinding-runtime:7.4.2")
+    implementation("androidx.databinding:databinding-runtime:8.1.3")
     implementation("com.github.zcweng:switch-button:0.0.3@aar")
     implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
     implementation("io.github.xmaihh:serialport:2.1.1")
