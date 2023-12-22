@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 
 class SharedPreferencesManager(context : Context) {
 
-    internal val sharedPreferences : SharedPreferences = context.getSharedPreferences(
+    private val sharedPreferences : SharedPreferences = context.getSharedPreferences(
         "rtjhPreferences",
         Context.MODE_PRIVATE
     )

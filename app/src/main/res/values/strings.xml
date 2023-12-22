@@ -48,6 +48,8 @@
         <item>"&#xe655;"</item> <!-- 退出程序 -->
     </string-array>
     <string name="readOrder">读取数据指令</string>
+    <string name="slave">站号</string>
+    <string name="readSlavePlaceholder">请输入站号</string>
     <string name="readOrderPlaceholder">请输入读取数据指令</string>
     <string name="powerOnOff">开关机设置------</string>
     <string name="powerOn">开机指令</string>

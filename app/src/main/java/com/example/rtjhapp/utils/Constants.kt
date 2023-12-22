@@ -16,7 +16,7 @@ object Constants {
         object Default {
             const val call = "/dev/ttyS9"
             const val airCondition = "/dev/ttyS0"
-            const val control = "/dev/ttyS2"
+            const val control = "/dev/ttyS5"
             const val music = "/dev/ttyS5"
         }
     }
@@ -38,6 +38,7 @@ object Constants {
      * 常量-空调设置
      */
     object AirConditionSettings {
+        const val slave = "SLAVE"
         object Order { // 指令常量
             const val powerOn = "PowerOnOrder" // 开机指令
             const val powerOff = "PowerOffOrder" // 关机指令
@@ -75,10 +76,11 @@ object Constants {
         }
 
         object Default {
+            const val slave = "2"
             object Order {
                 const val powerOn = "默认开机指令"
                 const val powerOff = "默认关机指令"
-                const val getStatus = "010300020017A404"
+                const val getStatus = "01030002001525C5"
             }
 
             object Register {

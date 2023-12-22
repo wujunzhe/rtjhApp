@@ -23,6 +23,7 @@ import com.example.rtjhapp.utils.VTOSerialHelper
 import com.example.rtjhapp.utils.modbus.CRC16
 
 class AirConditionAdapter(private val binding : AirConditionBinding) {
+    private lateinit var slave: String
     private val dutyRunningLayout : LinearLayout = binding.dutyRunningLayout
     private val neLayout : LinearLayout = binding.neRunningLayout
     private val airDutyLayout : LinearLayout = binding.airDutyLayout
@@ -67,6 +68,10 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
     private val airConditionHandler = Handler(Looper.getMainLooper())
 
     init {
+        slave = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.slave,
+            Constants.AirConditionSettings.Default.slave
+        ).toString()
         reHumReg = sharedPreferencesManager.readString(
             Constants.AirConditionSettings.Register.returnHum,
             Constants.AirConditionSettings.Default.Register.returnHum
@@ -183,7 +188,9 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
         }
 
         setOnClickListener()
+        setSlave()
     }
+
 
 
     fun isShow() {
@@ -207,6 +214,15 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
         }
     }
 
+     fun setSlave() {
+        val slaveHex = ByteUtil.intToHex(slave.toInt(),4)
+        val hex = "0106000A${slaveHex}"
+        val crc = CRC16.getCRC(hex)
+        if (airConditionSerialHelper.isOpen) {
+            airConditionSerialHelper.sendHex(hex + crc)
+            AddMsgToDebugList.addMsg("下发修改站号指令", hex + crc)
+        }
+    }
     fun getStatus() {
         if (airConditionSerialHelper.isOpen) {
             val hex = sharedPreferencesManager.readString(
@@ -310,14 +326,17 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
 
         // 温度加号
         tempPlus.setOnClickListener(DebounceClickListener({
-            val currentTempVal = setTemText.text.toString().toInt()
-            if (currentTempVal == Constants.AirConditionSettings.Default.Max.tem.toInt()) {
+            val currentTempVal = setTemText.text.toString()
+            if (currentTempVal == sharedPreferencesManager.readString(
+                Constants.AirConditionSettings.Max.tem,
+                Constants.AirConditionSettings.Default.Max.tem
+            )) {
                 MyToast().info(binding.root.context, "已达温度最大值")
             } else {
                 val newTempVal = if (setTemNeedMulti) {
-                    (currentTempVal + 1) * 10
+                    (currentTempVal.toInt() + 1) * 10
                 } else {
-                    currentTempVal + 1
+                    currentTempVal.toInt() + 1
                 }
 
                 val setTemRegHex = ByteUtil.intToHex((setTemReg !!.toInt() * 2), 4)
@@ -327,7 +346,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setTemText.text = (currentTempVal + 1).toString()
+                        setTemText.text = (currentTempVal + 1)
                         AddMsgToDebugList.addMsg("下发设置温度指令", hex + crc)
                     }
                 } else {
@@ -338,14 +357,17 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
 
         // 温度减号
         tempReduce.setOnClickListener(DebounceClickListener({
-            val currentTempVal = setTemText.text.toString().toInt()
-            if (currentTempVal == Constants.AirConditionSettings.Default.Min.tem.toInt()) {
+            val currentTempVal = setTemText.text.toString()
+            if (currentTempVal == sharedPreferencesManager.readString(
+                Constants.AirConditionSettings.Min.tem,
+                Constants.AirConditionSettings.Default.Min.tem
+            )) {
                 MyToast().info(binding.root.context, "已达温度最小值")
             } else {
                 val newTempVal = if (setTemNeedMulti) {
-                    (currentTempVal - 1) * 10
+                    (currentTempVal.toInt() - 1) * 10
                 } else {
-                    currentTempVal - 1
+                    currentTempVal.toInt() - 1
                 }
 
                 val setTemRegHex = ByteUtil.intToHex((setTemReg !!.toInt() * 2), 4)
@@ -355,7 +377,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setTemText.text = (currentTempVal - 1).toString()
+                        setTemText.text = (currentTempVal.toInt() - 1).toString()
                         AddMsgToDebugList.addMsg("下发设置温度指令", hex + crc)
                     }
                 } else {
@@ -366,14 +388,17 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
 
         // 湿度加号
         humPlus.setOnClickListener(DebounceClickListener({
-            val currentHumVal = setHumText.text.toString().toInt()
-            if (currentHumVal == Constants.AirConditionSettings.Default.Max.hum.toInt()) {
+            val currentHumVal = setHumText.text.toString()
+            if (currentHumVal == sharedPreferencesManager.readString(
+                Constants.AirConditionSettings.Max.hum,
+                Constants.AirConditionSettings.Default.Max.hum
+            )) {
                 MyToast().info(binding.root.context, "已达湿度最大值")
             } else {
                 val newHumVal = if (setHumNeedMulti) {
-                    (currentHumVal + 1) * 10
+                    (currentHumVal.toInt() + 1) * 10
                 } else {
-                    currentHumVal + 1
+                    currentHumVal.toInt() + 1
                 }
 
                 val setHumRegHex = ByteUtil.intToHex((setHumReg !!.toInt() * 2), 4)
@@ -383,7 +408,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setHumText.text = (currentHumVal + 1).toString()
+                        setHumText.text = (currentHumVal + 1)
                         AddMsgToDebugList.addMsg("下发设置湿度指令", hex + crc)
                     }
                 } else {
@@ -394,14 +419,17 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
 
         // 湿度减号
         humReduce.setOnClickListener(DebounceClickListener({
-            val currentHumVal = setHumText.text.toString().toInt()
-            if (currentHumVal == Constants.AirConditionSettings.Default.Min.hum.toInt()) {
+            val currentHumVal = setHumText.text.toString()
+            if (currentHumVal == sharedPreferencesManager.readString(
+                Constants.AirConditionSettings.Min.hum,
+                Constants.AirConditionSettings.Default.Min.hum
+            )) {
                 MyToast().info(binding.root.context, "已达湿度最小值")
             } else {
                 val newHumVal = if (setHumNeedMulti) {
-                    (currentHumVal - 1) * 10
+                    (currentHumVal.toInt() - 1) * 10
                 } else {
-                    currentHumVal - 1
+                    currentHumVal.toInt() - 1
                 }
 
                 val setHumRegHex = ByteUtil.intToHex((setHumReg !!.toInt() * 2), 4)
@@ -411,7 +439,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setHumText.text = (currentHumVal - 1).toString()
+                        setHumText.text = (currentHumVal.toInt() - 1).toString()
                         AddMsgToDebugList.addMsg("下发设置湿度指令", hex + crc)
                     }
                 } else {

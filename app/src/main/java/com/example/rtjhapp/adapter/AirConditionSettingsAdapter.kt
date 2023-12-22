@@ -1,7 +1,10 @@
 package com.example.rtjhapp.adapter
 
+import com.example.rtjhapp.databinding.AirConditionBinding
 import com.example.rtjhapp.databinding.AirConditionSettingsDialogBinding
+import com.example.rtjhapp.utils.AddMsgToDebugList
 import com.example.rtjhapp.utils.Constants
+import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
 
 class AirConditionSettingsAdapter(private val binding : AirConditionSettingsDialogBinding) {
@@ -13,6 +16,12 @@ class AirConditionSettingsAdapter(private val binding : AirConditionSettingsDial
             Constants.AirConditionSettings.Default.Order.getStatus
         )
         binding.readAirOrder.setText(localGetStatusOrder)
+
+        val localSlave = sharedPreferencesManager.readString(
+            Constants.AirConditionSettings.slave,
+            Constants.AirConditionSettings.Default.slave
+        )
+        binding.slave.setText(localSlave)
 
         // 开关机部分 start
         val localPowerOnOrder = sharedPreferencesManager.readString(
@@ -156,6 +165,21 @@ class AirConditionSettingsAdapter(private val binding : AirConditionSettingsDial
             Constants.AirConditionSettings.Order.getStatus,
             getStatusOrder
         )
+
+        val slave = binding.slave.text.toString()
+        sharedPreferencesManager.writeString(
+            Constants.AirConditionSettings.slave,
+            slave
+        )
+        try {
+            val airConditionBinding = AirConditionBinding.bind(binding.root)
+
+            val airConditionAdapter = AirConditionAdapter(airConditionBinding)
+
+            airConditionAdapter.setSlave()
+        } catch (e: Exception) {
+            AddMsgToDebugList.addMsg("错误", e.message.toString())
+        }
 
         // 开关机部分 start
         val powerOnOrder = binding.powerOnOrder.text.toString()
