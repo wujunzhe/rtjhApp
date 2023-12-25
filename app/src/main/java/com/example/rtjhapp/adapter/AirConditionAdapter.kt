@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.rtjhapp.MainActivity
 import com.example.rtjhapp.R
 import com.example.rtjhapp.databinding.AirConditionBinding
 import com.example.rtjhapp.utils.AddMsgToDebugList
@@ -63,9 +64,11 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
     private val airConditionNegeStressBtn : ImageButton = binding.positiveNegativePressureBtn
     private var airConditionNegeStressFlag : Boolean = false
     private val airConditionSerialHelper : AirConditionSerialHelper
+
     private val sharedPreferencesManager : SharedPreferencesManager =
         SharedPreferencesManager(binding.root.context)
-    private val airConditionHandler = Handler(Looper.getMainLooper())
+    private var localVtoHex: String = sharedPreferencesManager.readString("VTOHex", "0".repeat(44)).toString()
+        private val airConditionHandler = Handler(Looper.getMainLooper())
 
     init {
         slave = sharedPreferencesManager.readString(
@@ -223,6 +226,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
             AddMsgToDebugList.addMsg("下发修改站号指令", hex + crc)
         }
     }
+
     fun getStatus() {
         if (airConditionSerialHelper.isOpen) {
             val hex = sharedPreferencesManager.readString(
@@ -238,50 +242,67 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
         val dataList = data.chunked(4)
         for ((index, bytes) in dataList.withIndex()) {
             when (index + 1) {
+                // 回风温度
                 reTemReg !!.toInt() -> {
                     val reTemVal = if (reTemNeedDivision) {
                         ByteUtil.hexToDecimal(bytes).toString()
                     } else {
                         bytes.toInt(16).toString()
                     }
+                    val vtoHex = localVtoHex.substring(0,8) + bytes + localVtoHex.substring(12)
+                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
+                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
                     }
                 }
 
+                // 回风湿度
                 reHumReg !!.toInt() -> {
                     val reHumVal = if (reHumNeedDivision) {
                         ByteUtil.hexToDecimal(bytes).toString()
                     } else {
                         bytes.toInt(16).toString()
                     }
+                    val vtoHex = localVtoHex.substring(0,12) + bytes + localVtoHex.substring(16)
+                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
+                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
                     }
                 }
 
+                // 设置温度
                 setTemReg !!.toInt() -> {
                     val setTemVal = if (setTemNeedMulti) {
                         ByteUtil.hexToDecimal(bytes).toInt().toString()
                     } else {
                         bytes.toInt(16).toString()
                     }
+                    val vtoHex = localVtoHex.substring(0,16) + bytes + localVtoHex.substring(20)
+                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
+                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.settingTemText.text = setTemVal
                     }
                 }
 
+                // 设置湿度
                 setHumReg !!.toInt() -> {
                     val setHumVal = if (setTemNeedMulti) {
                         ByteUtil.hexToDecimal(bytes).toInt().toString()
                     } else {
                         bytes.toInt(16).toString()
                     }
+                    val vtoHex = localVtoHex.substring(0,20) + bytes + localVtoHex.substring(24)
+                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
+                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.settingHumText.text = setHumVal
                     }
                 }
 
+                // 值班
                 dutyReg !!.toInt() -> {
                     val dutyVal = bytes.lastOrNull().toString()
                     if (dutyVal.toInt() == 1) {
@@ -289,6 +310,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     }
                 }
 
+                // 正负压
                 negeReg !!.toInt() -> {
                     val negeVal = bytes.lastOrNull().toString()
                     if (negeVal.toInt() == 1) {
@@ -296,6 +318,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     }
                 }
 
+                // 系统正常
                 systemNormalReg !!.toInt() -> {
                     val status = bytes.lastOrNull().toString()
                     if (status.toInt() == 1) {
@@ -303,6 +326,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     }
                 }
 
+                // 系统报警
                 systemWarningReg !!.toInt() -> {
                     val status = bytes.lastOrNull().toString()
                     if (status.toInt() == 1) {
@@ -310,6 +334,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     }
                 }
 
+                // 系统故障
                 systemErrorReg !!.toInt() -> {
                     val status = bytes.lastOrNull().toString()
                     if (status.toInt() == 1) {

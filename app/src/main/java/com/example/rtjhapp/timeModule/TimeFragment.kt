@@ -11,14 +11,14 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.rtjhapp.MainActivity
 import com.example.rtjhapp.databinding.TopTimeBinding
 import com.example.rtjhapp.dialog.TimeDialog
 import com.example.rtjhapp.utils.AddMsgToDebugList
+import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.GlobalData
 import com.example.rtjhapp.utils.GlobalData.mzPd
-import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.VTOSerialHelper
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Timer
@@ -204,6 +204,15 @@ class TimeFragment : Fragment() {
                 ssTimeBuff = 0
                 start1(runnable1)
                 println("开始运行计时")
+                try {
+                    val vtoHex = ByteUtil.intToHex(1, 4)
+                    val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+                    val hex = localVtoHex !!.substring(0, 4) + vtoHex + localVtoHex.substring(8)
+                    sharedPreferencesManager.writeString("VTOHex", hex)
+                    MainActivity().sendVtoHex(hex, binding.root.context)
+                } catch (e : Exception) {
+                    AddMsgToDebugList.addMsg("错误", e.message !!)
+                }
             }
         }
         //监听重置按钮：计时重置功能
@@ -215,6 +224,16 @@ class TimeFragment : Fragment() {
             ssTimeBuff = 0
             rest1(ssShi, ssFen, ssMiao, runnable1)
             println("已经全部复位")
+            try {
+                val vtoHex = ByteUtil.intToHex(3, 4)
+                val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+                val hex = localVtoHex !!.substring(0, 4) + vtoHex + localVtoHex.substring(8)
+                sharedPreferencesManager.writeString("VTOHex", hex)
+                MainActivity().sendVtoHex(hex, binding.root.context)
+            } catch (e : Exception) {
+                AddMsgToDebugList.addMsg("错误", e.message !!)
+            }
+
         }
         //监听暂停按钮：计时暂停功能
         ssTimeWait.setOnClickListener {
@@ -224,6 +243,11 @@ class TimeFragment : Fragment() {
                     ssStartTime = 0
                     ssZhantZt = true
                     println("暂停程序")
+                    val vtoHex = ByteUtil.intToHex(2, 4)
+                    val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+                    val hex = localVtoHex !!.substring(0, 4) + vtoHex + localVtoHex.substring(8)
+                    sharedPreferencesManager.writeString("VTOHex", hex)
+                    MainActivity().sendVtoHex(hex, binding.root.context)
                 } else {
                     println("重复点击")
                 }
@@ -256,6 +280,11 @@ class TimeFragment : Fragment() {
                     mzTimeBuff = mzStartTime
                     start2(runnable2)
                     println("开始运行计时")
+                    val vtoHex = ByteUtil.intToHex(1, 4)
+                    val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+                    val hex = vtoHex + localVtoHex !!.substring(4)
+                    sharedPreferencesManager.writeString("VTOHex", hex)
+                    MainActivity().sendVtoHex(hex, binding.root.context)
                 }
             }
         }
@@ -268,6 +297,11 @@ class TimeFragment : Fragment() {
             mzTimeBuff = 120
             rest2(mzShi, mzFen, mzMiao, runnable2)
             println("已经全部复位")
+            val vtoHex = ByteUtil.intToHex(3, 4)
+            val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+            val hex = vtoHex + localVtoHex !!.substring(4)
+            sharedPreferencesManager.writeString("VTOHex", hex)
+            MainActivity().sendVtoHex(hex, binding.root.context)
         }
         //麻醉暂停按钮：麻醉暂停功能
         mzTimeWait.setOnClickListener {
@@ -277,6 +311,11 @@ class TimeFragment : Fragment() {
                     mzStartTime = 0
                     mzZhantZt = true
                     println("暂停程序")
+                    val vtoHex = ByteUtil.intToHex(2, 4)
+                    val localVtoHex = sharedPreferencesManager.readString("VTOHex", "0".repeat(44))
+                    val hex = vtoHex + localVtoHex !!.substring(4)
+                    sharedPreferencesManager.writeString("VTOHex", hex)
+                    MainActivity().sendVtoHex(hex, binding.root.context)
                 } else {
                     println("重复点击")
                 }
