@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rtjhapp.databinding.MusicBinding
 import com.example.rtjhapp.databinding.MusicListItemBinding
 import com.example.rtjhapp.model.MusicListItemViewModel
-import com.example.rtjhapp.musicModule.MusicPlayerManager
+import com.example.rtjhapp.module.musicModule.MusicPlayerManager
 
 class MusicAdapter(
     private val binding : MusicBinding,

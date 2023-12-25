@@ -1,4 +1,4 @@
-package com.example.rtjhapp.titleModule
+package com.example.rtjhapp.module.titleModule
 
 import android.os.Bundle
 import android.view.LayoutInflater

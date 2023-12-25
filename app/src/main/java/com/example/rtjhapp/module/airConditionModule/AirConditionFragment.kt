@@ -1,4 +1,4 @@
-package com.example.rtjhapp.airContidionModule
+package com.example.rtjhapp.module.airConditionModule
 
 import android.os.Bundle
 import android.os.Handler

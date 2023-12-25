@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.rtjhapp.airContidionModule.AirConditionFragment
-import com.example.rtjhapp.callModule.CallFragment
+import com.example.rtjhapp.module.airConditionModule.AirConditionFragment
+import com.example.rtjhapp.module.callModule.CallFragment
 import com.example.rtjhapp.databinding.FragmentCenterBinding
-import com.example.rtjhapp.gasModule.GasFragment
-import com.example.rtjhapp.musicModule.MusicFragment
+import com.example.rtjhapp.module.gasModule.GasFragment
+import com.example.rtjhapp.module.musicModule.MusicFragment
 
 class CenterContainerFragment : Fragment() {
     private lateinit var binding : FragmentCenterBinding

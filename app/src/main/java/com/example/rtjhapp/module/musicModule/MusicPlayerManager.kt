@@ -1,4 +1,4 @@
-package com.example.rtjhapp.musicModule
+package com.example.rtjhapp.module.musicModule
 
 import android.media.AudioManager
 import android.media.MediaPlayer

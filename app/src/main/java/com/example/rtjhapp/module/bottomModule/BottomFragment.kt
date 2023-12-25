@@ -1,4 +1,4 @@
-package com.example.rtjhapp.bottomModule
+package com.example.rtjhapp.module.bottomModule
 
 import android.content.Context
 import android.os.Bundle

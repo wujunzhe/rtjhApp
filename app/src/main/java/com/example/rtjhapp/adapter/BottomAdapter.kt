@@ -176,15 +176,9 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
                 0 -> {
                     lighting1Flag = if (value.lastOrNull() == '1') {
                         binding.lighting1Btn.setImageResource(R.drawable.lights1_selected)
-                        val vtoHex = localVtoHex!!.substring(0,24) + value  + localVtoHex!!.substring(28)
-                        sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                        MainActivity().sendVtoHex(vtoHex, binding.root.context)
                         true
                     } else {
                         binding.lighting1Btn.setImageResource(R.drawable.lights1_unselected)
-                        val vtoHex = localVtoHex!!.substring(0,24) + value  + localVtoHex!!.substring(28)
-                        sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                        MainActivity().sendVtoHex(vtoHex, binding.root.context)
                         false
                     }
                 }
@@ -195,13 +189,11 @@ class BottomAdapter(private val binding : BottomBinding) : OnDataReceivedListene
                         binding.lighting2Btn.setImageResource(R.drawable.lights2_selected)
                         val vtoHex = localVtoHex!!.substring(0,28) + value  + localVtoHex!!.substring(32)
                         sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                        MainActivity().sendVtoHex(vtoHex, binding.root.context)
                         true
                     } else {
                         binding.lighting2Btn.setImageResource(R.drawable.lights2_unselected)
                         val vtoHex = localVtoHex!!.substring(0,28) + value  + localVtoHex!!.substring(32)
                         sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                        MainActivity().sendVtoHex(vtoHex, binding.root.context)
                         false
                     }
                 }

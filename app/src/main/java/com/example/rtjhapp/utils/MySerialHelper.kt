@@ -56,18 +56,8 @@ open class AirConditionSerialHelper(sPort: String?, iBaudRate: Int) : SerialHelp
         this.onDataReceivedListener = listener
     }
 
-    private fun comBeanToHex(comBean: ComBean): String {
-        val hexStringBuilder = StringBuilder()
-        val data = comBean.bRec
-        for (byteValue in data) {
-            val hex = String.format("%02X", byteValue)
-            hexStringBuilder.append(hex)
-        }
-        return hexStringBuilder.toString()
-    }
-
     override fun onDataReceived(comBean: ComBean) {
-        val receivedString = comBeanToHex(comBean)
+        val receivedString = ByteUtil.comBeanToHex(comBean)
         onDataReceivedListener?.onDataReceived(receivedString)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rtjhapp.musicModule
+package com.example.rtjhapp.module.musicModule
 
 import android.annotation.SuppressLint
 import android.content.Context

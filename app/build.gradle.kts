@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.rtjhapp"
-        minSdk = 21
+        minSdk = 30
         targetSdk = 33
         ndk {
             abiFilters.add("armeabi-v7a")

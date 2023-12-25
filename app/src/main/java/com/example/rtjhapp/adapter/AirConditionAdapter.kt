@@ -16,15 +16,13 @@ import com.example.rtjhapp.utils.AirConditionSerialHelper
 import com.example.rtjhapp.utils.ByteUtil
 import com.example.rtjhapp.utils.Constants
 import com.example.rtjhapp.utils.DebounceClickListener
-import com.example.rtjhapp.utils.GlobalData
 import com.example.rtjhapp.utils.MyToast
 import com.example.rtjhapp.utils.OnDataReceivedListener
 import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.VTOSerialHelper
 import com.example.rtjhapp.utils.modbus.CRC16
 
 class AirConditionAdapter(private val binding : AirConditionBinding) {
-    private lateinit var slave: String
+    private var slave: String
     private val dutyRunningLayout : LinearLayout = binding.dutyRunningLayout
     private val neLayout : LinearLayout = binding.neRunningLayout
     private val airDutyLayout : LinearLayout = binding.airDutyLayout
@@ -233,7 +231,10 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 Constants.AirConditionSettings.Order.getStatus,
                 Constants.AirConditionSettings.Default.Order.getStatus
             )
-            airConditionSerialHelper.sendHex(hex)
+            airConditionHandler.post {
+                airConditionSerialHelper.sendHex(hex)
+                AddMsgToDebugList.addMsg("发送获取空调状态指令",hex.toString())
+            }
         }
     }
 
@@ -249,9 +250,6 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     } else {
                         bytes.toInt(16).toString()
                     }
-                    val vtoHex = localVtoHex.substring(0,8) + bytes + localVtoHex.substring(12)
-                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.tempCircle.setValue(reTemVal, setTemMax !!.toFloat())
                     }
@@ -264,9 +262,6 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     } else {
                         bytes.toInt(16).toString()
                     }
-                    val vtoHex = localVtoHex.substring(0,12) + bytes + localVtoHex.substring(16)
-                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.humidityCircle.setValue(reHumVal, setHumMax !!.toFloat())
                     }
@@ -279,9 +274,6 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     } else {
                         bytes.toInt(16).toString()
                     }
-                    val vtoHex = localVtoHex.substring(0,16) + bytes + localVtoHex.substring(20)
-                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.settingTemText.text = setTemVal
                     }
@@ -294,9 +286,6 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                     } else {
                         bytes.toInt(16).toString()
                     }
-                    val vtoHex = localVtoHex.substring(0,20) + bytes + localVtoHex.substring(24)
-                    sharedPreferencesManager.writeString("VTOHex", vtoHex)
-                    MainActivity().sendVtoHex(vtoHex, binding.root.context)
                     airConditionHandler.post {
                         binding.settingHumText.text = setHumVal
                     }
@@ -371,7 +360,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setTemText.text = (currentTempVal + 1)
+                        setTemText.text = (currentTempVal.toInt() + 1).toString()
                         AddMsgToDebugList.addMsg("下发设置温度指令", hex + crc)
                     }
                 } else {
@@ -433,7 +422,7 @@ class AirConditionAdapter(private val binding : AirConditionBinding) {
                 if (airConditionSerialHelper.isOpen) {
                     airConditionHandler.post {
                         airConditionSerialHelper.sendHex(hex + crc)
-                        setHumText.text = (currentHumVal + 1)
+                        setHumText.text = (currentHumVal.toInt() + 1).toString()
                         AddMsgToDebugList.addMsg("下发设置湿度指令", hex + crc)
                     }
                 } else {

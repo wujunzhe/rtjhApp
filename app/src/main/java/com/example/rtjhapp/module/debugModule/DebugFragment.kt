@@ -1,4 +1,4 @@
-package com.example.rtjhapp.debugModule
+package com.example.rtjhapp.module.debugModule
 
 import android.annotation.SuppressLint
 import android.os.Bundle

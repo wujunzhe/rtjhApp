@@ -1,41 +1,24 @@
 package com.example.rtjhapp
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rtjhapp.bottomModule.BottomFragment
+import com.example.rtjhapp.module.bottomModule.BottomFragment
 import com.example.rtjhapp.databinding.ActivityMainBinding
-import com.example.rtjhapp.debugModule.DebugFragment
-import com.example.rtjhapp.timeModule.TimeFragment
-import com.example.rtjhapp.titleModule.TitleFragment
-import com.example.rtjhapp.utils.AddMsgToDebugList
-import com.example.rtjhapp.utils.MyToast
-import com.example.rtjhapp.utils.OnDataReceivedListener
-import com.example.rtjhapp.utils.SharedPreferencesManager
-import com.example.rtjhapp.utils.VTOSerialHelper
+import com.example.rtjhapp.module.debugModule.DebugFragment
+import com.example.rtjhapp.module.timeModule.TimeFragment
+import com.example.rtjhapp.module.titleModule.TitleFragment
 
 class MainActivity : AppCompatActivity() {
     private var binding : ActivityMainBinding? = null
-    private lateinit var sharedPreferencesManager : SharedPreferencesManager
-    private lateinit var vtoSerialHelper : VTOSerialHelper
     private var clickCount = 0
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding !!.root)
-        sharedPreferencesManager = SharedPreferencesManager(binding !!.root.context)
 
-        initSerialHelper()
-        vtoSerialHelper.setOnDataReceivedListener(object : OnDataReceivedListener {
-            override fun onDataReceived(receivedData : String) {
-                super.onDataReceived(receivedData)
-                AddMsgToDebugList.addMsg("vto数据", receivedData)
-            }
-        })
-
-        // 在 Activity 的 onCreate 方法中添加以下代码
+        // 隐藏顶部状态栏
         val controller = window.insetsController
         controller?.hide(WindowInsets.Type.statusBars())
 
@@ -63,17 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         showTitle()
     }
-
-    private fun initSerialHelper() {
-        vtoSerialHelper = VTOSerialHelper("/dev/ttys2", 9600)
-        try {
-            vtoSerialHelper.open()
-        } catch (e : Exception) {
-            MyToast().error(this, "门口机串口未打开")
-        }
-    }
-
-
 
     private fun showTitle() {
         supportFragmentManager.beginTransaction()
@@ -111,12 +83,4 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun sendVtoHex(hex : String, context : Context) {
-        if (::vtoSerialHelper.isInitialized && vtoSerialHelper.isOpen){
-            vtoSerialHelper.sendHex(hex)
-            AddMsgToDebugList.addMsg("向门口机发送指令", hex)
-        } else {
-            MyToast().error(context, "门口机串口未打开")
-        }
-    }
 }

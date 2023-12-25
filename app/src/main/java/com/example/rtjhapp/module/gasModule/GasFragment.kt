@@ -1,4 +1,4 @@
-package com.example.rtjhapp.gasModule
+package com.example.rtjhapp.module.gasModule
 
 import android.os.Bundle
 import android.os.Handler
